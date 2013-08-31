@@ -1,0 +1,37 @@
+﻿@using Sfs.ViewModels.PessoaViewModels
+
+@model AssociarPerfisViewModel
+
+@{
+    ViewBag.Title = "AssociarPerfis";
+    var indice = 0;
+}
+
+<h2>Associar Perfis</h2>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(item => Model.Pessoa.Id)
+    <fieldset>
+        <legend>Perfis</legend>
+
+        @foreach (var item in Model.TodosPerfis)
+        {
+            var checkedStr = Model.PerfisSelecionados.Where(ps => ps.Id == item.Id).Any() ? "checked='checked'" : String.Empty;
+            <input type="hidden" name="PerfisSelecionados.Index" value="@indice" />
+            <input type="checkbox" name="PerfisSelecionados[@indice].Id" value="@item.Id" @Html.Raw(checkedStr) />
+            @item.Nome
+            <br />
+        
+            indice++;
+        }
+
+        <p>
+            @SfsHtml.Submit("Salvar")
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

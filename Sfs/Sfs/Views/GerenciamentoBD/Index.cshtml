@@ -1,0 +1,8 @@
+﻿@{
+    ViewBag.Title = "Alimentar Banco de Dados";
+}
+
+<form action="~/GerenciamentoBD/AlimentarBD" method="post" enctype="multipart/form-data">
+    <input type="file" name="source" id="source" />
+    @SfsHtml.Submit("Enviar")
+</form>

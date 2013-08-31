@@ -1,0 +1,100 @@
+﻿@model Sfs.ViewModels.InboxViewModels.IndexViewModel
+
+@{
+    ViewBag.Title = "Inbox";
+}
+
+<h2>Inbox</h2>
+<p style="text-align:right;">
+    <input type="button" onclick="deletarMsg();" class="small alert button" value="Excluir Selecionadas"/>
+</p>
+
+<form action="~/Inbox/Delete" method="post">
+<table>
+    <thead>
+    <tr>
+        <th>
+            <b>De</b>
+        </th>
+        <th>
+            <b>Assunto</b>
+        </th>
+        <th style="width:165px;">
+            <b>Data</b>
+        </th>
+        <th style="width:45px;text-align:center">
+            <input type="checkbox" onclick="selecionarTodas();" title="Inverter Seleção" />
+        </th>
+    </tr>
+</thead>
+ @{
+     var c = 0;
+ }
+ @foreach (var item in Model.Mensagens) {
+     <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Remetente)
+        </td>
+        <td>
+            @if(item.Lida) {
+                @SfsHtml.SmallImg("mail_ok.png", "Lida")
+                @Html.ActionLink(item.Assunto, "Ler", "Inbox", new { idMsg = item.Id, pagina = Model.PaginaAtual }, null)
+            }
+            else {
+                @SfsHtml.SmallImg("mail.png", "Não lida")
+                <b>@Html.ActionLink(item.Assunto, "Ler", "Inbox", new { idMsg = item.Id, pagina = Model.PaginaAtual }, null)</b>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DataEnvio)
+        </td>
+        <td style="text-align:center">
+            <input type="checkbox" name="guid" value="@item.Id" />
+            @{
+     c++;
+            }
+        </td>
+    </tr>
+}
+</table>
+    </form>
+
+<script>
+    function deletarMsg() {
+        if (confirm("Tem certeza que deseja deletar essas mensagens?")) {
+            document.forms[0].submit();
+        }
+    }
+
+    function selecionarTodas() {
+        var inputs = document.forms[0].getElementsByTagName("input");
+        for (var i = 1; i < inputs.length; i++) {
+            if (inputs[i].type == 'checkbox') {
+                inputs[i].checked = !inputs[i].checked;
+            }
+        }
+    }
+</script>
+<p style="text-align:center">
+    @if (Model.PaginaAtual > 0)
+    {
+        @Html.ActionLink("< ", "Index", new {PaginaAtual = Model.PaginaAtual - 1})
+    }
+    
+    @for (int i = 0; i < Model.TotalPaginas; i++)
+    {
+        string iAlterado = (i + 1).ToString() + " ";
+        if (i != Model.PaginaAtual)
+        {
+            @Html.ActionLink(iAlterado, "Index", new {PaginaAtual = i})
+        }
+        else {
+            @iAlterado
+        }
+    }
+    @if (Model.PaginaAtual < Model.TotalPaginas - 1)
+    {
+        @Html.ActionLink(">", "Index", new { PaginaAtual = Model.PaginaAtual + 1 })
+    }
+</p>
+

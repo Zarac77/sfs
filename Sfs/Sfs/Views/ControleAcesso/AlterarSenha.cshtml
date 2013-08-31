@@ -1,0 +1,44 @@
+﻿@model Sfs.ViewModels.ControleAcessoViewModels.AlterarSenhaViewModel
+
+@{
+    ViewBag.Title = "AlterarSenha";
+}
+
+<h2>Alterar Senha</h2>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @SfsHtml.ValidationSummary(ViewData, true)
+
+    <fieldset>
+        <legend>Alterar Senha</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.SenhaAtual)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.SenhaAtual)
+            @Html.ValidationMessageFor(model => model.SenhaAtual)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.NovaSenha)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.NovaSenha)
+            @Html.ValidationMessageFor(model => model.NovaSenha)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.ConfirmacaoNovaSenha)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.ConfirmacaoNovaSenha)
+            @Html.ValidationMessageFor(model => model.ConfirmacaoNovaSenha)
+        </div>
+
+        <p>
+            @SfsHtml.Submit("Salvar")
+        </p>
+    </fieldset>
+}

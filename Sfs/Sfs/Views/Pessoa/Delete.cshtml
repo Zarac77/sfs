@@ -1,0 +1,38 @@
+@model Sfs.Models.Pessoa
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<fieldset>
+    <legend>Pessoa</legend>
+
+    <div class="display-label">Nome</div>
+    <div class="display-field">@Model.Nome</div>
+
+    <div class="display-label">Matricula</div>
+    <div class="display-field">@Model.Matricula</div>
+
+    <div class="display-label">Email</div>
+    <div class="display-field">@Model.Email</div>
+
+    <div class="display-label">Senha</div>
+    <div class="display-field">@Model.Senha</div>
+
+    <div class="display-label">Inscricoes</div>
+    <div class="display-field">@(Model.Inscricoes == null ? "None" : Model.Inscricoes.Count.ToString())</div>
+
+    <div class="display-label">Perfis</div>
+    <div class="display-field">@(Model.Perfis == null ? "None" : Model.Perfis.Count.ToString())</div>
+</fieldset>
+@using (Html.BeginForm()) {
+    <p>
+        <input type="submit" value="Delete" /> |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+}
+
+

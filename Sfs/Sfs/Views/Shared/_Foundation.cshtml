@@ -1,0 +1,48 @@
+﻿@using Sfs.Models;
+
+<!DOCTYPE html>
+<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8" />
+
+    @*Set the viewport width to device width for mobile *@
+    <meta name="viewport" content="width=device-width" />
+
+    <title>@ViewBag.Title - Welcome to Foundation</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <link href="@Url.Content("~/Content/themes/base/jquery-ui.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/Content/css/select2.css")" rel="stylesheet"/>
+    @Styles.Render("~/Content/foundation/css")
+
+    @RenderSection("head", required: false)
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+     @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/foundation")
+    <script type="text/javascript" src="@Url.Content("~/scripts/select2.min.js")"></script>
+    @*Use the Scripts section to define page specific scripts*@
+    @RenderSection("scripts", required: false)
+</head>
+<body>
+    <div class="row">
+    @{  
+         Inbox inbox = ViewBag.Inbox;
+    }
+        @Html.Partial("_MenuPrincipal", inbox)
+    </div>
+    <div class="row">
+        @RenderBody()
+    </div>
+
+    <script>
+        $(document).foundation();
+        $(document).ready(function () {
+            $(".date").datepicker();
+        });
+    </script>
+</body>
+</html>

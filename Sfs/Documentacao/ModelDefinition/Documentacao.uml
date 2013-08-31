@@ -1,0 +1,511 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/dsltools/UseCaseModel"
+  dslVersion="1.0.0.0"
+  Id="8f589f5c-c92e-4575-9542-4a81cd6d5392"
+  name="Documentacao" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <appliedStereotypesInternal>
+    <stereotypeInstance
+      Id="1dd7a343-61be-47d9-9844-417db635c871"
+      name="namespace"
+      profile="CSharpProfile">
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="dcafd6e0-a11a-478a-815e-9d4793dfbf39">
+          <propertyInstance
+            Id="389aa15d-aa52-4e14-8988-74bbe8617c96"
+            name="BaseName" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="97a37a99-788d-40ef-be3d-a6cb62f7fcb7">
+          <propertyInstance
+            Id="ef738b6e-1262-469b-a151-5f2939478832"
+            name="ClrAttributes" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="86038b12-32ee-4b1f-a05d-cd99ccc8fb4f">
+          <propertyInstance
+            Id="9890b1a3-8602-4ebc-9bc2-ad80a7aae631"
+            name="Usings" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+    <stereotypeInstance
+      Id="af4ce440-91d7-440a-a0fc-8360d0d21c29"
+      name="TextTemplateBindings"
+      profile="TextTemplateBindings">
+      <propertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="4984e064-fd8e-42ce-a71c-cde6d99a49c9">
+          <propertyInstance
+            Id="5a7e69bd-eab2-4ec2-950f-91e9939c077b"
+            name="Alias"
+            value="ClassTemplate|EnumTemplate|InterfaceTemplate|StructTemplate" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="707e28f1-1656-4b55-b09c-169adc8abc97">
+          <propertyInstance
+            Id="7f9778e6-2604-46b1-8f0f-3247570fd8cf"
+            name="TemplateFilePath"
+            value="ClassTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 11.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\ClassTemplate.t4|EnumTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 11.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\EnumTemplate.t4|InterfaceTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 11.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\InterfaceTemplate.t4|StructTemplate=C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO 11.0\COMMON7\IDE\EXTENSIONS\MICROSOFT\ARCHITECTURE TOOLS\EXTENSIBILITY\Templates\Text\StructTemplate.t4" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="6531221d-7225-4579-81dc-88b4302fe20f">
+          <propertyInstance
+            Id="4379de46-c122-4a3e-9ce0-4e7201b6330d"
+            name="ProjectPath"
+            value="ClassTemplate=..\DocumentacaoLib\DocumentacaoLib.csproj|EnumTemplate=..\DocumentacaoLib\DocumentacaoLib.csproj|InterfaceTemplate=..\DocumentacaoLib\DocumentacaoLib.csproj|StructTemplate=..\DocumentacaoLib\DocumentacaoLib.csproj" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="fe918be8-2009-44f7-8434-7ce18a868097">
+          <propertyInstance
+            Id="b5d2d9bf-10b5-4b80-803a-844333ec571d"
+            name="TargetDirectory"
+            value="ClassTemplate=GeneratedCode\{PackageStructure}|EnumTemplate=GeneratedCode\{PackageStructure}|InterfaceTemplate=GeneratedCode\{PackageStructure}|StructTemplate=GeneratedCode\{PackageStructure}" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="0490f882-d8d6-4c86-93e3-1721e8a4d73b">
+          <propertyInstance
+            Id="bfc650ab-b625-483e-b27a-9d8182ed3f55"
+            name="TargetName"
+            value="ClassTemplate={Name}|EnumTemplate={Name}|InterfaceTemplate={Name}|StructTemplate={Name}" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="20e76128-4452-434e-8869-755c5762dd22">
+          <propertyInstance
+            Id="2dc13c8e-f779-4a0e-a6c3-59154662ff78"
+            name="Overwrite"
+            value="ClassTemplate=True|EnumTemplate=True|InterfaceTemplate=True|StructTemplate=True" />
+        </stereotypeInstanceHasPropertyInstances>
+        <stereotypeInstanceHasPropertyInstances
+          Id="34baaf6a-1b54-4aea-a46f-1ea5920d850d">
+          <propertyInstance
+            Id="d203d152-147d-4312-9a24-b33d35a42860"
+            name="Parameters" />
+        </stereotypeInstanceHasPropertyInstances>
+      </propertyInstances>
+    </stereotypeInstance>
+  </appliedStereotypesInternal>
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="8b729dfe-76af-44b4-937f-786915610d97">
+      <profileInstance
+        Id="adf7cef1-ccf2-465d-bc68-12c1c3ad51df"
+        name="CSharpProfile" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="8c59d7d8-c2b7-4257-b5b0-5a78dabd5bbe">
+      <profileInstance
+        Id="663aa0e3-9f32-43fb-b588-cc81e0055b14"
+        name="TextTemplateBindings" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <actor
+        Id="ef294e53-9259-4b28-8418-341b7473107d"
+        name="Aluno"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="9807d557-c630-4208-a42c-b5be5a2ee74c"
+            isDerived="false"
+            sourceEndRoleName="Aluno"
+            targetEndRoleName="Inscrever em atividades"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="623703de-f03a-42b5-bdea-cf97291dff08"
+              LastKnownName="Inscrever Aluno em atividades"
+              LastKnownLocation="Documentacao.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="d0249765-01b9-48dc-9862-d1c2a807ba91"
+                  name="Aluno"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="fb541de0-8dc8-4e7e-a259-495c0296eaa1"
+                  name="Inscrever em atividades"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="d9c81258-633a-4d0f-ab49-afc2bd354051"
+            isDerived="false"
+            sourceEndRoleName="Aluno"
+            targetEndRoleName="Visualizar atividades"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="23750750-051f-41ab-a57b-7a3694f4ab9c"
+              LastKnownName="Visualizar atividades"
+              LastKnownLocation="Documentacao.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="8ee3349d-854a-4591-8849-062d71da9748"
+                  name="Aluno"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="82c08128-38f0-4262-b0e5-b9db14a3d1fe"
+                  name="Visualizar atividades"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="b1115a97-a7de-4547-9683-f109691acf66"
+            isDerived="false"
+            sourceEndRoleName="Aluno"
+            targetEndRoleName="Desistir de atividade"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="e356022d-a2a6-4b03-8dd5-8213203706c2"
+              LastKnownName="Desistir de atividade"
+              LastKnownLocation="Documentacao.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="ab07242f-4841-4d3a-ae8c-5d656ce4f414"
+                  name="Aluno"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="6e40d120-7a43-489a-8091-c9150fc18be8"
+                  name="Desistir de atividade"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="5cd41bae-1411-41c5-a9af-23c84743631d"
+        name="Professor"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="df6de49d-0fe5-4cf0-88f3-c4e5ff3be42d"
+            isDerived="false"
+            sourceEndRoleName="Professor"
+            targetEndRoleName="Registrar Atividade"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="93bdd88c-7daf-4eba-a895-41217b2227e7"
+              LastKnownName="Sugerir Atividades"
+              LastKnownLocation="Documentacao.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="40261da9-cdd9-45df-af7c-96b330722d92"
+                  name="Professor"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="5c8a6941-f5f3-4000-b433-3d62b96e05f3"
+                  name="Registrar Atividade"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <subsystem
+        Id="94af5849-0a1f-402d-820a-21a96d1d8f7a"
+        name="Sistema de Fim de Semana (SFS)"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="93bdd88c-7daf-4eba-a895-41217b2227e7"
+        name="Sugerir Atividades"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="94af5849-0a1f-402d-820a-21a96d1d8f7a"
+            LastKnownName="Sistema de Fim de Semana (SFS)"
+            LastKnownLocation="Documentacao.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="623703de-f03a-42b5-bdea-cf97291dff08"
+        name="Inscrever Aluno em atividades"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="94af5849-0a1f-402d-820a-21a96d1d8f7a"
+            LastKnownName="Sistema de Fim de Semana (SFS)"
+            LastKnownLocation="Documentacao.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="23750750-051f-41ab-a57b-7a3694f4ab9c"
+        name="Visualizar atividades"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="94af5849-0a1f-402d-820a-21a96d1d8f7a"
+            LastKnownName="Sistema de Fim de Semana (SFS)"
+            LastKnownLocation="Documentacao.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="8aea4556-609b-4492-8936-c6d348f2aea3"
+        LastKnownName="Sfs"
+        LastKnownLocation="Package_1518.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <packageMoniker
+        Id="ba38725a-fd1a-4f3c-8d09-d6de45a90e76"
+        LastKnownName="System"
+        LastKnownLocation="Package2_1518.uml" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="ef7b73cf-3ab5-4688-8cd8-705af553b5d3"
+        name="Aprovar atividade"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="94af5849-0a1f-402d-820a-21a96d1d8f7a"
+            LastKnownName="Sistema de Fim de Semana (SFS)"
+            LastKnownLocation="Documentacao.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <actor
+        Id="4150ea20-8b99-4233-ab2c-ca740219fa17"
+        name="Coordenador de Final de Semana"
+        isAbstract="false"
+        isLeaf="false">
+        <targetEnds>
+          <association
+            Id="dcba3c5f-db3d-4697-91b0-d77be0c107d4"
+            isDerived="false"
+            sourceEndRoleName="Coordenador de Final de Semana"
+            targetEndRoleName="Aprovar atividade"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="ef7b73cf-3ab5-4688-8cd8-705af553b5d3"
+              LastKnownName="Aprovar atividade"
+              LastKnownLocation="Documentacao.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="dcedb70b-95ee-4dcc-8da1-0ba4ed750c15"
+                  name="Coordenador de Final de Semana"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="fa403c1b-a06d-442f-9263-c7b5d0ae8af6"
+                  name="Aprovar atividade"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+          <association
+            Id="be3ca0a9-0898-4bd5-85e5-edd66bd60b20"
+            isDerived="false"
+            sourceEndRoleName="Coordenador de Final de Semana"
+            targetEndRoleName="Aprovar inscrição"
+            isLeaf="false"
+            isAbstract="false">
+            <useCaseMoniker
+              Id="66bf4214-803d-4f31-98b6-4cc14d010f76"
+              LastKnownName="Aprovar inscrição"
+              LastKnownLocation="Documentacao.uml" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="36ab31f6-4624-4aa9-a6f9-ab528514df53"
+                  name="Coordenador de Final de Semana"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false"
+                  isNavigableOwned="false" />
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd
+                  Id="f3b4d58b-5c9d-4471-82c8-4de680165da0"
+                  name="Aprovar inscrição"
+                  isLeaf="false"
+                  isStatic="false"
+                  isReadOnly="false"
+                  isDerived="false"
+                  isDerivedUnion="false"
+                  aggregation="None"
+                  isComposite="false" />
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+          </association>
+        </targetEnds>
+      </actor>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="e356022d-a2a6-4b03-8dd5-8213203706c2"
+        name="Desistir de atividade"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="94af5849-0a1f-402d-820a-21a96d1d8f7a"
+            LastKnownName="Sistema de Fim de Semana (SFS)"
+            LastKnownLocation="Documentacao.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="7a524948-4103-405b-8e7e-7f0c4ed30278"
+        name="Aprovar inscrição"
+        isAbstract="false"
+        isLeaf="false" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <useCase
+        Id="66bf4214-803d-4f31-98b6-4cc14d010f76"
+        name="Aprovar inscrição"
+        isAbstract="false"
+        isLeaf="false">
+        <subjects>
+          <subsystemMoniker
+            Id="94af5849-0a1f-402d-820a-21a96d1d8f7a"
+            LastKnownName="Sistema de Fim de Semana (SFS)"
+            LastKnownLocation="Documentacao.uml" />
+        </subjects>
+      </useCase>
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>

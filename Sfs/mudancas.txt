@@ -1,0 +1,18 @@
+Mudanças:
+
+	. na classe de inicialização:
+		. chamada ao método SaveChanges();
+
+	. nas visões:
+		. ajuste de layout;
+
+	. nos modelos:
+		. Atividade:
+			. definição das propriedades de data;
+		. Usuario;
+
+	. viewModels:
+		. AtividadeViewModels:
+			. IndexViewModel
+
+	. novos helpers de visão;

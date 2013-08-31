@@ -1,0 +1,25 @@
+@model Sfs.Models.Atividade
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm()) {
+    @SfsHtml.ValidationSummary(ViewData, true)
+    <fieldset>
+        <legend>Atividade</legend>
+
+        @Html.HiddenFor(model => model.Id)
+		@Html.Partial("_CreateOrEdit", Model)
+
+        <p>
+            @SfsHtml.Submit("Salvar")
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

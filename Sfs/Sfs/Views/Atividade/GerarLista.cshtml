@@ -1,0 +1,51 @@
+﻿@model Sfs.ViewModels.AtividadeViewModels.GerarListaViewModel
+
+@{
+    ViewBag.Title = "GerarLista";
+}
+<form action="~/Atividade/GerarLista" method="get">
+<fieldset>
+    <legend>
+        Adicionar Inscrições
+    </legend>
+    
+    <div class="row">
+        <div class="large-3 columns">
+        Matrícula
+        <input type="text" name="Matricula" id="Matricula" value="@Model.Matricula"/>
+        </div>
+        
+        <div class="large-3 columns">
+        Turma
+        <input type="text" name="Turma" id="Turma" value="@Model.Turma"/>
+        </div>
+        <div class="large-2 columns">
+            <br />
+            @SfsHtml.Submit("Pesquisar")
+        </div>
+        <div class="large-4 columns"></div>
+    </div>
+</fieldset>
+    <input type="hidden" name="IdAtividade" value="@Model.IdAtividade" />
+</form>
+<br />
+<form action="~/Atividade/ForcarInscricoes" method="post">
+    @{
+    var c = 0;
+    }
+@if (Model.ResultadoPessoas != null)
+{
+    foreach (var p in Model.ResultadoPessoas)
+    {
+        <input type="checkbox" name="IdSelecionados[@c]" value="@p.Id"/> @p.Nome
+        <input type="hidden" name="IdSelecionados[@c]" value="@Guid.Empty" />
+        <br />
+        c++;
+    }
+}
+    @SfsHtml.Submit("Adicionar")
+    <input type="hidden" name="IdAtividade" value="@Model.IdAtividade" />
+    <input type="hidden" name="CampoMatricula" value="@Model.Matricula" />
+    <input type="hidden" name="CampoTurma" value="@Model.Turma" />
+</form>
+@Html.Partial("_Listar", Model.Atividade)

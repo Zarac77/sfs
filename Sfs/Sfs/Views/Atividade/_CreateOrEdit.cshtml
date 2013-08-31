@@ -1,0 +1,55 @@
+@model Sfs.ViewModels.AtividadeViewModels.CreateViewModel
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Descricao)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Descricao)
+    @Html.ValidationMessageFor(model => model.Descricao)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.DataInicio)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.DataInicio)
+    @Html.ValidationMessageFor(model => model.DataInicio)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.DataFim)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.DataFim)
+    @Html.ValidationMessageFor(model => model.DataFim)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.DataLimiteInscricao)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.DataLimiteInscricao)
+    @Html.ValidationMessageFor(model => model.DataLimiteInscricao)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.DataLimiteCancelamento)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.DataLimiteCancelamento)
+    @Html.ValidationMessageFor(model => model.DataLimiteCancelamento)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.NumeroVagas)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.NumeroVagas)
+    @Html.ValidationMessageFor(model => model.NumeroVagas)
+</div>
+<div class="editor-field">
+  <!-- SfsHtml.FileInput() -->
+</div>
+

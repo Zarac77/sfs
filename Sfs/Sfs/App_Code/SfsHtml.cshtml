@@ -1,0 +1,140 @@
+﻿@using System.Web.Mvc
+
+@helper CreateActionLink(string linkText, string controllerName, object routeValues)
+{
+    var urlHelper = new UrlHelper(Context.Request.RequestContext);
+    var action = urlHelper.Action("Create", controllerName, routeValues);
+    var src = urlHelper.Content("~/Images/16x16/create.png");
+    
+    <a href="@action"><img src="@src" title="@linkText" alt="@linkText" /> @linkText</a>
+}
+
+
+
+@helper EditActionLink(string controllerName, object routeValues)
+{
+    var urlHelper = new UrlHelper(Context.Request.RequestContext);
+    var action = urlHelper.Action("Edit", controllerName, routeValues);
+    var src = urlHelper.Content("~/Images/16x16/edit.png");
+    
+    <a href="@action"><img src="@src" title="Editar" alt="Editar" /></a>
+}
+
+
+
+@helper DetailsActionLink(string controllerName, object routeValues)
+{
+    var urlHelper = new UrlHelper(Context.Request.RequestContext);
+    var action = urlHelper.Action("Details", controllerName, routeValues);
+    var src = urlHelper.Content("~/Images/16x16/details.png");
+    
+    <a href="@action"><img src="@src" title="Detalhes" alt="Detalhes" /></a>
+}
+
+
+
+@helper DeleteActionLink(string controllerName, object routeValues)
+{
+    var urlHelper = new UrlHelper(Context.Request.RequestContext);
+    var action = urlHelper.Action("Delete", controllerName, routeValues);
+    var src = urlHelper.Content("~/Images/16x16/delete.png");
+    
+    <a href="@action"><img src="@src" title="Excluir" alt="Excluir" /></a>
+}
+
+
+
+@helper IconActionLink(string linkText, string actionName, string controllerName, object routeValues, string imageName)
+{
+    var urlHelper = new UrlHelper(Context.Request.RequestContext);
+    var action = urlHelper.Action(actionName, controllerName, routeValues);
+    var src = urlHelper.Content("~/Images/16x16/" + imageName);
+    
+    <a href="@action"><img src="@src" title="@linkText" alt="@linkText" /></a>
+}
+
+@helper IconScriptLink(string linkText, string script, string imageName, object[] parameters)
+{
+    var urlHelper = new UrlHelper(Context.Request.RequestContext);
+    var src = urlHelper.Content("~/Images/16x16/" + imageName);
+    var s = String.Empty;
+    /*foreach(var parameter in parameters) {
+        if (s.Length > 0)
+        {
+            s += ",";
+        }
+        if(parameter.GetType() == typeof(string)) {
+            s += "'" + parameter + "'";
+        }
+        else {
+            s += "'" + parameter.ToString() + "'";
+        }         
+    }*/
+    //s = "'" + parameters[0].ToString() + "'";
+    s = parameters[0] != "" ? "'" + parameters[0].ToString() + "'" : "";
+    
+    <a href="#" onclick="@script (@s)"><img src="@src" title="@linkText" alt="@linkText" /></a>
+}
+
+
+
+@helper Submit(string text)
+{
+    <input type="submit" class="small button" value="@text" />
+}
+
+
+
+@helper ValidationSummary(ViewDataDictionary viewData, bool excludePropertyErrors)
+{
+    if (!viewData.ModelState.IsValid)
+    {
+        var modelStates = new List<System.Web.Mvc.ModelState>();
+    
+        for (var i = 0; i < viewData.ModelState.Keys.Count; i++)
+        {
+            var key = viewData.ModelState.Keys.ElementAt(i);
+
+            if (key == String.Empty || !excludePropertyErrors)
+            {
+                modelStates.Add(viewData.ModelState.Values.ElementAt(i));
+            }
+        }
+    
+        if (modelStates.Count > 0)
+        {
+            <table class="validation-summary">
+                <thead>
+                    <tr>
+                        <th>Problemas encontrados</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var modelState in modelStates)
+                    {
+                        foreach (var error in modelState.Errors)
+                        {
+                            <tr>
+                                <td>@error.ErrorMessage</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }    
+    }
+}
+
+
+
+@helper SmallImg(string imageName, string title)
+{
+    var urlHelper = new UrlHelper(Context.Request.RequestContext);
+    var src = urlHelper.Content("~/Images/16x16/" + imageName);
+    <img src="@src" title="@title" alt="@title" class="small-img" />
+}
+
+@helper FileInput() {
+    <input type="file" />
+}
