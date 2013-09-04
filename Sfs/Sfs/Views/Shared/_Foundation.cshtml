@@ -22,8 +22,10 @@
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
      @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/jquery.maskedinput")
     @Scripts.Render("~/bundles/foundation")
     <script type="text/javascript" src="@Url.Content("~/scripts/select2.min.js")"></script>
+    <script type="text/javascript" src="@Url.Content("~/scripts/jquery.maskedinput-1.3.1.js")"></script>
     @*Use the Scripts section to define page specific scripts*@
     @RenderSection("scripts", required: false)
 </head>
@@ -39,6 +41,7 @@
     </div>
 
     <script>
+        $("#time").mask("99:99:99");
         $(document).foundation();
         $(document).ready(function () {
             $(".date").datepicker();

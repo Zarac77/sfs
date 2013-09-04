@@ -23,6 +23,7 @@
         var turma = (i < Model.Inscricoes.Count) ? Model.Inscricoes[i].Pessoa.Turma : String.Empty;
         
     <tr>
+        @if(!Model.Aberta) { <td><input type="checkbox" /></td> }
         <td>@(i+1)</td>
         <td>@matrícula</td>
         <td>@nome</td>

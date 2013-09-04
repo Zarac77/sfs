@@ -83,7 +83,14 @@
     <input type="submit" class="small button" value="@text" />
 }
 
+@helper DateInput(string name, int width, string val) {
+    <input name="@name" class="date hasDatepicker" id="@name" type="text" data-val="true" data-val-date="The field Data de término must be a date." value="@val"/>
+}
 
+@helper TimeInput(string name, int width, string val) {
+    string w = width + "px";
+    <input type="text" id="time" name="@name" style="width:@w" class="text-box single line" value="@val"/>
+}
 
 @helper ValidationSummary(ViewDataDictionary viewData, bool excludePropertyErrors)
 {

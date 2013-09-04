@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using Sfs.Models;
 
 namespace Sfs.ViewModels.AtividadeViewModels
 {
@@ -11,41 +12,32 @@ namespace Sfs.ViewModels.AtividadeViewModels
     {
         #region Atributos e propriedades
 
-        [Key]
-        public Guid Id { get; set; }
-
-        [DisplayName("Descrição")]
-        [MaxLength(256)]
-        [Required]
-        public string Descricao { get; set; }
-
+        public Atividade Atividade { get; set; }
+        public Guid IdAtividade { get; set; }
         [DataType(DataType.Date)]
-        [DisplayName("Data de início")]
-        public DateTime? DataInicio { get; set; }
+        public DateTime DataInicio
+        {
+            get { return Atividade.DataHoraInicio; }
+            set { Atividade.DataHoraInicio = value; }
+        }
+        public string HoraInicio
+        {
+            get { return Atividade.DataHoraInicio.TimeOfDay.ToString(); }
+            set { var a = Atividade.DataHoraInicio.ToString("dd/MM/yyyy") + " " + value;
+            Atividade.DataHoraInicio = DateTime.Parse(a);
+            }
+        }
 
-        [DataType(DataType.Date)]
-        [DisplayName("Data de término")]
-        public DateTime? DataFim { get; set; }
-
-        [DataType(DataType.Time)]
-        [DisplayName("Hora de início")]
-        public DateTime HoraInicio { get; set; }
-
-        [DataType(DataType.Time)]
-        [DisplayName("Hora de término")]
-        public DateTime HoraFim { get; set; }
-
-        [DisplayName("Data e hora limites para inscrições")]
-        public DateTime DataLimiteInscricao { get; set; }
-
-        [DisplayName("Data e hora limites para cancelamento")]
-        public DateTime DataLimiteCancelamento { get; set; }
-
-        [DisplayName("Número de vagas")]
-        [Range(1, 500)]
-        [Required]
-        public int NumeroVagas { get; set; }
-
+        public DateTime DataFim
+        {
+            get { return Atividade.DataHoraFim.Date; }
+            set { Atividade.DataHoraFim = value; }
+        }
+        public string HoraFim
+        {
+            get { return Atividade.DataHoraFim.TimeOfDay.ToString(); }
+            set { Atividade.DataHoraFim = DateTime.Parse(Atividade.DataHoraFim + " " + value); }
+        }
         #endregion
     }
 }

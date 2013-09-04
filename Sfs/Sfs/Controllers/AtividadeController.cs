@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web.Mvc;
-
+using AutoMapper;
 using Sfs.Models;
 using Sfs.ViewModels.AtividadeViewModels;
 using Sfs.Services;
@@ -48,9 +48,21 @@ namespace Sfs.Controllers
         }
 
         [HttpPost]
-        public ActionResult ForcarInscricoes(ForcarInscricoesViewModel fivm)
+            public ActionResult ForcarInscricoes(ForcarInscricoesViewModel fivm)
         {
-
+            fivm.Atividade = Context.Atividades.Find(fivm.IdAtividade);
+            var novasInscricoes = fivm.IdSelecionados.Where(s => !fivm.Atividade.Inscricoes.Exists(i => i.Id == s));
+            foreach (var i in novasInscricoes)
+            {
+                var insc = new Inscricao { 
+                    Pessoa = Context.Pessoas.Find(i),
+                    Id = Guid.NewGuid(), IdPessoa = i, 
+                    IdAtividade = fivm.Atividade.Id, 
+                    Atividade = fivm.Atividade
+                };
+                Context.Atividades.Find(fivm.IdAtividade).Inscricoes.Add(insc);
+            }
+            Context.SaveChanges();
             return RedirectToAction("GerarLista", new { IdAtividade = fivm.IdAtividade, Matricula = fivm.CampoMatricula, Turma = fivm.CampoTurma});
         }
 
@@ -75,12 +87,12 @@ namespace Sfs.Controllers
                 var atividade = new Atividade()
                 {
                     Id = Guid.NewGuid(),
-                    DataHoraInicio = viewModel.DataInicio.Value,
-                    DataHoraFim = viewModel.DataFim.Value,
-                    Descricao = viewModel.Descricao,
-                    DataLimiteCancelamento = viewModel.DataLimiteCancelamento,
-                    DataLimiteInscricao = viewModel.DataLimiteInscricao,
-                    NumeroVagas = viewModel.NumeroVagas
+                    DataHoraInicio = viewModel.DataInicio,
+                    DataHoraFim = viewModel.DataFim,
+                    Descricao = viewModel.Atividade.Descricao,
+                    DataLimiteCancelamento = viewModel.Atividade.DataLimiteCancelamento,
+                    DataLimiteInscricao = viewModel.Atividade.DataLimiteInscricao,
+                    NumeroVagas = viewModel.Atividade.NumeroVagas
                 };
                 Context.Atividades.Add(atividade);
                 Context.SaveChanges();
@@ -95,12 +107,9 @@ namespace Sfs.Controllers
  
         public ActionResult Edit(System.Guid id)
         {
-            Atividade atividade = Context.Atividades.Single(x => x.Id == id);
-            CreateViewModel viewModel = new CreateViewModel
-            {
-
-            };
-            return View(atividade);
+            Atividade atividade = Context.Atividades.Find(id);
+            CreateViewModel viewModel = new CreateViewModel { Atividade = atividade, IdAtividade = atividade.Id };
+            return View(viewModel);
         }
 
         //
@@ -111,16 +120,7 @@ namespace Sfs.Controllers
         {
             if (ModelState.IsValid)
             {
-                var atividade = new Atividade()
-                {
-                    Id = Guid.NewGuid(),
-                    DataHoraInicio = viewModel.DataInicio.Value,
-                    DataHoraFim = viewModel.DataFim.Value,
-                    Descricao = viewModel.Descricao,
-                    DataLimiteCancelamento = viewModel.DataLimiteCancelamento,
-                    DataLimiteInscricao = viewModel.DataLimiteInscricao,
-                    NumeroVagas = viewModel.NumeroVagas
-                };
+                var atividade = viewModel.Atividade;
                 Context.Entry(atividade).State = EntityState.Modified;
                 Context.SaveChanges();
                 return RedirectToAction("Index");

@@ -37,8 +37,7 @@
 {
     foreach (var p in Model.ResultadoPessoas)
     {
-        <input type="checkbox" name="IdSelecionados[@c]" value="@p.Id"/> @p.Nome
-        <input type="hidden" name="IdSelecionados[@c]" value="@Guid.Empty" />
+        <input type="checkbox" name="IdSelecionados" value="@p.Id"/> @p.Nome
         <br />
         c++;
     }

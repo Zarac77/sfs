@@ -180,3 +180,6 @@ C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\obj\Debug\Sfs.c
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\obj\Debug\Sfs.dll
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\obj\Debug\Sfs.pdb
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\obj\Debug\Sfs.csprojResolveAssemblyReference.cache
+C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\AutoMapper.dll
+C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\AutoMapper.Net4.dll
+C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\AutoMapper.xml

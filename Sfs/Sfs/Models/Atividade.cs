@@ -42,6 +42,9 @@ namespace Sfs.Models
         /// </summary>
         public bool Aprovada { get; set; } //Sujeita a deprecação. Conforme conversado com a coordenadora de final de semana.
 
+
+        public bool Aberta { get; set; }
+
         public virtual List<Inscricao> Inscricoes { get; set; }
 
         #endregion
@@ -61,6 +64,7 @@ namespace Sfs.Models
         {
             Aprovada = false;
             Inscricoes = new List<Inscricao>();
+            Aberta = true;
         }
 
         #endregion

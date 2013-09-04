@@ -3,7 +3,4 @@
 @model DateTime?
 
 @{var s = Model.HasValue ? Model.Value.ToString("dd/MM/yyyy") : String.Empty;}
-
-<div style="width: 100px; display: inline-block;">
-    @Html.TextBox("", s, new { @class = "date" })
-</div>
+    @Html.TextBox("", s, new { @class = "date", @style = "width:100px;" })

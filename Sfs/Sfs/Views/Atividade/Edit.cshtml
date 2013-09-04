@@ -1,4 +1,4 @@
-@model Sfs.Models.Atividade
+@model Sfs.ViewModels.AtividadeViewModels.CreateViewModel
 
 @{
     ViewBag.Title = "Edit";
@@ -11,7 +11,7 @@
     <fieldset>
         <legend>Atividade</legend>
 
-        @Html.HiddenFor(model => model.Id)
+        <input type="hidden" name="IdAtividade" value="@Model.Atividade.Id" />
 		@Html.Partial("_CreateOrEdit", Model)
 
         <p>
