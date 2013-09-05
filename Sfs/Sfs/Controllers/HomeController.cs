@@ -28,5 +28,11 @@ namespace Sfs.Controllers
 
             return View();
         }
+
+        public ActionResult VerLista(Guid id)
+        {
+            var atividade = Context.Atividades.Find(id);
+            return View(atividade);
+        }
     }
 }

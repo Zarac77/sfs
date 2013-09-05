@@ -2,7 +2,10 @@
     ViewBag.Title = "Alimentar Banco de Dados";
 }
 
+<h3>Alimentar Banco de Dados</h3>
 <form action="~/GerenciamentoBD/AlimentarBD" method="post" enctype="multipart/form-data">
     <input type="file" name="source" id="source" />
     @SfsHtml.Submit("Enviar")
 </form>
+
+@Html.ActionLink("Dropar Banco", "DroparBanco")

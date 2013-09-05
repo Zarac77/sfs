@@ -31,10 +31,8 @@
 </head>
 <body>
     <div class="row">
-    @{  
-         Inbox inbox = ViewBag.Inbox;
-    }
-        @Html.Partial("_MenuPrincipal", inbox)
+    
+            @Html.Partial("_MenuPrincipal")
     </div>
     <div class="row">
         @RenderBody()

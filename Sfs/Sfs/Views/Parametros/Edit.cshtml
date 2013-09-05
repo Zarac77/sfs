@@ -1,0 +1,21 @@
+﻿@model Sfs.Models.ParametrosSistema
+
+@{
+    ViewBag.Title = "Customizar Parâmetros do Sistema";
+}
+
+<h2>Parâmetros do Sistema</h2>
+
+<form method="post" action="~/Parametros/Edit">
+    <div class="row">
+        <div class="large-2 columns">
+            <input type="hidden" value="@Model.Id" name="Id" />
+            @Html.DisplayNameFor(model => model.PontuacaoInicialAlunos)
+            @Html.EditorFor(model => model.PontuacaoInicialAlunos)
+        </div>
+    </div>
+    @SfsHtml.Submit("Salvar")
+</form>
+
+<br />
+@Html.ActionLink("Reiniciar pontuações manualmente", "SetPontuacaoPessoas")

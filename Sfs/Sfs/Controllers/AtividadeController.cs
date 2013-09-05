@@ -49,9 +49,9 @@ namespace Sfs.Controllers
 
         [HttpPost]
             public ActionResult ForcarInscricoes(ForcarInscricoesViewModel fivm)
-        {
+            {
             fivm.Atividade = Context.Atividades.Find(fivm.IdAtividade);
-            var novasInscricoes = fivm.IdSelecionados.Where(s => !fivm.Atividade.Inscricoes.Exists(i => i.Id == s));
+            var novasInscricoes = fivm.IdSelecionados.Where(s => !fivm.Atividade.Inscricoes.Exists(i => i.IdPessoa == s));
             foreach (var i in novasInscricoes)
             {
                 var insc = new Inscricao { 
@@ -64,6 +64,23 @@ namespace Sfs.Controllers
             }
             Context.SaveChanges();
             return RedirectToAction("GerarLista", new { IdAtividade = fivm.IdAtividade, Matricula = fivm.CampoMatricula, Turma = fivm.CampoTurma});
+        }
+
+        [HttpPost]
+        public ActionResult CancelarInscricoes(Guid[] ids, Guid idAtividade)
+        {
+            var atividade = Context.Atividades.Find(idAtividade);
+            foreach(var id in ids) {
+                var pessoa = Context.Pessoas.Single(p => p.Inscricoes.Any(i => i.Id == id));
+                var insc = Context.Inscricoes.Find(id);
+                pessoa.Inscricoes.Remove(insc);
+                atividade.Inscricoes.Remove(insc);
+                Context.Entry(pessoa).State = EntityState.Modified;
+                Context.Entry(insc).State = EntityState.Modified;
+                Context.Inscricoes.Remove(insc);
+            }
+            Context.SaveChanges();
+            return RedirectToAction("GerarLista", new { IdAtividade = idAtividade });
         }
 
 
@@ -120,6 +137,7 @@ namespace Sfs.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 var atividade = viewModel.Atividade;
                 Context.Entry(atividade).State = EntityState.Modified;
                 Context.SaveChanges();

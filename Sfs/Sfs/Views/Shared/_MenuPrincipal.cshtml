@@ -1,12 +1,11 @@
 ﻿@using Sfs.Models
 
-@model Inbox
-
 @{
     Pessoa pessoaLogada = ViewBag.PessoaLogada;
     int numMsgs = 0;
     if(pessoaLogada != null) {
-        numMsgs = Model.Mensagens.Where(m => !m.Lida).Count();
+        Inbox inbox = ViewBag.Inbox;
+        numMsgs = inbox.Mensagens.Where(m => !m.Lida).Count();
     }
     string numMsgsStr = "Inbox " + ((numMsgs == 0) ? String.Empty : "(" + numMsgs.ToString() + ")");
 }
@@ -45,6 +44,8 @@
                     </ul>
                 </li>
                 <li class="divider"></li>
+                <li><a href="#">@pessoaLogada.Pontuacao Pontos</a></li>
+                <li class="divider"></li>
                 if (pessoaLogada.IsAdministrador)
                 {
                     <li class="has-dropdown">
@@ -53,8 +54,12 @@
                             <li>@Html.ActionLink("Pessoas", "Index", "Pessoa")</li>
                             <li>@Html.ActionLink("Perfis de acesso", "Index", "Perfil")</li>
                             <li>@Html.ActionLink("Atividades", "Index", "Atividade")</li>
+                            <li>@Html.ActionLink("Parâmetros do Sistema", "Edit", "Parametros")</li>
+                            
                         </ul>
+
                     </li>
+
                 }
             }
             

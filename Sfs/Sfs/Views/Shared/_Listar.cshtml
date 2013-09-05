@@ -1,0 +1,49 @@
+﻿@model Sfs.Models.Atividade
+
+@{
+    ViewBag.Title = "Lista para " + Model.Descricao;
+}
+
+<h4 style="text-align:center">@Model.Descricao</h4>
+<hr />
+<br />
+<form id="lista atividade" action="~/Atividade/CancelarInscricoes" method="post">
+    <table>
+        <thead>
+        <tr>
+            @{var w = ViewBag.PessoaLogada.IsAdministrador ? "65px" : "30px";}
+            <td style="width:@w;">@if (ViewBag.PessoaLogada.IsAdministrador) { <br />@SfsHtml.SelecionarTodosTrigger("listaAtividade") }</td>
+            <td style="width:70px;"><b>Matrícula</b></td>
+            <td><b>Nome</b></td>
+            <td style="width:140px;"><b>Turma</b></td>
+        </tr>
+            </thead>
+        @for (int i = 0; i < Model.NumeroVagas; i++)
+        {
+            var matrícula = (i < Model.Inscricoes.Count) ? Model.Inscricoes[i].Pessoa.Matricula : String.Empty;
+            var nome = (i < Model.Inscricoes.Count) ? Model.Inscricoes[i].Pessoa.Nome : String.Empty;
+            var turma = (i < Model.Inscricoes.Count) ? Model.Inscricoes[i].Pessoa.Turma : String.Empty;        
+        <tr>
+        
+            <td>@if (ViewBag.PessoaLogada.IsAdministrador && i < Model.Inscricoes.Count)
+                { <input type="checkbox" class="listaAtividade" name="ids" value="@Model.Inscricoes[i].Id"/> } 
+                else { <input type="checkbox" /> } 
+                @(i+1)</td>
+            <td>@matrícula</td>
+            <td>@nome</td>
+            <td>@turma</td>
+        </tr>
+        }
+
+    </table>
+    <input type="hidden" name="idAtividade" value="@Model.Id" />
+    @SfsHtml.Submit("Cancelar inscrições selecionadas", "small alert button")
+</form>
+
+<script>
+    function cancelarInscricao(idAtividade, nomeAluno) {
+        if (confirm("Confirma a o cancelamento da inscrição do(a) aluno(a) " + nomeAluno + "?"))
+            location.href = "Atividade/Desistir?Id=" + idAtividade;
+    }
+</script>
+@SfsHtml.SelecionarTodosScript()

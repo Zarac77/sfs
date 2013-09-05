@@ -83,6 +83,11 @@
     <input type="submit" class="small button" value="@text" />
 }
 
+@helper Submit(string text, string classInput)
+{
+    <input type="submit" class="@classInput" value="@text" />
+}
+
 @helper DateInput(string name, int width, string val) {
     <input name="@name" class="date hasDatepicker" id="@name" type="text" data-val="true" data-val-date="The field Data de término must be a date." value="@val"/>
 }
@@ -144,4 +149,24 @@
 
 @helper FileInput() {
     <input type="file" />
+}
+
+@helper SelecionarTodosScript() {
+    <script>
+        function selecionarTodas(classInput) {
+            var inputs = $("." + classInput);
+            for (var i = 0; i < inputs.length; i++) {
+                var inp = inputs[i];
+                if (inp.type == 'checkbox' && inp.id != 'control') {
+
+                    inputs[i].checked = $('#control').prop("checked");
+                }
+            }
+        }
+    </script>
+}
+
+@helper SelecionarTodosTrigger(string classInput) {
+    <br />
+    <input type="checkbox" onclick="selecionarTodas('@classInput');" title="Inverter Seleção" id="control" />
 }

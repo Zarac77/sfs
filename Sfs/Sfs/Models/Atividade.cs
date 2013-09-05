@@ -57,7 +57,7 @@ namespace Sfs.Models
 
         #region Métodos públicos
         #endregion
-
+        
         #region Construtores
 
         public Atividade()

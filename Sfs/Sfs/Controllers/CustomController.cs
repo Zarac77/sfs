@@ -39,7 +39,10 @@ namespace Sfs.Controllers
                 if (principal == null)
                     return null;
                 else
-                    return Context.Pessoas.AsNoTracking().SingleOrDefault(u => u.Email == principal.Identity.Name);
+                {
+                    var a = Context.Pessoas.AsNoTracking().SingleOrDefault(u => u.Email == principal.Identity.Name);
+                    return a;
+                }
             }
         }
 
@@ -51,6 +54,7 @@ namespace Sfs.Controllers
                 var inbox = Context.Inboxes.Single(i => i.IdPessoa == PessoaLogada.Id);
                 ViewBag.Inbox = inbox;
             }
+            else { ViewBag.Inbox = null; }
             
             base.OnActionExecuting(filterContext);
         }

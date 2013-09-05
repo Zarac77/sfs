@@ -20,6 +20,8 @@
                 Vagas: @atividade.NumeroVagas
                 <br />
                 Inscrições: @atividade.Inscricoes.Count() @GerarLinkInscricao(atividade)
+                <br />
+                @Html.ActionLink("Ver Lista", "VerLista", "Home", new { id = atividade.Id }, null)
             </div>
         </div>
     </div>

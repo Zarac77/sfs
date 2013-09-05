@@ -32,5 +32,7 @@ namespace Sfs.Models
         public DbSet<Inbox> Inboxes { get; set; }
 
         public DbSet<Mensagem> Mensagens { get; set; }
+
+        public DbSet<ParametrosSistema> ParametrosSistema { get; set; }
     }
 }

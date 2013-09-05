@@ -15,7 +15,7 @@ namespace Sfs
     {
         protected void Application_Start()
         {
-            Database.SetInitializer(new DadosExemplo());
+            Database.SetInitializer(new DataInitializer());
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);

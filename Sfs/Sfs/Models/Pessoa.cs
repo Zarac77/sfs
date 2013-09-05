@@ -42,6 +42,11 @@ namespace Sfs.Models
 
         [NotMapped]
         public bool IsAdministrador { get { return Perfis.Where(p => p.Id == Perfil.GUID_PERFIL_ADMINISTRADOR).Any(); } }
+
+        [Range(1, Double.MaxValue)]
+        [Required]
+        public int Pontuacao { get; set; }
+
         #endregion
 
         #region Métodos privados
@@ -60,6 +65,7 @@ namespace Sfs.Models
             Inscricoes = new List<Inscricao>();
             Perfis = new List<Perfil>();
             Ativo = true;
+            Pontuacao = 1;
         }
 
         #endregion

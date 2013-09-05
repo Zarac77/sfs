@@ -201,6 +201,7 @@
     <Compile Include="Controllers\GerenciamentoBDController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
+    <Compile Include="Controllers\ParametrosController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
@@ -211,10 +212,11 @@
     <Compile Include="Models\AccountModels.cs" />
     <Compile Include="Models\Aluno.cs" />
     <Compile Include="Models\Atividade.cs" />
-    <Compile Include="Models\DadosExemplo.cs" />
+    <Compile Include="Models\DataInitializer.cs" />
     <Compile Include="Models\Inbox.cs" />
     <Compile Include="Models\Inscricao.cs" />
     <Compile Include="Models\Mensagem.cs" />
+    <Compile Include="Models\ParametrosSistema.cs" />
     <Compile Include="Models\Perfil.cs" />
     <Compile Include="Models\Pessoa.cs" />
     <Compile Include="Models\Professor.cs" />
@@ -430,7 +432,7 @@
     <Content Include="Views\Pessoa\AssociarPerfis.cshtml" />
     <Content Include="Views\Atividade\_ProximasAtividades.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Date.cshtml" />
-    <Content Include="Views\Atividade\_Listar.cshtml" />
+    <Content Include="Views\Shared\_Listar.cshtml" />
     <Content Include="Views\Inbox\Index.cshtml" />
     <Content Include="Views\Inbox\Ler.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -438,6 +440,8 @@
     <Content Include="Views\Atividade\GerarLista.cshtml" />
     <Content Include="Views\GerenciamentoBD\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TimeSpan.cshtml" />
+    <Content Include="Views\Parametros\Edit.cshtml" />
+    <Content Include="Views\Home\VerLista.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

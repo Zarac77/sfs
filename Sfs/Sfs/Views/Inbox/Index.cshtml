@@ -13,6 +13,9 @@
 <table>
     <thead>
     <tr>
+        <th style="width:45px;text-align:center">
+            @SfsHtml.SelecionarTodosTrigger("msgCheckbox")
+        </th>
         <th>
             <b>De</b>
         </th>
@@ -22,9 +25,7 @@
         <th style="width:165px;">
             <b>Data</b>
         </th>
-        <th style="width:45px;text-align:center">
-            <input type="checkbox" onclick="selecionarTodas();" title="Inverter Seleção" />
-        </th>
+        
     </tr>
 </thead>
  @{
@@ -32,6 +33,12 @@
  }
  @foreach (var item in Model.Mensagens) {
      <tr>
+         <td style="text-align:center">
+            <input type="checkbox" name="guid" value="@item.Id" class="msgCheckbox" />
+            @{
+     c++;
+            }
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.Remetente)
         </td>
@@ -48,12 +55,7 @@
         <td>
             @Html.DisplayFor(modelItem => item.DataEnvio)
         </td>
-        <td style="text-align:center">
-            <input type="checkbox" name="guid" value="@item.Id" />
-            @{
-     c++;
-            }
-        </td>
+        
     </tr>
 }
 </table>
@@ -65,16 +67,9 @@
             document.forms[0].submit();
         }
     }
-
-    function selecionarTodas() {
-        var inputs = document.forms[0].getElementsByTagName("input");
-        for (var i = 1; i < inputs.length; i++) {
-            if (inputs[i].type == 'checkbox') {
-                inputs[i].checked = !inputs[i].checked;
-            }
-        }
-    }
 </script>
+
+@SfsHtml.SelecionarTodosScript()
 <p style="text-align:center">
     @if (Model.PaginaAtual > 0)
     {
