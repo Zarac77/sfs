@@ -44,10 +44,11 @@
                     </ul>
                 </li>
                 <li class="divider"></li>
-                <li><a href="#">@pessoaLogada.Pontuacao Pontos</a></li>
+                if(!pessoaLogada.IsAdministrador) {
+                    <li><a href="#">@pessoaLogada.Pontuacao Pontos</a></li>
                 <li class="divider"></li>
-                if (pessoaLogada.IsAdministrador)
-                {
+                }                
+                else {
                     <li class="has-dropdown">
                         <a href="#">Administração</a>
                         <ul class="dropdown">
@@ -59,8 +60,9 @@
                         </ul>
 
                     </li>
-
+                    <li class="divider"></li>
                 }
+                <li>@Html.ActionLink("Sair", "LogOut", "ControleAcesso")</li>
             }
             
         </ul>

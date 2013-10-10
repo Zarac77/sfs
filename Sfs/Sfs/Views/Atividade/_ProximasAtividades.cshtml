@@ -21,6 +21,8 @@
                 <br />
                 Inscrições: @atividade.Inscricoes.Count() @GerarLinkInscricao(atividade)
                 <br />
+                Custo: @atividade.Custo
+                <br />
                 @Html.ActionLink("Ver Lista", "VerLista", "Home", new { id = atividade.Id }, null)
             </div>
         </div>

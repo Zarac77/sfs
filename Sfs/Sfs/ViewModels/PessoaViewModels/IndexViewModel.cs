@@ -4,7 +4,7 @@ using Sfs.Models;
 
 namespace Sfs.ViewModels.PessoaViewModels
 {
-    public class IndexViewModel
+    public class IndexViewModel : ListaPaginada
     {
         public string Nome { get; set; }
         public bool IgnorarInativos { get; set; }

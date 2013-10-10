@@ -7,6 +7,7 @@ using AutoMapper;
 using Sfs.Models;
 using Sfs.ViewModels.AtividadeViewModels;
 using Sfs.Services;
+using System.Collections.Generic;
 
 namespace Sfs.Controllers
 {   
@@ -21,8 +22,9 @@ namespace Sfs.Controllers
                 return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
             var atividades = Context.Atividades.Include(atividade => atividade.Inscricoes);
 
+            //Sem sentido após a mudança Aprovada -> Validada. Favor rever.
             if (!viewModel.ExibirNaoAprovadas)
-                atividades = atividades.Where(a => a.Aprovada);
+                atividades = atividades.Where(a => !a.Validada);
 
             viewModel.Atividades = atividades.ToList();
             return View(viewModel);
@@ -50,36 +52,23 @@ namespace Sfs.Controllers
         [HttpPost]
             public ActionResult ForcarInscricoes(ForcarInscricoesViewModel fivm)
             {
-            fivm.Atividade = Context.Atividades.Find(fivm.IdAtividade);
-            var novasInscricoes = fivm.IdSelecionados.Where(s => !fivm.Atividade.Inscricoes.Exists(i => i.IdPessoa == s));
-            foreach (var i in novasInscricoes)
-            {
-                var insc = new Inscricao { 
-                    Pessoa = Context.Pessoas.Find(i),
-                    Id = Guid.NewGuid(), IdPessoa = i, 
-                    IdAtividade = fivm.Atividade.Id, 
-                    Atividade = fivm.Atividade
-                };
-                Context.Atividades.Find(fivm.IdAtividade).Inscricoes.Add(insc);
-            }
-            Context.SaveChanges();
-            return RedirectToAction("GerarLista", new { IdAtividade = fivm.IdAtividade, Matricula = fivm.CampoMatricula, Turma = fivm.CampoTurma});
+                
+                fivm.Atividade = Context.Atividades.Find(fivm.IdAtividade);
+                var novasInscricoes = fivm.IdSelecionados.Where(s => !fivm.Atividade.Inscricoes.Exists(i => i.IdPessoa == s));
+                foreach (var i in novasInscricoes)
+                {
+                    ServicoAtividade.Inscrever(Context, fivm.Atividade, i);
+                }
+                Context.SaveChanges();
+                return RedirectToAction("GerarLista", new { IdAtividade = fivm.IdAtividade, Matricula = fivm.CampoMatricula, Turma = fivm.CampoTurma});
         }
 
         [HttpPost]
         public ActionResult CancelarInscricoes(Guid[] ids, Guid idAtividade)
         {
-            var atividade = Context.Atividades.Find(idAtividade);
             foreach(var id in ids) {
-                var pessoa = Context.Pessoas.Single(p => p.Inscricoes.Any(i => i.Id == id));
-                var insc = Context.Inscricoes.Find(id);
-                pessoa.Inscricoes.Remove(insc);
-                atividade.Inscricoes.Remove(insc);
-                Context.Entry(pessoa).State = EntityState.Modified;
-                Context.Entry(insc).State = EntityState.Modified;
-                Context.Inscricoes.Remove(insc);
+                ServicoAtividade.CancelarInscricao(Context, idAtividade, id);
             }
-            Context.SaveChanges();
             return RedirectToAction("GerarLista", new { IdAtividade = idAtividade });
         }
 
@@ -169,21 +158,18 @@ namespace Sfs.Controllers
 
         public ActionResult Inscrever(Atividade atividade)
         {
-            atividade = Context.Atividades.Single(a => a.Id == atividade.Id);
-            Context.Inscricoes.Add(new Inscricao() { IdAtividade = atividade.Id, Id = Guid.NewGuid(), IdPessoa = PessoaLogada.Id});
-            
-            Context.SaveChanges();
+            ServicoAtividade.Inscrever(Context, atividade, PessoaLogada.Id);
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Desistir(Atividade atividade)
         {
-            ServicoAtividade.CancelarInscricao(Context, atividade, PessoaLogada);
+            ServicoAtividade.CancelarInscricao(Context, atividade.Id, PessoaLogada.Id);
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult CancelarInscricao(Atividade atividade, Pessoa pessoa) {
-            ServicoAtividade.CancelarInscricao(Context, atividade, pessoa);
+            ServicoAtividade.CancelarInscricao(Context, atividade.Id, pessoa.Id);
             return RedirectToAction("Listar", new { atividade.Id });
         }
 

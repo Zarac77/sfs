@@ -6,7 +6,7 @@ using Sfs.Models;
 
 namespace Sfs.Services
 {
-    public class ServicoInbox
+    public class ServicoInbox : Servico
     {
         
     }

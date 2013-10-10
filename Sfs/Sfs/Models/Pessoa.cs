@@ -47,6 +47,12 @@ namespace Sfs.Models
         [Required]
         public int Pontuacao { get; set; }
 
+        [Range(1, 20)]
+        public string Telefone { get; set; }
+
+        [Required]
+        public double CoeficienteSorte { get; set; }
+
         #endregion
 
         #region Métodos privados
@@ -66,6 +72,7 @@ namespace Sfs.Models
             Perfis = new List<Perfil>();
             Ativo = true;
             Pontuacao = 1;
+            Telefone = "";
         }
 
         #endregion

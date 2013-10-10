@@ -6,8 +6,8 @@ using System.Linq;
 namespace Sfs.Models
 {
     // public class DataInitializer : CreateDatabaseIfNotExists<SfsContext>
-    public class DataInitializer : DropCreateDatabaseAlways<SfsContext>
-    //public class DataInitializer : DropCreateDatabaseIfModelChanges<SfsContext>
+    //public class DataInitializer : DropCreateDatabaseAlways<SfsContext>
+    public class DataInitializer : DropCreateDatabaseIfModelChanges<SfsContext>
     {
         private List<Perfil> perfis = new List<Perfil>
         {
@@ -24,7 +24,7 @@ namespace Sfs.Models
         private void SeedPessoas(SfsContext context)
         {
             new List<Pessoa> {
-                new Pessoa { Id = Guid.Parse("04725000-12AD-4C23-9D3F-64ECE28E6760"), Matricula = "2011.0004", Nome = "Westerbly Snaydley", Email = @"westerbly@gmail.com", Turma = "3C" },
+                //new Pessoa { Id = Guid.Parse("04725000-12AD-4C23-9D3F-64ECE28E6760"), Matricula = "2011.0004", Nome = "Westerbly Snaydley", Email = @"westerbly@gmail.com", Turma = "3C" },
                 new Pessoa { Id = Guid.Parse("DC8F560F-1BA7-4C3D-878B-02C97E388E09"), Matricula = "1255", Nome = "Italo Gomes", Email = @"igomes@sesc.com.br", Turma = "4U" },
                 new Pessoa { Id = Guid.Parse("0E79C10F-B329-4BFE-BE32-E2FE6EFFC618"), Matricula = "0001", Nome = "Administrador", Email = @"admin@whatever.com.br", Senha = "adminesem", Perfis = new List<Perfil> { perfis.Single(p => p.Id == Perfil.GUID_PERFIL_ADMINISTRADOR ) }}
             }.ForEach(a => context.Pessoas.Add(a));
@@ -33,19 +33,19 @@ namespace Sfs.Models
         private void SeedAtividades(SfsContext context)
         {
             new List<Atividade> {
-                new Atividade { Id = Guid.NewGuid(), Aprovada = true, Descricao = "Uma saída bem feliz.", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3), DataLimiteInscricao = new DateTime(2013, 6, 28, 21, 2, 3), DataLimiteCancelamento = new DateTime(2013, 6, 28, 21, 2, 3) },
-                new Atividade { Id = Guid.NewGuid(), Aprovada = true, Descricao = "Uma saída bem triste.", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3), DataLimiteInscricao = new DateTime(2013, 6, 28, 21, 2, 3), DataLimiteCancelamento = new DateTime(2013, 6, 28, 21, 2, 3) },
-                new Atividade { Id = Guid.NewGuid(), Aprovada = true, Descricao = "Do you even want to go out?", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3), DataLimiteInscricao = new DateTime(2013, 6, 28, 21, 2, 3), DataLimiteCancelamento = new DateTime(2013, 6, 28, 21, 2, 3) },
-                new Atividade { Id = Guid.NewGuid(), Aprovada = true, Descricao = "Shopping :D", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3), DataLimiteInscricao = new DateTime(2013, 6, 28, 21, 2, 3), DataLimiteCancelamento = new DateTime(2013, 6, 28, 21, 2, 3) }
-                //new Atividade { Id = new Guid(), Aprovada = true, Descricao = "Uma saída bem feliz.", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3) },
-                //new Atividade { Id = new Guid(), Aprovada = true, Descricao = "Uma saída bem feliz.", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3) }
+                new Atividade { Id = Guid.NewGuid(), Validada = false, Descricao = "Uma saída bem feliz.", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3), DataLimiteInscricao = new DateTime(2013, 6, 28, 21, 2, 3), DataLimiteCancelamento = new DateTime(2013, 6, 28, 21, 2, 3) },
+                new Atividade { Id = Guid.NewGuid(), Validada = false, Descricao = "Uma saída bem triste.", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3), DataLimiteInscricao = new DateTime(2013, 6, 28, 21, 2, 3), DataLimiteCancelamento = new DateTime(2013, 6, 28, 21, 2, 3) },
+                new Atividade { Id = Guid.NewGuid(), Validada = false, Descricao = "Do you even want to go out?", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3), DataLimiteInscricao = new DateTime(2013, 6, 28, 21, 2, 3), DataLimiteCancelamento = new DateTime(2013, 6, 28, 21, 2, 3) },
+                new Atividade { Id = Guid.NewGuid(), Validada = false, Descricao = "Shopping :D", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3), DataLimiteInscricao = new DateTime(2013, 6, 28, 21, 2, 3), DataLimiteCancelamento = new DateTime(2013, 6, 28, 21, 2, 3) }
+                //new Atividade { Id = new Guid(), Validada = true, Descricao = "Uma saída bem feliz.", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3) },
+                //new Atividade { Id = new Guid(), Validada = true, Descricao = "Uma saída bem feliz.", NumeroVagas = 15, DataHoraInicio = new DateTime(2013, 6, 28, 21, 2, 3), DataHoraFim = new DateTime(2013, 6, 29, 21, 2, 3) }
             }.ForEach(a => context.Atividades.Add(a));
         }
 
         private void SeedInboxes(SfsContext context)
         {
             new List<Inbox> {
-                new Inbox { Id = Guid.NewGuid(), IdPessoa = Guid.Parse("04725000-12AD-4C23-9D3F-64ECE28E6760")},
+                //new Inbox { Id = Guid.NewGuid(), IdPessoa = Guid.Parse("04725000-12AD-4C23-9D3F-64ECE28E6760")},
                 new Inbox { Id = Guid.NewGuid(), IdPessoa = Guid.Parse("DC8F560F-1BA7-4C3D-878B-02C97E388E09")},
                 new Inbox { Id = Guid.NewGuid(), IdPessoa = Guid.Parse("0E79C10F-B329-4BFE-BE32-E2FE6EFFC618")}
             }.ForEach(a => context.Inboxes.Add(a));

@@ -70,26 +70,4 @@
 </script>
 
 @SfsHtml.SelecionarTodosScript()
-<p style="text-align:center">
-    @if (Model.PaginaAtual > 0)
-    {
-        @Html.ActionLink("< ", "Index", new {PaginaAtual = Model.PaginaAtual - 1})
-    }
-    
-    @for (int i = 0; i < Model.TotalPaginas; i++)
-    {
-        string iAlterado = (i + 1).ToString() + " ";
-        if (i != Model.PaginaAtual)
-        {
-            @Html.ActionLink(iAlterado, "Index", new {PaginaAtual = i})
-        }
-        else {
-            @iAlterado
-        }
-    }
-    @if (Model.PaginaAtual < Model.TotalPaginas - 1)
-    {
-        @Html.ActionLink(">", "Index", new { PaginaAtual = Model.PaginaAtual + 1 })
-    }
-</p>
-
+@SfsHtml.PaginacaoLista("Inbox", "Index", Model)

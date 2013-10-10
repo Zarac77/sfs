@@ -5,7 +5,7 @@ using Sfs.Models;
 
 namespace Sfs.Services
 {
-    public class ServicoControleAcesso
+    public class ServicoControleAcesso : Servico
     {
         public static bool AlterarSenha(SfsContext context, Guid id, string senhaAtual, 
             string novaSenha, string confirmacaoNovaSenha)

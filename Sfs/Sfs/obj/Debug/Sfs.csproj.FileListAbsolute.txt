@@ -93,6 +93,8 @@ C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\Sfs.dll.con
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\Sfs.dll
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\Sfs.pdb
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\Antlr3.Runtime.dll
+C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\AutoMapper.dll
+C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\AutoMapper.Net4.dll
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\DotNetOpenAuth.AspNet.dll
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\DotNetOpenAuth.Core.dll
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\DotNetOpenAuth.OAuth.Consumer.dll
@@ -123,6 +125,7 @@ C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\System.Web.
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\WebGrease.dll
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\WebMatrix.Data.dll
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\WebMatrix.WebData.dll
+C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\AutoMapper.xml
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\Newtonsoft.Json.xml
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\System.Net.Http.Extensions.xml
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\System.Net.Http.Formatting.xml
@@ -177,9 +180,6 @@ C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\ru\System.S
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\zh-Hans\System.Spatial.resources.dll
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\zh-Hant\System.Spatial.resources.dll
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\obj\Debug\Sfs.csproj.App.config
+C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\obj\Debug\Sfs.csprojResolveAssemblyReference.cache
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\obj\Debug\Sfs.dll
 C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\obj\Debug\Sfs.pdb
-C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\obj\Debug\Sfs.csprojResolveAssemblyReference.cache
-C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\AutoMapper.dll
-C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\AutoMapper.Net4.dll
-C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\Sfs\bin\AutoMapper.xml

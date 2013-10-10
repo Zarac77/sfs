@@ -27,7 +27,6 @@ namespace Sfs.Controllers
                 .Single(i => i.IdPessoa == PessoaLogada.Id)
                 .Mensagens
                 .Count();
-            ivm.Delete = new bool[ivm.Mensagens.Count()];
             double totalPaginas = (double)totalMensagens / MENSAGENS_POR_PAGINA;
             ivm.TotalPaginas = (int)Math.Ceiling(totalPaginas);            
             return View(ivm);

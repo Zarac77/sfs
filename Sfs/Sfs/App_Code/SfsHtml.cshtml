@@ -88,11 +88,13 @@
     <input type="submit" class="@classInput" value="@text" />
 }
 
-@helper DateInput(string name, int width, string val) {
+@helper DateInput(string name, int width, string val)
+{
     <input name="@name" class="date hasDatepicker" id="@name" type="text" data-val="true" data-val-date="The field Data de término must be a date." value="@val"/>
 }
 
-@helper TimeInput(string name, int width, string val) {
+@helper TimeInput(string name, int width, string val)
+{
     string w = width + "px";
     <input type="text" id="time" name="@name" style="width:@w" class="text-box single line" value="@val"/>
 }
@@ -102,7 +104,7 @@
     if (!viewData.ModelState.IsValid)
     {
         var modelStates = new List<System.Web.Mvc.ModelState>();
-    
+
         for (var i = 0; i < viewData.ModelState.Keys.Count; i++)
         {
             var key = viewData.ModelState.Keys.ElementAt(i);
@@ -112,7 +114,7 @@
                 modelStates.Add(viewData.ModelState.Values.ElementAt(i));
             }
         }
-    
+
         if (modelStates.Count > 0)
         {
             <table class="validation-summary">
@@ -134,7 +136,7 @@
                     }
                 </tbody>
             </table>
-        }    
+        }
     }
 }
 
@@ -147,11 +149,13 @@
     <img src="@src" title="@title" alt="@title" class="small-img" />
 }
 
-@helper FileInput() {
+@helper FileInput()
+{
     <input type="file" />
 }
 
-@helper SelecionarTodosScript() {
+@helper SelecionarTodosScript()
+{
     <script>
         function selecionarTodas(classInput) {
             var inputs = $("." + classInput);
@@ -166,7 +170,37 @@
     </script>
 }
 
-@helper SelecionarTodosTrigger(string classInput) {
+@helper PaginacaoLista(string controllerName, string actionName, Sfs.ViewModels.ListaPaginada model)
+{
+    //Só funciona para ViewModels com inheritance de "Sfs.ViewModels.ListaPaginada".
+    var urlHelper = new UrlHelper(Context.Request.RequestContext);
+    <p style="text-align:center">
+    @if (model.PaginaAtual > 0)
+    {
+        <a href="@urlHelper.Action(actionName, new { PaginaAtual = model.PaginaAtual - 1 })"><</a>
+    }
+    
+    @for (int i = 0; i < model.TotalPaginas; i++)
+    {
+        string iAlterado = (i + 1).ToString() + " ";
+        if (i != model.PaginaAtual)
+        {
+            <a href="@urlHelper.Action(actionName, new { PaginaAtual = i })">@iAlterado</a>
+        }
+        else
+        {
+            @iAlterado
+        }
+    }
+    @if (model.PaginaAtual < model.TotalPaginas - 1)
+    {
+        <a href="@urlHelper.Action(actionName, new { PaginaAtual = model.PaginaAtual + 1 })">></a>
+    }
+</p>
+}
+
+@helper SelecionarTodosTrigger(string classInput)
+{
     <br />
     <input type="checkbox" onclick="selecionarTodas('@classInput');" title="Inverter Seleção" id="control" />
 }

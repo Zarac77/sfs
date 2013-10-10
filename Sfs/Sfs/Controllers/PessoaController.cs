@@ -15,12 +15,15 @@ namespace Sfs.Controllers
         //
         // GET: /Pessoa/
 
+        private const int PESSOAS_POR_PAGINA = 30;
+
         public ActionResult Index(IndexViewModel viewModel)
         {
             if (!PessoaLogada.IsAdministrador)
                 return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
 
             var pessoas = Context.Pessoas.OrderBy(p => p.Nome).AsQueryable();
+            var indiceInicial = (viewModel.PaginaAtual) * PESSOAS_POR_PAGINA;
 
             if (!String.IsNullOrEmpty(viewModel.Nome))
                 pessoas = pessoas.Where(p => p.Nome.Contains(viewModel.Nome));
@@ -28,7 +31,13 @@ namespace Sfs.Controllers
             if (viewModel.IgnorarInativos)
                 pessoas = pessoas.Where(p => p.Ativo);
 
-            viewModel.Pessoas = pessoas.ToList();
+            viewModel.Pessoas = pessoas
+                .OrderBy(p => p.Nome)
+                .Skip(indiceInicial)
+                .Take(PESSOAS_POR_PAGINA).ToList();
+            int totalPessoas = pessoas.Count();
+            double totalPaginas = (double)totalPessoas / PESSOAS_POR_PAGINA;
+            viewModel.TotalPaginas = (int)Math.Ceiling(totalPaginas);
             return View(viewModel);
         }
 

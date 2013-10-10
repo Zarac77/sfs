@@ -6,7 +6,7 @@ using Sfs.Models;
 
 namespace Sfs.Services
 {
-    public class ServicoMensageiro
+    public class ServicoMensageiro : Servico
     {
         public static bool EnviarMensagem(SfsContext context, Pessoa pessoa, string assunto, string remetente, string texto)
         {

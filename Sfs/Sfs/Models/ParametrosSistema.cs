@@ -16,5 +16,11 @@ namespace Sfs.Models
         [DisplayName("Pontos Iniciais")]
         [Range(1, Double.MaxValue)]
         public int PontuacaoInicialAlunos { get; set; }
+
+        public DateTime ViradaSemestre { get; set; }
+
+        public ParametrosSistema() {
+            ViradaSemestre = new DateTime(2013, 7, 1);
+        }
     }
 }

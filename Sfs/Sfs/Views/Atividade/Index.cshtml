@@ -51,11 +51,11 @@
 
 @foreach (var item in Model.Atividades) 
 {
-    var css = item.Aprovada ? "aprovada" : "nao-aprovada";
+    var css = item.Validada ? "aprovada" : "nao-aprovada";
     
     <tr class="linha">
         <td class="@css">
-            @Html.DisplayFor(modelItem => item.Aprovada, new { title = "Aprovada" })
+            @Html.DisplayFor(modelItem => item.Validada, new { title = "Aprovada" })
             @SfsHtml.SmallImg("atividade.png", String.Empty)
             @Html.DisplayFor(modelItem => item.Descricao)
         </td>

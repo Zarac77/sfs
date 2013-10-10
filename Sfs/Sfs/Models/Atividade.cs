@@ -38,14 +38,19 @@ namespace Sfs.Models
         public int NumeroVagas { get; set; }
 
         /// <summary>
-        /// Indica se a atividade está aprovada para inscrições.
+        /// Indica se a atividade já está finalizada e pronta para controle.
         /// </summary>
-        public bool Aprovada { get; set; } //Sujeita a deprecação. Conforme conversado com a coordenadora de final de semana.
+        public bool Validada { get; set; }
 
 
         public bool Aberta { get; set; }
 
         public virtual List<Inscricao> Inscricoes { get; set; }
+
+        [Required]
+        public int Custo { get; set; }
+
+        public bool Cancelada { get; set; }
 
         #endregion
 
@@ -62,9 +67,11 @@ namespace Sfs.Models
 
         public Atividade()
         {
-            Aprovada = false;
+            Validada = false;
             Inscricoes = new List<Inscricao>();
             Aberta = true;
+            Custo = 10;
+            Cancelada = false;
         }
 
         #endregion

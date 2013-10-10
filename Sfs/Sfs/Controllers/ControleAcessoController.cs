@@ -16,7 +16,8 @@ namespace Sfs.Controllers
 
         public ActionResult Login()
         {
-            return View();
+
+            return View(new LoginViewModel { Email = "wcardoso2011@escolasesc.g12.br" });
         }
 
         public ActionResult AcessoNaoAutorizado()
@@ -60,6 +61,11 @@ namespace Sfs.Controllers
 
             ModelState.AddModelError("", "Não foi possível alterar a senha. Verifique a senha atual e a nova senha.");
             return View(viewModel);
+        }
+
+        public ActionResult LogOut() {
+            FormsAuthentication.SignOut();
+            return RedirectToAction("Login");
         }
     }
 }
