@@ -8,7 +8,12 @@ namespace Sfs.ViewModels.InboxViewModels
 {
     public class IndexViewModel : ListaPaginada
     {
-        public IEnumerable<Mensagem> Mensagens { get; set; }
+
+        public List<Mensagem> Mensagens { 
+            get { 
+                var lista = new List<Mensagem> (Lista.Cast<Mensagem>());
+                return lista;
+            } }
         public IndexViewModel()
         {
         }

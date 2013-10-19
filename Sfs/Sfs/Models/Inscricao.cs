@@ -49,7 +49,7 @@ namespace Sfs.Models
         /// </summary>
         public bool Validada { get; set; }
 
-
+        public int Prioridade { get; set; }
 
         #endregion
 

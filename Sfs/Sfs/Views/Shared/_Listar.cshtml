@@ -7,7 +7,7 @@
 <h4 style="text-align:center">@Model.Descricao</h4>
 <hr />
 <br />
-<form id="lista atividade" action="~/Atividade/CancelarInscricoes" method="post">
+<form id="listaAtividade" action="~/Atividade/RedirectToListarAction" method="post">
     <table>
         <thead>
         <tr>
@@ -26,7 +26,7 @@
         <tr>
         
             <td>@if (ViewBag.PessoaLogada.IsAdministrador && i < Model.Inscricoes.Count)
-                { <input type="checkbox" class="listaAtividade" name="ids" value="@Model.Inscricoes[i].Id"/> }  
+                { <input type="checkbox" class="listaAtividade" name="IdSelecionados" value="@Model.Inscricoes[i].Id"/> }  
                 @(i < Model.NumeroVagas ? (i + 1).ToString() : "LE")</td>
             <td>@matrícula</td>
             <td>@nome</td>
@@ -36,16 +36,23 @@
         }
 
     </table>
-    <input type="hidden" name="idAtividade" value="@Model.Id" />
+    <input type="hidden" name="IdAtividade" value="@Model.Id" />
     @if(ViewBag.PessoaLogada.IsAdministrador) {
-    @SfsHtml.Submit("Cancelar inscrições selecionadas", "small alert button")
+        //@SfsHtml.DummyButton("Cancelar inscrições selecionadas", "redirect('CancelarInscricoes')", "small alert button")
+        <p style="text-align:right">
+            <input type="button" class="small alert button" value="Desafixar" onclick="redirect('DesafixarInscricoes')" />
+            <input type="button" class="small success button" value="Fixar" onclick="redirect('FixarInscricoes')" />
+            <input type="button" class="small alert button" value="Cancelar Inscrições" onclick="redirect('CancelarInscricoes')" />
+        </p>
+        //@SfsHtml.DummyButton("Fixar selecionados", "")
+        //@SfsHtml.DummyButton("Desafixar selecionados", "redirect('DesafixarInscricoes')")
     }
 </form>
 
 <script>
-    function cancelarInscricao(idAtividade, nomeAluno) {
-        if (confirm("Confirma a o cancelamento da inscrição do(a) aluno(a) " + nomeAluno + "?"))
-            location.href = "Atividade/Desistir?Id=" + idAtividade;
+    function redirect(sender) {
+        $('#listaAtividade').get(0).setAttribute('action', sender);
+        $('#listaAtividade').submit();
     }
 </script>
 @SfsHtml.SelecionarTodosScript()

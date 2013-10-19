@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 using Sfs.Models;
 using Sfs.ViewModels.PessoaViewModels;
+using Sfs.Services;
 
 namespace Sfs.Controllers
 {   
@@ -30,14 +31,8 @@ namespace Sfs.Controllers
 
             if (viewModel.IgnorarInativos)
                 pessoas = pessoas.Where(p => p.Ativo);
-
-            viewModel.Pessoas = pessoas
-                .OrderBy(p => p.Nome)
-                .Skip(indiceInicial)
-                .Take(PESSOAS_POR_PAGINA).ToList();
-            int totalPessoas = pessoas.Count();
-            double totalPaginas = (double)totalPessoas / PESSOAS_POR_PAGINA;
-            viewModel.TotalPaginas = (int)Math.Ceiling(totalPaginas);
+            viewModel.Lista = pessoas;
+            viewModel = (IndexViewModel)Servico.PaginarLista(viewModel, "Nome");
             return View(viewModel);
         }
 

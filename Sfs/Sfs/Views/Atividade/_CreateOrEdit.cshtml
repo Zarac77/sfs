@@ -22,7 +22,7 @@
     @Html.LabelFor(model => model.DataFim)
 </div>
 <div class="editor-field">
-    @Html.EditorFor(model => model.DataFim)
+        @Html.EditorFor(model => model.DataFim) às @SfsHtml.TimeInput("HoraFim", 50, Model.HoraFim.IsEmpty() ? "" : Model.HoraFim)
     @Html.ValidationMessageFor(model => model.DataFim)
 </div>
 
@@ -57,10 +57,10 @@
     @Html.ValidationMessageFor(model => model.Atividade.Aberta)
 </div>
 <div class="editor-label">
-    @Html.LabelFor(model => model.Atividade.Aprovada)
+    @Html.LabelFor(model => model.Atividade.Validada)
 </div>
 <div class="editor-field">
-    @Html.EditorFor(model => model.Atividade.Aprovada)
+    @Html.EditorFor(model => model.Atividade.Validada)
     @Html.ValidationMessageFor(model => model.Atividade.Aberta)
 </div>
 <div class="editor-field">

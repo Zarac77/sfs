@@ -51,7 +51,7 @@
 
 @foreach (var item in Model.Atividades) 
 {
-    var css = item.Validada ? "aprovada" : "nao-aprovada";
+    var css = item.Validada ? "nao-aprovada" : "aprovada";
     
     <tr class="linha">
         <td class="@css">

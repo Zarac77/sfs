@@ -76,7 +76,13 @@
     <a href="#" onclick="@script (@s)"><img src="@src" title="@linkText" alt="@linkText" /></a>
 }
 
+@helper DummyButton(string text, string onClick) {
+    <input type="button" class="small button" value="@text" onclick="@Html.Raw(onClick)" />
+}
 
+@helper DummyButton(string text, string onClick, string classInput) {
+    <input type="button" class="@classInput" value="@text" onclick="@Html.Raw(onClick)" />
+}
 
 @helper Submit(string text)
 {

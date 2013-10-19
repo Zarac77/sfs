@@ -33,8 +33,7 @@ namespace Sfs.Controllers
         public ActionResult VerLista(Guid id)
         {
             var atividade = Context.Atividades.Find(id);
-            atividade.Inscricoes.Sort((p1,p2) => -p1.CoeficienteSorte.CompareTo(-p2.CoeficienteSorte));
-            //atividade.Inscricoes = ServicoAtividade.SortListas(Context, id);
+            atividade.Inscricoes = atividade.Inscricoes.OrderByDescending(i => i.CoeficienteSorte).ToList();
             return View(atividade);
         }
     }

@@ -7,7 +7,6 @@ using AutoMapper;
 using Sfs.Models;
 using Sfs.ViewModels.AtividadeViewModels;
 using Sfs.Services;
-using System.Collections.Generic;
 
 namespace Sfs.Controllers
 {   
@@ -15,6 +14,7 @@ namespace Sfs.Controllers
     {
         //
         // GET: /Atividades/
+
 
         public ActionResult Index(IndexViewModel viewModel)
         {
@@ -43,33 +43,59 @@ namespace Sfs.Controllers
         {
             if (!(string.IsNullOrEmpty(glvm.Matricula) && string.IsNullOrEmpty(glvm.Turma)))
             {
-                glvm.ResultadoPessoas = Context.Pessoas.Where(p => p.Matricula == glvm.Matricula || p.Turma == glvm.Turma).OrderBy(p => p.Nome);
+                glvm.ResultadoPessoas = ServicoPessoa.BuscarPessoas(Context, new Pessoa { Matricula = glvm.Matricula, Turma = glvm.Turma} );
             }
-            glvm.Atividade = Context.Atividades.Find(glvm.IdAtividade);
+            glvm.Atividade = Context.Atividades.Include(a => a.Inscricoes).Single(a => a.Id == glvm.IdAtividade);
+            glvm.Atividade.Inscricoes = glvm.Atividade.Inscricoes.OrderByDescending(i => i.CoeficienteSorte).ToList();
             return View(glvm);
         }
 
         [HttpPost]
-            public ActionResult ForcarInscricoes(ForcarInscricoesViewModel fivm)
-            {
-                
-                fivm.Atividade = Context.Atividades.Find(fivm.IdAtividade);
-                var novasInscricoes = fivm.IdSelecionados.Where(s => !fivm.Atividade.Inscricoes.Exists(i => i.IdPessoa == s));
-                foreach (var i in novasInscricoes)
-                {
-                    ServicoAtividade.Inscrever(Context, fivm.Atividade, i);
-                }
-                Context.SaveChanges();
-                return RedirectToAction("GerarLista", new { IdAtividade = fivm.IdAtividade, Matricula = fivm.CampoMatricula, Turma = fivm.CampoTurma});
+        public ActionResult RedirectToListarAction(Guid[] ids, Guid idAtividade, string actionName) {
+            ListarViewModel lvm = new ListarViewModel {
+                IdSelecionados = ids,
+                IdAtividade = idAtividade
+            };
+            return View(actionName, lvm);
         }
 
         [HttpPost]
-        public ActionResult CancelarInscricoes(Guid[] ids, Guid idAtividade)
+        public ActionResult CancelarInscricoes(ListarViewModel lvm)
         {
-            foreach(var id in ids) {
-                ServicoAtividade.CancelarInscricao(Context, idAtividade, id);
+            foreach(var id in lvm.IdSelecionados) {
+                ServicoAtividade.CancelarInscricao(Context, lvm.IdAtividade, id);
             }
-            return RedirectToAction("GerarLista", new { IdAtividade = idAtividade });
+            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade });
+        }
+
+        [HttpPost]
+        public ActionResult ForcarInscricoes(ListarViewModel lvm)
+        {
+            if (!PessoaLogada.IsAdministrador)
+                return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
+            lvm.Atividade = Context.Atividades.Find(lvm.IdAtividade);
+            var novasInscricoes = lvm.IdSelecionados.Where(s => !lvm.Atividade.Inscricoes.Exists(i => i.IdPessoa == s));
+            novasInscricoes.Each(id => ServicoAtividade.Inscrever(Context, lvm.Atividade, id));
+            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade, Matricula = lvm.CampoMatricula, Turma = lvm.CampoTurma});
+        }
+        
+        public ActionResult FixarInscricoes(ListarViewModel lvm) {
+            if (!PessoaLogada.IsAdministrador)
+                return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
+            lvm.IdSelecionados.Each(id => ServicoAtividade.FixarInscricao(Context, id));
+            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade, Matricula = lvm.CampoMatricula, Turma = lvm.CampoTurma });
+        }
+
+        [HttpPost]
+        public ActionResult DesafixarInscricoes(ListarViewModel lvm) {
+            if (!PessoaLogada.IsAdministrador)
+                return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
+            lvm.IdSelecionados.Each(id => ServicoAtividade.DesafixarInscricao(Context, id));
+            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade, Matricula = lvm.CampoMatricula, Turma = lvm.CampoTurma});
         }
 
 
@@ -153,24 +179,22 @@ namespace Sfs.Controllers
             Atividade atividade = Context.Atividades.Single(x => x.Id == id);
             Context.Atividades.Remove(atividade);
             Context.SaveChanges();
+            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
             return RedirectToAction("Index");
         }
 
         public ActionResult Inscrever(Atividade atividade)
         {
             ServicoAtividade.Inscrever(Context, atividade, PessoaLogada.Id);
+            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Desistir(Atividade atividade)
         {
             ServicoAtividade.CancelarInscricao(Context, atividade.Id, PessoaLogada.Id);
+            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
             return RedirectToAction("Index", "Home");
-        }
-
-        public ActionResult CancelarInscricao(Atividade atividade, Pessoa pessoa) {
-            ServicoAtividade.CancelarInscricao(Context, atividade.Id, pessoa.Id);
-            return RedirectToAction("Listar", new { atividade.Id });
         }
 
         /*[HttpPost]
@@ -188,10 +212,7 @@ namespace Sfs.Controllers
             var viewModel = new ProximasAtividadesViewModel()
             {
                 Pessoa = PessoaLogada,
-                Atividades = Context.Atividades
-                    //.Where(a => a.DataHoraInicio >= DateTime.Now) // linha comentada para exibir todas as atividades (debug).
-                    .OrderBy(a => a.DataHoraInicio)
-                    .ToList(),
+                Atividades = ServicoAtividade.GetAtividadesAtivas(Context),
                 PermitirInscricao = possuiPerfilAluno || possuiPerfilProfessor
             };
             return PartialView(viewModel);

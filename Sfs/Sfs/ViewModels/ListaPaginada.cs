@@ -9,6 +9,7 @@ namespace Sfs.ViewModels
     {
         public int PaginaAtual { get; set; }
         public int TotalPaginas { get; set; }
+        public IEnumerable<object> Lista { get; set; }
 
         public ListaPaginada()
         {

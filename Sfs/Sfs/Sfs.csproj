@@ -201,6 +201,7 @@
     <Compile Include="Controllers\GerenciamentoBDController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
+    <Compile Include="Controllers\InscricoesController.cs" />
     <Compile Include="Controllers\ParametrosController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
@@ -226,6 +227,7 @@
     <Compile Include="Services\ServicoAtividade.cs" />
     <Compile Include="Services\ServicoControleAcesso.cs" />
     <Compile Include="Services\ServicoInbox.cs" />
+    <Compile Include="Services\ServicoInscricoes.cs" />
     <Compile Include="Services\ServicoMensageiro.cs" />
     <Compile Include="Services\ServicoPessoa.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\CreateViewModel.cs" />
@@ -316,6 +318,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Foundation_readme.txt" />
     <Content Include="Global.asax" />
+    <Content Include="Images\16x16\arrow_down_red.png" />
+    <Content Include="Images\16x16\arrow_up_green.png" />
     <Content Include="Images\16x16\atividade.png" />
     <Content Include="Images\16x16\create.png" />
     <Content Include="Images\16x16\delete.png" />
@@ -445,6 +449,7 @@
     <Content Include="Views\Shared\EditorTemplates\TimeSpan.cshtml" />
     <Content Include="Views\Parametros\Edit.cshtml" />
     <Content Include="Views\Home\VerLista.cshtml" />
+    <Content Include="Views\Inscricoes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

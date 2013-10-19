@@ -54,4 +54,8 @@
     </form>
 }
 @SfsHtml.SelecionarTodosScript()
-@Html.Partial("_Listar", Model.Atividade)
+@{
+    var lmodel = Model.Atividade;
+    //lmodel.Inscricoes = lmodel.Inscricoes.OrderByDescending(i => i.CoeficienteSorte).ToList();
+} 
+@Html.Partial("_Listar", lmodel)
