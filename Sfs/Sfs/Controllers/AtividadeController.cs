@@ -65,7 +65,7 @@ namespace Sfs.Controllers
             foreach(var id in lvm.IdSelecionados) {
                 ServicoAtividade.CancelarInscricao(Context, lvm.IdAtividade, id);
             }
-            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            //ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
             return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade });
         }
 
@@ -77,7 +77,7 @@ namespace Sfs.Controllers
             lvm.Atividade = Context.Atividades.Find(lvm.IdAtividade);
             var novasInscricoes = lvm.IdSelecionados.Where(s => !lvm.Atividade.Inscricoes.Exists(i => i.IdPessoa == s));
             novasInscricoes.Each(id => ServicoAtividade.Inscrever(Context, lvm.Atividade, id));
-            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            //ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
             return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade, Matricula = lvm.CampoMatricula, Turma = lvm.CampoTurma});
         }
         
@@ -85,7 +85,7 @@ namespace Sfs.Controllers
             if (!PessoaLogada.IsAdministrador)
                 return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
             lvm.IdSelecionados.Each(id => ServicoAtividade.FixarInscricao(Context, id));
-            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            //ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
             return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade, Matricula = lvm.CampoMatricula, Turma = lvm.CampoTurma });
         }
 
@@ -94,7 +94,7 @@ namespace Sfs.Controllers
             if (!PessoaLogada.IsAdministrador)
                 return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
             lvm.IdSelecionados.Each(id => ServicoAtividade.DesafixarInscricao(Context, id));
-            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            //ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
             return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade, Matricula = lvm.CampoMatricula, Turma = lvm.CampoTurma});
         }
 
@@ -105,7 +105,7 @@ namespace Sfs.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            return View(new CreateViewModel());
         } 
 
         //
@@ -116,19 +116,8 @@ namespace Sfs.Controllers
         {
             if (ModelState.IsValid)
             {
-                var atividade = new Atividade()
-                {
-                    Id = Guid.NewGuid(),
-                    DataHoraInicio = viewModel.DataInicio,
-                    DataHoraFim = viewModel.DataFim,
-                    Descricao = viewModel.Atividade.Descricao,
-                    DataLimiteCancelamento = viewModel.Atividade.DataLimiteCancelamento,
-                    DataLimiteInscricao = viewModel.Atividade.DataLimiteInscricao,
-                    NumeroVagas = viewModel.Atividade.NumeroVagas
-                };
-                Context.Atividades.Add(atividade);
-                Context.SaveChanges();
-                return RedirectToAction("Index");  
+                ServicoAtividade.CreateOrEdit(Context, viewModel);
+                return RedirectToAction("Index");
             }
 
             return View(viewModel);
@@ -139,8 +128,7 @@ namespace Sfs.Controllers
  
         public ActionResult Edit(System.Guid id)
         {
-            Atividade atividade = Context.Atividades.Find(id);
-            CreateViewModel viewModel = new CreateViewModel { Atividade = atividade, IdAtividade = atividade.Id };
+            var viewModel = ServicoAtividade.CreateViewModel(Context, id);
             return View(viewModel);
         }
 
@@ -152,10 +140,13 @@ namespace Sfs.Controllers
         {
             if (ModelState.IsValid)
             {
-                
+               /* 
                 var atividade = viewModel.Atividade;
                 Context.Entry(atividade).State = EntityState.Modified;
                 Context.SaveChanges();
+                
+                * */
+                ServicoAtividade.CreateOrEdit(Context, viewModel);
                 return RedirectToAction("Index");
             }
             return View(viewModel);
@@ -179,21 +170,24 @@ namespace Sfs.Controllers
             Atividade atividade = Context.Atividades.Single(x => x.Id == id);
             Context.Atividades.Remove(atividade);
             Context.SaveChanges();
-            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            //ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
             return RedirectToAction("Index");
         }
 
         public ActionResult Inscrever(Atividade atividade)
         {
+            atividade = Context.Atividades.Find(atividade.Id);
             ServicoAtividade.Inscrever(Context, atividade, PessoaLogada.Id);
-            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            //ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+       
             return RedirectToAction("Index", "Home");
         }
 
         public ActionResult Desistir(Atividade atividade)
         {
             ServicoAtividade.CancelarInscricao(Context, atividade.Id, PessoaLogada.Id);
-            ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            //ServicoAtividade.RecalcularCSInscricoesAtivas(Context);
+            atividade = Context.Atividades.Find(atividade.Id);
             return RedirectToAction("Index", "Home");
         }
 

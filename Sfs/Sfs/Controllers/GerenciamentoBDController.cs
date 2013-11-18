@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.IO;
 using System.Text;
 using Sfs.Models;
+using Sfs.Services;
 
 namespace Sfs.Controllers
 {
@@ -43,9 +44,9 @@ namespace Sfs.Controllers
                     Matricula = dados[1],
                     Turma = dados[3],
                     Email = string.IsNullOrEmpty(dados[5]) ? Guid.NewGuid() + "@escolasesc.g12.br" : dados[5],
-                    Senha = "123456",
                     Perfis = new List<Perfil> { Context.Perfis.Single(pf => pf.Id == Perfil.GUID_PERFIL_ALUNO) }
                 };
+                p.Senha = ServicoControleAcesso.HashSenha(p.Email, "123456"); //Linha em separado para pegar e-mail.
                 pessoas.Add(p);
                 linha = reader.ReadLine();
             }

@@ -17,8 +17,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -29,6 +29,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IncludeIisSettings>true</IncludeIisSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -202,6 +203,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\InscricoesController.cs" />
+    <Compile Include="Controllers\LoggingController.cs" />
     <Compile Include="Controllers\ParametrosController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
@@ -216,6 +218,7 @@
     <Compile Include="Models\DataInitializer.cs" />
     <Compile Include="Models\Inbox.cs" />
     <Compile Include="Models\Inscricao.cs" />
+    <Compile Include="Models\LogReport.cs" />
     <Compile Include="Models\Mensagem.cs" />
     <Compile Include="Models\ParametrosSistema.cs" />
     <Compile Include="Models\Perfil.cs" />
@@ -228,6 +231,7 @@
     <Compile Include="Services\ServicoControleAcesso.cs" />
     <Compile Include="Services\ServicoInbox.cs" />
     <Compile Include="Services\ServicoInscricoes.cs" />
+    <Compile Include="Services\ServicoLog.cs" />
     <Compile Include="Services\ServicoMensageiro.cs" />
     <Compile Include="Services\ServicoPessoa.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\CreateViewModel.cs" />
@@ -346,6 +350,7 @@
     <Content Include="Scripts\foundation\foundation.section.js" />
     <Content Include="Scripts\foundation\foundation.tooltips.js" />
     <Content Include="Scripts\foundation\foundation.topbar.js" />
+    <None Include="Properties\PublishProfiles\Westerbly.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -367,7 +372,9 @@
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\zepto.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -450,6 +457,7 @@
     <Content Include="Views\Parametros\Edit.cshtml" />
     <Content Include="Views\Home\VerLista.cshtml" />
     <Content Include="Views\Inscricoes\Index.cshtml" />
+    <Content Include="Views\Logging\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -473,7 +481,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>2367</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:2287/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>

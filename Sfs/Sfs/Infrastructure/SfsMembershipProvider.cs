@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Security;
 
 using Sfs.Models;
+using Sfs.Services;
 
 namespace Sfs.Infrastructure
 {
@@ -153,7 +154,7 @@ namespace Sfs.Infrastructure
         {
             var sfsContext = new SfsContext();
             var pessoa = sfsContext.Pessoas.SingleOrDefault(u => u.Email == username);
-            return (pessoa != null) && (pessoa.Senha == password);
+            return (pessoa != null) && (ServicoControleAcesso.CompararSHA1(pessoa.Senha, ServicoControleAcesso.HashSenha(pessoa.Email, password)));
         }
     }
 }

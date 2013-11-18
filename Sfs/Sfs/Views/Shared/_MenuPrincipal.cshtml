@@ -41,6 +41,9 @@
                     <ul class="dropdown">
                         <li>@Html.ActionLink("Alterar senha", "AlterarSenha", "ControleAcesso")</li>
                         <li>@Html.ActionLink(numMsgsStr, "Index", "Inbox")</li>
+                        @if(!pessoaLogada.IsAdministrador) {
+                            <li>@Html.ActionLink("Inscrições", "Index", "Inscricoes")</li>
+                        }
                     </ul>
                 </li>
                 <li class="divider"></li>
@@ -59,6 +62,16 @@
                             
                         </ul>
 
+                    </li>
+                    <li class="divider"></li>
+                    <li class="has-dropdown">
+                        <a href="#">Suporte</a>
+                        <ul class="dropdown">
+                            <li>@Html.ActionLink("Gerenciar Banco de Dados", "Index", "GerenciamentoBD")</li>
+                            <li>@Html.ActionLink("Logs", "Index", "Logging")</li>
+
+                        </ul>
+                        
                     </li>
                     <li class="divider"></li>
                 }

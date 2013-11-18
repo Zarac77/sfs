@@ -1,0 +1,84 @@
+@using Sfs.Models
+@using Sfs.ViewModels.PessoaViewModels
+
+@model IndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@section head
+{
+    <link href="@Url.Content("~/Content/Pessoa/Index.css")" rel="stylesheet" />
+}
+
+<h2>Pessoas</h2>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>Filtro</legend>
+        <div class="row">
+            <div class="small-1 column"><label class="inline">Nome:</label></div>
+            <div class="small-4 columns">@Html.EditorFor(model => Model.Nome)</div>
+
+            <div class="small-2 columns">@Html.EditorFor(model => Model.IgnorarInativos) Ignorar inativos</div>
+            <div class="small-5 columns">@SfsHtml.Submit("Filtrar")</div>
+        </div>
+    </fieldset>
+}
+
+<p>
+    @SfsHtml.CreateActionLink("Nova pessoa", "Pessoa", null)
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Nome
+            </th>
+            <th>
+                Matrícula
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+@foreach (var item in Model.Pessoas)
+{
+    var css = item.Ativo ? "ativo" : "inativo";
+    
+    <tr class="linha">
+        <td class="@css">
+            @Nome(item)
+        </td>
+        <td>
+			@item.Matricula
+        </td>
+        <td>
+			@item.Email
+        </td>
+        <td>
+            @SfsHtml.EditActionLink("Pessoa", new { id = item.Id })
+            @SfsHtml.DetailsActionLink("Pessoa", new { id = item.Id })
+            @SfsHtml.DeleteActionLink("Pessoa", new { id = item.Id })
+            &nbsp;
+            @SfsHtml.IconActionLink("Perfis de Acesso", "AssociarPerfis", "Pessoa", new { idPessoa = item.Id }, "perfil.png")
+        </td>
+    </tr>
+}
+</table>
+
+@helper Nome(Pessoa pessoa)
+{
+    var title = pessoa.Ativo ? String.Empty : String.Format("{0} está inativo.", pessoa.Nome);
+    
+    @SfsHtml.SmallImg("pessoa.png", String.Empty)
+	<span title="@title">@pessoa.Nome</span>
+}
+
+@SfsHtml.PaginacaoLista("Inbox", "Index", Model)

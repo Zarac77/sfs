@@ -1,0 +1,76 @@
+﻿@model Sfs.ViewModels.InboxViewModels.IndexViewModel
+@using Sfs.Models;
+@{
+    
+    ViewBag.Title = "Inbox";
+}
+
+<h2>Inbox</h2>
+<p style="text-align:right;">
+    <input type="button" onclick="deletarMsg();" class="small alert button" value="Excluir Selecionadas"/>
+</p>
+
+<form action="~/Inbox/Delete" method="post">
+<table>
+    <thead>
+    <tr>
+        <th style="width:45px;text-align:center">
+            @SfsHtml.SelecionarTodosTrigger("msgCheckbox")
+        </th>
+        <th>
+            <b>De</b>
+        </th>
+        <th>
+            <b>Assunto</b>
+        </th>
+        <th style="width:165px;">
+            <b>Data</b>
+        </th>
+        
+    </tr>
+</thead>
+ @{
+     var c = 0;
+ }
+ @foreach (var item in Model.Mensagens) {
+     <tr>
+         <td style="text-align:center">
+            
+            @{
+                c++;
+                var _item = item;
+            }
+             <input type="checkbox" name="guid" value="@_item.Id" class="msgCheckbox" />
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => _item.Remetente)
+        </td>
+        <td>
+            @if(_item.Lida) {
+                @SfsHtml.SmallImg("mail_ok.png", "Lida")
+                @Html.ActionLink(_item.Assunto, "Ler", "Inbox", new { idMsg = _item.Id, pagina = Model.PaginaAtual }, null)
+            }
+            else {
+                @SfsHtml.SmallImg("mail.png", "Não lida")
+                <b>@Html.ActionLink(_item.Assunto, "Ler", "Inbox", new { idMsg = _item.Id, pagina = Model.PaginaAtual }, null)</b>
+            }
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => _item.DataEnvio)
+        </td>
+        
+    </tr>
+}
+</table>
+    </form>
+
+<script>
+    function deletarMsg() {
+        if (confirm("Tem certeza que deseja deletar essas mensagens?")) {
+            document.forms[0].submit();
+        }
+    }
+</script>
+
+@SfsHtml.SelecionarTodosScript()
+@SfsHtml.PaginacaoLista("Inbox", "Index", Model)

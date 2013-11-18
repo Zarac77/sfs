@@ -29,5 +29,9 @@ namespace Sfs.Services
             lista.TotalPaginas = (int)Math.Ceiling(totalPaginas);
             return lista;
         }
+
+        public static int GetWeekOfYear() {
+            return (int)DateTime.Today.DayOfYear / 7;
+        }
     }
 }

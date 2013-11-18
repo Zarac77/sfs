@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sfs.Services;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -25,8 +26,8 @@ namespace Sfs.Models
         {
             new List<Pessoa> {
                 //new Pessoa { Id = Guid.Parse("04725000-12AD-4C23-9D3F-64ECE28E6760"), Matricula = "2011.0004", Nome = "Westerbly Snaydley", Email = @"westerbly@gmail.com", Turma = "3C" },
-                new Pessoa { Id = Guid.Parse("DC8F560F-1BA7-4C3D-878B-02C97E388E09"), Matricula = "1255", Nome = "Italo Gomes", Email = @"igomes@sesc.com.br", Turma = "4U" },
-                new Pessoa { Id = Guid.Parse("0E79C10F-B329-4BFE-BE32-E2FE6EFFC618"), Matricula = "0001", Nome = "Administrador", Email = @"admin@whatever.com.br", Senha = "adminesem", Perfis = new List<Perfil> { perfis.Single(p => p.Id == Perfil.GUID_PERFIL_ADMINISTRADOR ) }}
+                //new Pessoa { Id = Guid.Parse("DC8F560F-1BA7-4C3D-878B-02C97E388E09"), Matricula = "1255", Nome = "Italo Gomes", Email = @"igomes@sesc.com.br", Turma = "4U" },
+                new Pessoa { Id = Guid.Parse("0E79C10F-B329-4BFE-BE32-E2FE6EFFC618"), Matricula = "0001", Nome = "Administrador", Email = @"admin@whatever.com.br", Senha = ServicoControleAcesso.HashSenha(@"admin@whatever.com.br", "adminesem"), Perfis = new List<Perfil> { perfis.Single(p => p.Id == Perfil.GUID_PERFIL_ADMINISTRADOR ) }}
             }.ForEach(a => context.Pessoas.Add(a));
         }
 
@@ -46,7 +47,7 @@ namespace Sfs.Models
         {
             new List<Inbox> {
                 //new Inbox { Id = Guid.NewGuid(), IdPessoa = Guid.Parse("04725000-12AD-4C23-9D3F-64ECE28E6760")},
-                new Inbox { Id = Guid.NewGuid(), IdPessoa = Guid.Parse("DC8F560F-1BA7-4C3D-878B-02C97E388E09")},
+                //new Inbox { Id = Guid.NewGuid(), IdPessoa = Guid.Parse("DC8F560F-1BA7-4C3D-878B-02C97E388E09")},
                 new Inbox { Id = Guid.NewGuid(), IdPessoa = Guid.Parse("0E79C10F-B329-4BFE-BE32-E2FE6EFFC618")}
             }.ForEach(a => context.Inboxes.Add(a));
         }

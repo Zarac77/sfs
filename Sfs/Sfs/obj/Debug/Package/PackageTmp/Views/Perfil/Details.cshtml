@@ -1,0 +1,26 @@
+@model Sfs.Models.Perfil
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Perfil</legend>
+
+    <div class="display-label">Nome</div>
+    <div class="display-field">@Model.Nome</div>
+
+    <div class="display-label">Descricao</div>
+    <div class="display-field">@Model.Descricao</div>
+
+    <div class="display-label">Pessoas</div>
+    <div class="display-field">@(Model.Pessoas == null ? "None" : Model.Pessoas.Count.ToString())</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

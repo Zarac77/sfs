@@ -102,7 +102,7 @@
 @helper TimeInput(string name, int width, string val)
 {
     string w = width + "px";
-    <input type="text" id="time" name="@name" style="width:@w" class="text-box single line" value="@val"/>
+    <input type="text" id="@name" name="@name" style="width:@w" class="text-box single line time" value="@val"/>
 }
 
 @helper ValidationSummary(ViewDataDictionary viewData, bool excludePropertyErrors)

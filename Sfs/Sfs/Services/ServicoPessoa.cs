@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Sfs.Models;
+using System.Text.RegularExpressions;
 
 namespace Sfs.Services {
     public class ServicoPessoa {
@@ -31,9 +32,6 @@ namespace Sfs.Services {
         }
 
         public static IEnumerable<Pessoa> BuscarPessoas(SfsContext context, Pessoa modelo) {
-            if (!String.IsNullOrEmpty(modelo.Matricula)) {
-                return new List<Pessoa> { context.Pessoas.Single(p => p.Matricula == modelo.Matricula) };
-            }
             var pessoas = context.Pessoas.ToList();
             var info = typeof(Pessoa).GetProperties();
             foreach (var p in info) {
@@ -41,7 +39,7 @@ namespace Sfs.Services {
                 var type = value != null ? value.GetType() : null;
                 bool isTipoValido = type == typeof(string) || type == typeof(bool);
                 if ((isTipoValido && type == typeof(string)) && !String.IsNullOrEmpty(p.GetValue(modelo).ToString())) {
-                    pessoas = pessoas.Where(pessoa => p.GetValue(pessoa) != null && p.GetValue(pessoa).ToString().Contains(p.GetValue(modelo).ToString())).ToList();
+                    pessoas = pessoas.Where(pessoa => p.GetValue(pessoa) != null && Regex.IsMatch(p.GetValue(pessoa).ToString(), p.GetValue(modelo).ToString(), RegexOptions.IgnoreCase)).ToList();
                 }
                 else if (isTipoValido) {
                     pessoas = pessoas.Where(pessoa => p.GetValue(modelo).Equals(p.GetValue(pessoa))).ToList();
@@ -49,6 +47,10 @@ namespace Sfs.Services {
             }
 
             return pessoas;
+        }
+
+        public static void RegistrarPessoa(SfsContext context, Pessoa pessoa) {
+            //pessoa.Senha = ServicoControleAcesso.HashSenha(pessoa.Email
         }
     }
 }

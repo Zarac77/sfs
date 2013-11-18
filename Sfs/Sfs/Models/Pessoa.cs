@@ -28,8 +28,7 @@ namespace Sfs.Models
         public string Email { get; set; }
 
         [DataType(DataType.Password)]
-        [StringLength(100)]
-        public string Senha { get; set; }
+        public byte[] Senha { get; set; }
 
         [Required]
         public bool Ativo { get; set; }

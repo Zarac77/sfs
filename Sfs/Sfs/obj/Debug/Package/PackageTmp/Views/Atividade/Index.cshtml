@@ -1,0 +1,88 @@
+﻿@using Sfs.Models
+@using Sfs.ViewModels.AtividadeViewModels
+
+@model IndexViewModel
+
+@{
+    ViewBag.Title = "Index";
+    var atividade = new Atividade();
+}
+
+@section head
+{
+    <link href="@Url.Content("~/Content/Atividade/Index.css")" rel="stylesheet" />
+}
+
+<h2>Atividades</h2>
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>Filtro</legend>
+        <div class="row">
+            <div class="small-3 columns">@Html.EditorFor(model => Model.ExibirNaoAprovadas) Exibir não aprovadas</div>
+            <div class="small-9 columns">@SfsHtml.Submit("Filtrar")</div>
+        </div>
+    </fieldset>
+}
+
+<p>
+    @SfsHtml.CreateActionLink("Nova atividade", "Atividade", null)
+</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => atividade.Descricao)
+            </th>
+            <th class="text-center">
+                Duração
+            </th>
+            <th class="text-center">
+                Inscrições
+            </th>
+            <th class="text-center">
+                @Html.DisplayNameFor(model => atividade.NumeroVagas)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+@foreach (var item in Model.Atividades) 
+{
+    var css = item.Validada ? "nao-aprovada" : "aprovada";
+    
+    <tr class="linha">
+        <td class="@css">
+            @Html.DisplayFor(modelItem => item.Validada, new { title = "Aprovada" })
+            @SfsHtml.SmallImg("atividade.png", String.Empty)
+            @Html.DisplayFor(modelItem => item.Descricao)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.DataHoraInicio)
+            <br />
+            até
+            <br />
+            @Html.DisplayFor(modelItem => item.DataHoraFim)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.DataLimiteInscricao)
+            <br />
+            até
+            <br />
+            @Html.DisplayFor(modelItem => item.DataLimiteCancelamento)
+        </td>
+        <td class="text-center">
+            @Html.DisplayFor(modelItem => item.NumeroVagas)
+        </td>
+        <td>
+            @SfsHtml.EditActionLink("Atividade", new { id = item.Id })
+            @SfsHtml.DetailsActionLink("Atividade", new { id = item.Id })
+            @SfsHtml.DeleteActionLink("Atividade", new { id = item.Id })
+            @SfsHtml.IconActionLink("Ver Lista", "GerarLista", "Atividade", new { IdAtividade = item.Id}, "users.png")
+        </td>
+    </tr>
+}
+
+</table>

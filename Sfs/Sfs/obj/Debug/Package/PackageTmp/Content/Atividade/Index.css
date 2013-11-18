@@ -1,0 +1,7 @@
+﻿td.aprovada {
+    color: green !important;
+}
+
+td.nao-aprovada {
+    color: silver !important;
+}

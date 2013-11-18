@@ -2,26 +2,30 @@
 using System.Linq;
 
 using Sfs.Models;
+using System.Security.Cryptography;
 
 namespace Sfs.Services
 {
     public class ServicoControleAcesso : Servico
     {
-        public static bool AlterarSenha(SfsContext context, Guid id, string senhaAtual, 
-            string novaSenha, string confirmacaoNovaSenha)
-        {
+        public static bool Login(SfsContext context, string user, string senha) {
+            return true;
+        }
+
+        public static bool AlterarSenha(SfsContext context, Guid id, string senhaAtual, string novaSenha, string confirmacaoNovaSenha) {
             //
-            // Verifica se hovue erro na digitação da nova senha.
+            // Verifica se houve erro na digitação da nova senha.
             if (novaSenha != confirmacaoNovaSenha)
                 return false;
 
             var pessoa = context.Pessoas.Single(u => u.Id == id);
             //
             // Verifica se a senha atual informada está incorreta.
-            if (pessoa.Senha != senhaAtual)
+            var senhaHash = HashSenha(pessoa.Email, senhaAtual);
+            if (!CompararSHA1(pessoa.Senha, senhaHash))
                 return false;
 
-            pessoa.Senha = novaSenha;
+            pessoa.Senha = HashSenha(pessoa.Email, novaSenha);
             context.SaveChanges();
             return true;
         }
@@ -38,6 +42,27 @@ namespace Sfs.Services
             var pessoa = context.Pessoas.Find(idPessoa);
             var perfil = context.Perfis.Find(idPerfil);
             return pessoa.Perfis.Contains(perfil);
+        }
+
+        public static byte[] HashSenha(string userId, string senha) {
+            SHA1CryptoServiceProvider sha = new SHA1CryptoServiceProvider();
+            return sha.ComputeHash(System.Text.Encoding.ASCII.GetBytes(userId + senha));
+        }
+
+        public static bool CompararSHA1(byte[] p1, byte[] p2) {
+            bool result = false;
+            if (p1 != null && p2 != null) {
+                if (p1.Length == p2.Length) {
+                    result = true;
+                    for (int i = 0; i < p1.Length; i++) {
+                        if (p1[i] != p2[i]) {
+                            result = false;
+                            break;
+                        }
+                    }
+                }
+            }
+            return result;
         }
     }
 }

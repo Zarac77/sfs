@@ -1,0 +1,25 @@
+﻿@using Sfs.Models;
+@{
+    ViewBag.Title = "Logs";
+}
+
+@model List<LogReport>
+
+<h2>Logs</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Descrição</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    @foreach (var item in Model) {
+        <tr>
+            <td>@item.Descricao</td>
+            <td>@Html.ActionLink("Ver", "Ver", new { id = item.Id })</td>
+            <td>@Html.ActionLink("Download", "Download", new { id = item.Id })</td>
+        </tr>
+    }
+</table>

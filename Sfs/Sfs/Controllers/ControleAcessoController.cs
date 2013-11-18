@@ -17,7 +17,7 @@ namespace Sfs.Controllers
         public ActionResult Login()
         {
 
-            return View(new LoginViewModel { Email = "wcardoso2011@escolasesc.g12.br" });
+            return View(new LoginViewModel { Email = "admin@whatever.com.br" });
         }
 
         public ActionResult AcessoNaoAutorizado()
@@ -30,14 +30,10 @@ namespace Sfs.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (Membership.ValidateUser(viewModel.Email, viewModel.Senha))
+                var pessoa = Context.Pessoas.SingleOrDefault(p => p.Email == viewModel.Email);
+                if (pessoa != null && ServicoControleAcesso.CompararSHA1(pessoa.Senha, ServicoControleAcesso.HashSenha(viewModel.Email, viewModel.Senha)))
                 {
                     FormsAuthentication.SetAuthCookie(viewModel.Email, false);
-                    var pessoa = Context.Pessoas.Single(p => p.Email == viewModel.Email);
-                    string assunto = "Login efetuado com sucesso";
-                    string remetente = "Sistema";
-                    string texto = "Parabéns! \n Você, " + pessoa.Nome + ", de matrícula " + pessoa.Matricula + ", efetuou o login no sistema com sucesso. \n \n Atenciosamente, O Sistema.";
-                    ServicoMensageiro.EnviarMensagem(Context, pessoa, assunto, remetente, texto);
                     return RedirectToAction("Index", "Home");
                 }
                 else

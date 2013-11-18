@@ -1,0 +1,59 @@
+﻿@using System.Collections
+@using Sfs.Models
+@using Sfs.ViewModels.AtividadeViewModels
+
+@model ProximasAtividadesViewModel
+
+<h2>Próximas atividades</h2>
+
+@foreach (var atividade in Model.Atividades)
+{
+    <div class="panel">
+        <h3>@atividade.Descricao</h3>
+        <div class="row">
+            <div class="small-5 columns">
+                Início: @atividade.DataHoraInicio.ToString("dd/MM/yyyy") às @atividade.DataHoraInicio.ToString("hh:mm")
+                <br />
+                Término: @atividade.DataHoraInicio.ToString("dd/MM/yyyy") às @atividade.DataHoraFim.ToString("hh:mm")
+            </div>
+            <div class="small-5 columns right">
+                Vagas: @atividade.NumeroVagas
+                <br />
+                Inscrições: @atividade.Inscricoes.Count() @GerarLinkInscricao(atividade)
+                <br />
+                Custo: @atividade.Custo
+                <br />
+                @Html.ActionLink("Ver Lista", "VerLista", "Home", new { id = atividade.Id }, null)
+            </div>
+        </div>
+    </div>
+}
+
+<script>
+    function inscrever(idAtividade, descricao) {
+        if (confirm("Confirma sua inscrição em " + descricao + "?"))
+            location.href = "Atividade/Inscrever?Id=" + idAtividade;
+    }
+
+    function desistir(idAtividade, descricao) {
+        if (confirm("Confirma a sua desistência em " + descricao + "?"))
+            location.href = "Atividade/Desistir?Id=" + idAtividade;
+    }
+</script>
+
+@helper GerarLinkInscricao(Atividade atividade) 
+{
+    if (Model.PermitirInscricao)
+    {
+        var existeInscricao = Model.Pessoa.Inscricoes.Where(i => i.IdAtividade == atividade.Id).Any();
+        
+        if (!existeInscricao)
+        {
+            <a href="#" class="small button" onclick="inscrever('@atividade.Id', '@atividade.Descricao');">Inscrever</a>
+        }
+        else
+        {
+            <a href="#" class="small alert button" onclick="desistir('@atividade.Id', '@atividade.Descricao');">Desistir</a>
+        }
+    }
+}
