@@ -1,0 +1,11 @@
+﻿@model Sfs.ViewModels._ListarViewModel
+@{
+    ViewBag.Title = "Ver";
+}
+
+<h2>Ver</h2>
+@{var _model = Model;}
+<form action="~/Controle/ConfirmarPresencas" method="post">
+    @Html.Partial("_Listar", _model)
+    @SfsHtml.Submit("Confirmar Presenças")
+</form>

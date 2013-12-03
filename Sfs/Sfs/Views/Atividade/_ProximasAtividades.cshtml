@@ -23,7 +23,12 @@
                 <br />
                 Custo: @atividade.Custo
                 <br />
-                @Html.ActionLink("Ver Lista", "VerLista", "Home", new { id = atividade.Id }, null)
+                @if(ViewBag.PessoaLogada.IsAdministrador) {
+                    @Html.ActionLink("Ver Lista", "GerarLista", "Atividade", new { IdAtividade = atividade.Id }, null)
+                }                    
+                else {
+                    @Html.ActionLink("Ver Lista", "VerLista", "Home", new { id = atividade.Id }, null)
+                }
             </div>
         </div>
     </div>
@@ -47,13 +52,15 @@
     {
         var existeInscricao = Model.Pessoa.Inscricoes.Where(i => i.IdAtividade == atividade.Id).Any();
         
-        if (!existeInscricao)
+        if (!existeInscricao && atividade.DataLimiteInscricao > DateTime.Today)
         {
             <a href="#" class="small button" onclick="inscrever('@atividade.Id', '@atividade.Descricao');">Inscrever</a>
         }
         else
         {
-            <a href="#" class="small alert button" onclick="desistir('@atividade.Id', '@atividade.Descricao');">Desistir</a>
+            if (existeInscricao && atividade.DataLimiteCancelamento > DateTime.Today) {
+                <a href="#" class="small alert button" onclick="desistir('@atividade.Id', '@atividade.Descricao');">Desistir</a>
+            }
         }
     }
 }

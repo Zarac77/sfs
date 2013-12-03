@@ -32,7 +32,7 @@ namespace Sfs.Controllers
             if (viewModel.IgnorarInativos)
                 pessoas = pessoas.Where(p => p.Ativo);
             viewModel.Lista = pessoas;
-            viewModel = (IndexViewModel)Servico.PaginarLista(viewModel, "Nome");
+            viewModel = (IndexViewModel)Servico.PaginarLista(viewModel, "Nome", false);
             return View(viewModel);
         }
 
@@ -61,10 +61,7 @@ namespace Sfs.Controllers
         {
             if (ModelState.IsValid)
             {
-                pessoa.Id = Guid.NewGuid();
-                Context.Pessoas.Add(pessoa);
-                Context.SaveChanges();
-                return RedirectToAction("Index");  
+                ServicoPessoa.RegistrarPessoa(Context, pessoa, true);
             }
 
             return View(pessoa);

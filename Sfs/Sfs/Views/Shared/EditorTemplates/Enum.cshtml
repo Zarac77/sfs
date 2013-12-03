@@ -1,0 +1,15 @@
+﻿@using System
+@using Sfs.Services
+
+@model Enum
+
+@{Type tipo = Model.GetType();
+  var valores = Enum.GetValues(tipo);
+ }
+<select name="lista">
+    @foreach (var val in valores) {
+
+        <option value="@val">@Servico.GetEnumDescricao(Enum.Parse(tipo, val.ToString()))</option>
+
+    }
+</select>

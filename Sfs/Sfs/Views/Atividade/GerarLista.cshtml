@@ -53,9 +53,24 @@
         <input type="hidden" name="CampoTurma" value="@Model.Turma" />
     </form>
 }
-@SfsHtml.SelecionarTodosScript()
+
 @{
-    var lmodel = Model.Atividade;
-    //lmodel.Inscricoes = lmodel.Inscricoes.OrderByDescending(i => i.CoeficienteSorte).ToList();
-} 
-@Html.Partial("_Listar", lmodel)
+    var lmodel = Model._ListarViewModel;
+}
+<form id="listaAtividade" action="~/Atividade/RedirectToListarAction" method="post">
+    @Html.Partial("_Listar", lmodel)
+</form>
+@if (ViewBag.PessoaLogada.IsAdministrador) {
+    <p style="text-align:right">
+        <input type="button" class="small alert button" value="Desafixar" onclick="redirect('DesafixarInscricoes')" />
+        <input type="button" class="small success button" value="Fixar" onclick="redirect('FixarInscricoes')" />
+        <input type="button" class="small alert button" value="Cancelar Inscrições" onclick="redirect('CancelarInscricoes')" />
+    </p>
+}
+<script>
+    function redirect(sender) {
+        $('#listaAtividade').get(0).setAttribute('action', sender);
+        $('#listaAtividade').submit();
+    }
+</script>
+@SfsHtml.SelecionarTodosScript()

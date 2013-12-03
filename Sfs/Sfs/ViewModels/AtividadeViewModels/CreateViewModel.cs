@@ -31,10 +31,19 @@ namespace Sfs.ViewModels.AtividadeViewModels
         public DateTime DataLimiteCancelamento { get; set; }
         public string HoraLimiteCancelamento { get; set; }
 
+        public Dictionary<Guid, string> EstadosAtividade { get; set; }
+
+        public string EstadoAtividadeValue { get; set; }
+
+        public List<EstadoAtividade> _EstadosAtividade { get; set; }
         public CreateViewModel() {
             Atividade = new Atividade();
             DataInicio = DateTime.Today;
             DataFim = DateTime.Today;
+            DataLimiteCancelamento = DateTime.Today;
+            DataLimiteInscricao = DateTime.Today;
+            EstadosAtividade = new Dictionary<Guid, string>();
+
         }
         #endregion
     }

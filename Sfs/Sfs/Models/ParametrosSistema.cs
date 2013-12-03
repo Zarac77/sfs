@@ -14,13 +14,17 @@ namespace Sfs.Models
 
         [Required]
         [DisplayName("Pontos Iniciais")]
-        [Range(1, Double.MaxValue)]
+        [Range(0, Double.MaxValue)]
         public int PontuacaoInicialAlunos { get; set; }
 
         public DateTime ViradaSemestre { get; set; }
 
+        [DisplayName("Tempo entre atividades, em minutos")]
+        public int TempoEntreAtividades { get; set; }
+
         public ParametrosSistema() {
             ViradaSemestre = new DateTime(2013, 7, 1);
+            TempoEntreAtividades = 60;
         }
     }
 }

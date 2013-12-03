@@ -208,5 +208,14 @@
 @helper SelecionarTodosTrigger(string classInput)
 {
     <br />
-    <input type="checkbox" onclick="selecionarTodas('@classInput');" title="Inverter Seleção" id="control" />
+    <input type="checkbox" onclick="selecionarTodas('@classInput');" title="Selecionar Todos" id="control" />
+}
+
+@helper DropDown(IDictionary<Guid, string> valueDescricao, Guid keySelecionado, string name, int width) { 
+    <select name="@name" id="@name" style="width:@(width)px">
+        
+        @foreach (var k in valueDescricao) {
+            <option value="@k.Key" @(k.Key == keySelecionado ? "selected" : "")>@k.Value</option>
+        }
+    </select>
 }

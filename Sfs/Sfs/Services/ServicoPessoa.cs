@@ -6,7 +6,7 @@ using Sfs.Models;
 using System.Text.RegularExpressions;
 
 namespace Sfs.Services {
-    public class ServicoPessoa {
+    public class ServicoPessoa : Servico {
         public static int GetNumeroSaidas(SfsContext context, Pessoa pessoa) {
             pessoa = context.Pessoas.Find(pessoa.Id);
             var viradaSemestre = context.ParametrosSistema.FirstOrDefault().ViradaSemestre;
@@ -22,7 +22,7 @@ namespace Sfs.Services {
             return inscricoes.Count();
         }
 
-        public static double CalcCoeficienteSorte(SfsContext context, Pessoa pessoa) {
+        public static double CalcCoeficienteSortePessoa(SfsContext context, Pessoa pessoa) {
             var atividadesAtivas = ServicoAtividade.GetAtividadesAtivas(context);
             int numeroAtividadadesAtivas = atividadesAtivas.Count();
             int numeroInscricoesAtivas = atividadesAtivas.Where(a => a.Inscricoes.Exists(i => i.Pessoa.Id == pessoa.Id)).Count();
@@ -31,26 +31,43 @@ namespace Sfs.Services {
             return cfs;
         }
 
-        public static IEnumerable<Pessoa> BuscarPessoas(SfsContext context, Pessoa modelo) {
-            var pessoas = context.Pessoas.ToList();
-            var info = typeof(Pessoa).GetProperties();
-            foreach (var p in info) {
-                var value = p.GetValue(modelo);
-                var type = value != null ? value.GetType() : null;
-                bool isTipoValido = type == typeof(string) || type == typeof(bool);
-                if ((isTipoValido && type == typeof(string)) && !String.IsNullOrEmpty(p.GetValue(modelo).ToString())) {
-                    pessoas = pessoas.Where(pessoa => p.GetValue(pessoa) != null && Regex.IsMatch(p.GetValue(pessoa).ToString(), p.GetValue(modelo).ToString(), RegexOptions.IgnoreCase)).ToList();
-                }
-                else if (isTipoValido) {
-                    pessoas = pessoas.Where(pessoa => p.GetValue(modelo).Equals(p.GetValue(pessoa))).ToList();
-                }
+        public static void SetCoeficienteSorteInscricoesPessoa(SfsContext context, Pessoa pessoa) {
+            pessoa = context.Pessoas.Find(pessoa.Id);
+            var inscricoes = ServicoInscricoes.GetInscricoesAtivasPessoa(context, pessoa);
+            foreach (var i in inscricoes) {
+                i.CoeficienteSorte = ServicoAtividade.GetCoeficienteSorteInscricao(i);
             }
-
-            return pessoas;
         }
 
+        public static IEnumerable<Pessoa> BuscarPessoas(SfsContext context, Pessoa modelo) {
+            var lista = FiltrarLista<Pessoa>(context, modelo);
+            return lista;
+        }
+
+        /// <summary>
+        /// Faz as alterações necessárias para que uma pessoa possa ser devidamente registrada no sistema.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="pessoa"></param>
         public static void RegistrarPessoa(SfsContext context, Pessoa pessoa) {
-            //pessoa.Senha = ServicoControleAcesso.HashSenha(pessoa.Email
+            pessoa.Id = Guid.NewGuid();
+            pessoa.Senha = ServicoControleAcesso.HashSenha(pessoa.Email, pessoa.PreSenha);
+            context.Pessoas.Add(pessoa);
+            context.Inboxes.Add(new Inbox { Id = Guid.NewGuid(), IdPessoa = pessoa.Id, Pessoa = pessoa });
+        }
+
+        /// <summary>
+        /// Faz as alterações necessárias para que uma pessoa possa ser devidamente registrada no sistema.
+        /// </summary>
+        /// <param name="context">A classe de contexto onde o novo usuário será incluído.</param>
+        /// <param name="pessoa">A instância de Pessoa que contem os dados de registro.</param>
+        /// <param name="saveChanges">As alterações devem ser salvas no banco?</param>
+        public static void RegistrarPessoa(SfsContext context, Pessoa pessoa, bool saveChanges) {
+            pessoa.Id = Guid.NewGuid();
+            pessoa.Senha = ServicoControleAcesso.HashSenha(pessoa.Email, pessoa.PreSenha);
+            context.Pessoas.Add(pessoa);
+            context.Inboxes.Add(new Inbox { Id = Guid.NewGuid(), IdPessoa = pessoa.Id, Pessoa = pessoa });
+            if (saveChanges) context.SaveChanges();
         }
     }
 }

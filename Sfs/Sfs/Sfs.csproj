@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <IncludeIisSettings>true</IncludeIisSettings>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -198,6 +201,7 @@
     <Compile Include="Controllers\AlunoController.cs" />
     <Compile Include="Controllers\AtividadeController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
+    <Compile Include="Controllers\ControleController.cs" />
     <Compile Include="Controllers\CustomController.cs" />
     <Compile Include="Controllers\GerenciamentoBDController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -229,21 +233,24 @@
     <Compile Include="Services\Servico.cs" />
     <Compile Include="Services\ServicoAtividade.cs" />
     <Compile Include="Services\ServicoControleAcesso.cs" />
+    <Compile Include="Services\ServicoGerenciamentoBD.cs" />
     <Compile Include="Services\ServicoInbox.cs" />
     <Compile Include="Services\ServicoInscricoes.cs" />
     <Compile Include="Services\ServicoLog.cs" />
     <Compile Include="Services\ServicoMensageiro.cs" />
     <Compile Include="Services\ServicoPessoa.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\CreateViewModel.cs" />
-    <Compile Include="ViewModels\AtividadeViewModels\ForcarInscricoesViewModel.cs" />
+    <Compile Include="ViewModels\AtividadeViewModels\ListarViewModel.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\GerarListaViewModel.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\ProximasAtividadesViewModel.cs" />
     <Compile Include="ViewModels\ControleAcessoViewModels\AlterarSenhaViewModel.cs" />
     <Compile Include="ViewModels\ControleAcessoViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\ControleViewModels\ConfirmarPresencasViewModel.cs" />
     <Compile Include="ViewModels\InboxViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\InboxViewModels\LerViewModel.cs" />
     <Compile Include="ViewModels\ListaPaginada.cs" />
+    <Compile Include="ViewModels\_ListarViewModel.cs" />
     <Compile Include="ViewModels\PessoaViewModels\AssociarPerfisViewModel.cs" />
     <Compile Include="ViewModels\PessoaViewModels\IndexViewModel.cs" />
   </ItemGroup>
@@ -350,13 +357,15 @@
     <Content Include="Scripts\foundation\foundation.section.js" />
     <Content Include="Scripts\foundation\foundation.tooltips.js" />
     <Content Include="Scripts\foundation\foundation.topbar.js" />
+    <None Include="Properties\PublishProfiles\Produção.pubxml" />
     <None Include="Properties\PublishProfiles\Westerbly.pubxml" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.0.3.js" />
+    <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery-2.0.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.maskedinput-1.3.1.js" />
     <Content Include="Scripts\jquery.maskedinput-1.3.1.min.js" />
@@ -380,6 +389,7 @@
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\_references.js" />
     <Content Include="Images\accent.png" />
@@ -449,7 +459,6 @@
     <Content Include="Views\Shared\_Listar.cshtml" />
     <Content Include="Views\Inbox\Index.cshtml" />
     <Content Include="Views\Inbox\Ler.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\ControleAcesso\AcessoNaoAutorizado.cshtml" />
     <Content Include="Views\Atividade\GerarLista.cshtml" />
     <Content Include="Views\GerenciamentoBD\Index.cshtml" />
@@ -458,6 +467,10 @@
     <Content Include="Views\Home\VerLista.cshtml" />
     <Content Include="Views\Inscricoes\Index.cshtml" />
     <Content Include="Views\Logging\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Enum.cshtml" />
+    <Content Include="Views\GerenciamentoBD\ConfirmacaoSucessoAlimentarDB.cshtml" />
+    <Content Include="Views\Controle\Index.cshtml" />
+    <Content Include="Views\Controle\Ver.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -493,7 +506,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.7\tools\Microsoft.Bcl.Build.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Sfs.Services;
+using Sfs.ViewModels;
 
 namespace Sfs.Controllers
 {
@@ -34,7 +35,7 @@ namespace Sfs.Controllers
         {
             var atividade = Context.Atividades.Find(id);
             atividade.Inscricoes = atividade.Inscricoes.OrderByDescending(i => i.CoeficienteSorte).ToList();
-            return View(atividade);
+            return View(new _ListarViewModel { Atividade = atividade, IdAtividade = atividade.Id, MostrarCheckboxes = false});
         }
     }
 }

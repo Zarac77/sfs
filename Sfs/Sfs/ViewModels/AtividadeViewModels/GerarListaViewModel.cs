@@ -14,5 +14,7 @@ namespace Sfs.ViewModels.AtividadeViewModels
         public Guid IdAtividade { get; set; }
         public Atividade Atividade { get; set; }
         public IEnumerable<Pessoa> ResultadoPessoas { get; set; }
+
+        public _ListarViewModel _ListarViewModel { get; set; }
     }
 }

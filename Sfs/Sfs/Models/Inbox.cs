@@ -8,7 +8,7 @@ using System.Web;
 namespace Sfs.Models
 {
     /// <summary>
-    /// Caixa de Entrada para sistema de mensagens interno.
+    /// Representa uma caixa de entrada para sistema de mensagens interno.
     /// </summary>
     public class Inbox
     {

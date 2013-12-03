@@ -10,6 +10,8 @@ namespace Sfs.Controllers
     public class CustomController : Controller
     {
         private SfsContext context;
+        
+        //Não é um singleton
         public SfsContext Context
         {
             get

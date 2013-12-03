@@ -1,58 +1,58 @@
-﻿@model Sfs.Models.Atividade
+﻿@model Sfs.ViewModels._ListarViewModel
+@using Sfs.Models
 
 @{
-    ViewBag.Title = "Lista para " + Model.Descricao;
+    ViewBag.Title = "Lista para " + Model.Atividade.Descricao;
 }
 
-<h4 style="text-align:center">@Model.Descricao</h4>
+<h4 style="text-align:center">@Model.Atividade.Descricao</h4>
 <hr />
 <br />
-<form id="listaAtividade" action="~/Atividade/RedirectToListarAction" method="post">
     <table>
         <thead>
         <tr>
             @{var w = ViewBag.PessoaLogada.IsAdministrador ? "65px" : "30px";}
-            <td style="width:@w;">@if (ViewBag.PessoaLogada.IsAdministrador) { <br />@SfsHtml.SelecionarTodosTrigger("listaAtividade") }</td>
+            <td style="width:@w;">@if (Model.MostrarCheckboxes) { <br />@SfsHtml.SelecionarTodosTrigger("listaAtividade") }</td>
             <td style="width:70px;"><b>Matrícula</b></td>
             <td><b>Nome</b></td>
-            <td style="width:140px;"><b>Turma</b></td>
+            <td style="width:80px;"><b>Turma</b></td>
+            <td style="width:140px"><b>Telefone</b></td>
+            @if (ViewBag.PessoaLogada.IsAdministrador) {
+                @MostrarPresencasCabecalho()
+            }
         </tr>
             </thead>
-        @for (int i = 0; i < Model.Inscricoes.Count; i++)
+        @for (int i = 0; i < Model.Atividade.Inscricoes.Count; i++)
         {
-            var matrícula = Model.Inscricoes[i].Pessoa.Matricula;
-            var nome = Model.Inscricoes[i].Pessoa.Nome;
-            var turma = Model.Inscricoes[i].Pessoa.Turma;        
+            var matrícula = Model.Atividade.Inscricoes[i].Pessoa.Matricula;
+            var nome = Model.Atividade.Inscricoes[i].Pessoa.Nome;
+            var turma = Model.Atividade.Inscricoes[i].Pessoa.Turma;        
         <tr>
         
-            <td>@if (ViewBag.PessoaLogada.IsAdministrador && i < Model.Inscricoes.Count)
-                { <input type="checkbox" class="listaAtividade" name="IdSelecionados" value="@Model.Inscricoes[i].IdPessoa"/> }  
-                @(i < Model.NumeroVagas ? (i + 1).ToString() : "LE")</td>
+            <td>@if (Model.MostrarCheckboxes && i < Model.Atividade.Inscricoes.Count)
+                { <input type="checkbox" class="listaAtividade" name="IdSelecionados" value="@Model.Atividade.Inscricoes[i].IdPessoa"/> }  
+                @(i < Model.Atividade.NumeroVagas ? (i + 1).ToString() : "LE")</td>
             <td>@matrícula</td>
             <td>@nome</td>
             <td>@turma</td>
-            <td>@Model.Inscricoes[i].CoeficienteSorte</td>
+            <td>@Model.Atividade.Inscricoes[i].Pessoa.Telefone</td>
+            @if (ViewBag.PessoaLogada.IsAdministrador) { 
+                @MostrarPresencas(Model.Atividade.Inscricoes[i])
+            }
         </tr>
         }
 
     </table>
-    <input type="hidden" name="IdAtividade" value="@Model.Id" />
-    @if(ViewBag.PessoaLogada.IsAdministrador) {
-        //@SfsHtml.DummyButton("Cancelar inscrições selecionadas", "redirect('CancelarInscricoes')", "small alert button")
-        <p style="text-align:right">
-            <input type="button" class="small alert button" value="Desafixar" onclick="redirect('DesafixarInscricoes')" />
-            <input type="button" class="small success button" value="Fixar" onclick="redirect('FixarInscricoes')" />
-            <input type="button" class="small alert button" value="Cancelar Inscrições" onclick="redirect('CancelarInscricoes')" />
-        </p>
-        //@SfsHtml.DummyButton("Fixar selecionados", "")
-        //@SfsHtml.DummyButton("Desafixar selecionados", "redirect('DesafixarInscricoes')")
-    }
-</form>
+    <input type="hidden" name="IdAtividade" value="@Model.Atividade.Id" />
 
-<script>
-    function redirect(sender) {
-        $('#listaAtividade').get(0).setAttribute('action', sender);
-        $('#listaAtividade').submit();
+
+@helper MostrarPresencasCabecalho() { 
+        if (Model.Atividade.EstadoAtividade.Indice == EstadoAtividade.Validada) {             
+                <td><b>Presente</b></td>           
+        }
+}
+@helper MostrarPresencas(Inscricao ins) {
+                  if (Model.Atividade.EstadoAtividade.Indice == EstadoAtividade.Validada) {
+                      <td>@(ins.Presente ? "Presente" : "Ausente")</td>
+                  }
     }
-</script>
-@SfsHtml.SelecionarTodosScript()

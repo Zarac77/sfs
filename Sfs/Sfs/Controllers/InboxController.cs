@@ -19,7 +19,7 @@ namespace Sfs.Controllers
         public ActionResult Index(IndexViewModel ivm)
         {
             ivm.Lista = Context.Inboxes.Single(i => i.IdPessoa == PessoaLogada.Id).Mensagens;
-            ivm = (IndexViewModel)Servico.PaginarLista(ivm, "DataEnvio");
+            ivm = (IndexViewModel)Servico.PaginarLista(ivm, "DataEnvio", true);
             return View(ivm);
         }
 

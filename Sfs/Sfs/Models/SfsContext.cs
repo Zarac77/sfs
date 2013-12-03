@@ -36,5 +36,7 @@ namespace Sfs.Models
         public DbSet<ParametrosSistema> ParametrosSistema { get; set; }
 
         public DbSet<LogReport> LogReports { get; set; }
+
+        public DbSet<EstadoAtividade> EstadosAtividade { get; set; }
     }
 }

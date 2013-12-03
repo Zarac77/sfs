@@ -33,6 +33,8 @@ namespace Sfs.Models
         /// </summary>
         public bool Presente { get; set; }
 
+        public bool FaltaAbonada { get; set; }
+
         [ForeignKey("Pessoa")]
         public Guid IdPessoa { get; set; }
         public virtual Pessoa Pessoa { get; set; }
