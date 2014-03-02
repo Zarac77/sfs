@@ -1,0 +1,39 @@
+﻿@model Sfs.ViewModels.MatrizViewModels.IndexViewModel
+
+@{
+    ViewBag.Title = "Matriz " + System.DateTime.Today.Year;
+}
+
+@using Sfs.Services
+
+<table>
+    <thead>
+        <tr>
+            <th>
+                Matrícula
+            </th>
+            <th>
+                Nome
+            </th>
+            <th>
+                Saídas
+            </th>
+        </tr>
+    </thead>
+    @foreach (Sfs.Models.Pessoa item in Model.Lista) {
+        <tr>
+            <td>
+                @item.Matricula
+            </td>
+            <td>
+                @item.Nome
+            </td>
+            <td>
+                @Html.ActionLink("Ver", "Details", new { Id = item.Id })
+            </td>
+        </tr> 
+    }
+    
+</table>
+
+@SfsHtml.PaginacaoLista("Matriz", "Index", Model)
