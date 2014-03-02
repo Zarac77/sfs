@@ -34,7 +34,7 @@ namespace Sfs.Services
             /*foreach (var e in Enum.GetValues(enm.GetType())) {
                 dic.Add(e.ToString(), GetEnumDescricao(e));
             }*/
-            var estados = context.EstadosAtividade.Where(a => a.Id == a.Id).ToList();
+            var estados = context.EstadosAtividade.ToList();
             for (int i = 0; i < estados.Count(); i++) {
                 var estado = estados.Single(e => e.Indice == i);
                 dic.Add(estado.Id, estado.Descricao);
@@ -42,12 +42,13 @@ namespace Sfs.Services
                 return dic;
         }
 
-        public static ListaPaginada PaginarLista(ListaPaginada listaPaginada, string criterio, bool descending) {
+        public static ListaPaginada<T> PaginarLista<T>(ListaPaginada<T> listaPaginada, string criterio, bool descending) where T : class {
             var lista = listaPaginada.Lista;
             if(descending)
                 lista = lista.OrderByDescending(p => p.GetType().GetProperty(criterio).GetValue(p));
             else
                 lista = lista.OrderBy(p => p.GetType().GetProperty(criterio).GetValue(p));
+            listaPaginada.TotalPaginas = (int)(lista.Count() / ITENS_POR_PAGINA);
             listaPaginada.Lista = lista
                 .Skip(ITENS_POR_PAGINA * listaPaginada.PaginaAtual)
                 .Take(ITENS_POR_PAGINA);
@@ -65,14 +66,14 @@ namespace Sfs.Services
         /// <typeparam name="T">Tipo do modelo.</typeparam>
         /// <param name="context">Uma instância da classe de contexto.</param>
         /// <param name="modelo">O objeto modelo cujas informações serão buscadas no banco de dados.</param>
-        /// <returns></returns>
+        /// <returns>Retorna uma lista filtrada à partir de um modelo.</returns>
         public static List<Tipo> FiltrarLista<Tipo>(SfsContext context, object modelo) where Tipo : class {
             var lista = context.Set<Tipo>().ToList();
             var info = modelo.GetType().GetProperties();
             foreach (var i in info) {
                 var value = i.GetValue(modelo);
                 var type = value != null ? value.GetType() : null;
-                bool isTipoValido = type == typeof(string) || type == typeof(bool) || type == typeof(int);
+                bool isTipoValido = type == typeof(string) || type == typeof(bool);
                 if ((isTipoValido && type == typeof(string)) && !String.IsNullOrEmpty(i.GetValue(modelo).ToString())) {
                     lista = lista
                         .Where(o => i.GetValue(o) != null

@@ -176,31 +176,33 @@
     </script>
 }
 
-@helper PaginacaoLista(string controllerName, string actionName, Sfs.ViewModels.ListaPaginada model)
+@helper PaginacaoLista(string controllerName, string actionName, object model)
 {
     //Só funciona para ViewModels com inheritance de "Sfs.ViewModels.ListaPaginada".
     var urlHelper = new UrlHelper(Context.Request.RequestContext);
     <p style="text-align:center">
-    @if (model.PaginaAtual > 0)
+    @{
+        var propertyInfos = model.GetType().GetProperties();
+        int paginaAtual = (int)propertyInfos.First(a => a.Name == "PaginaAtual").GetValue(model);
+        int totalPaginas = (int)propertyInfos.First(a => a.Name == "TotalPaginas").GetValue(model);       
+    }
+    @if (paginaAtual > 0)
     {
-        <a href="@urlHelper.Action(actionName, new { PaginaAtual = model.PaginaAtual - 1 })"><</a>
+        <a href="@urlHelper.Action(actionName, new { PaginaAtual = paginaAtual - 1 })"><</a>
     }
     
-    @for (int i = 0; i < model.TotalPaginas; i++)
-    {
+    @for (int i = 0; i < totalPaginas; i++) {
         string iAlterado = (i + 1).ToString() + " ";
-        if (i != model.PaginaAtual)
-        {
+        if (i != paginaAtual) {
             <a href="@urlHelper.Action(actionName, new { PaginaAtual = i })">@iAlterado</a>
         }
-        else
-        {
+        else {
             @iAlterado
         }
     }
-    @if (model.PaginaAtual < model.TotalPaginas - 1)
+    @if (paginaAtual < totalPaginas - 1)
     {
-        <a href="@urlHelper.Action(actionName, new { PaginaAtual = model.PaginaAtual + 1 })">></a>
+        <a href="@urlHelper.Action(actionName, new { PaginaAtual = paginaAtual + 1 })">></a>
     }
 </p>
 }

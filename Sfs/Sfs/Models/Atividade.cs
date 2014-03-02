@@ -21,6 +21,12 @@ namespace Sfs.Models
         [Required]
         public string Descricao { get; set; }
 
+        [DisplayName("Transporte")]
+        public string Transporte { get; set; }
+
+        [DisplayName("Responsáveis")]
+        public string Responsaveis { get; set; }
+
         [DisplayName("Data e hora de início")]
         public DateTime DataHoraInicio { get; set; }
 

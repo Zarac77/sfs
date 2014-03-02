@@ -8,8 +8,9 @@ namespace Sfs.Services
 {
     public class ServicoControleAcesso : Servico
     {
-        public static bool Login(SfsContext context, string user, string senha) {
-            return true;
+        public static bool Login(string user, string senha, Pessoa pessoa) {
+            var valida = CompararSHA1(HashSenha(user, senha), pessoa.Senha);
+            return valida;
         }
 
         public static bool AlterarSenha(SfsContext context, Guid id, string senhaAtual, string novaSenha, string confirmacaoNovaSenha) {

@@ -4,8 +4,13 @@
 @{
     ViewBag.Title = "Lista para " + Model.Atividade.Descricao;
 }
-
+@Html.ValidationSummary(true)
 <h4 style="text-align:center">@Model.Atividade.Descricao</h4>
+<h5 style="text-align:center"> <b>Responsáveis:</b> @Model.Atividade.Responsaveis
+    <br />
+    <b>Transporte: @Model.Atividade.Transporte
+</b>
+    </h5>
 <hr />
 <br />
     <table>
@@ -33,7 +38,7 @@
                 { <input type="checkbox" class="listaAtividade" name="IdSelecionados" value="@Model.Atividade.Inscricoes[i].IdPessoa"/> }  
                 @(i < Model.Atividade.NumeroVagas ? (i + 1).ToString() : "LE")</td>
             <td>@matrícula</td>
-            <td>@nome</td>
+            <td @(Model.Atividade.Inscricoes[i].Fixada ? "style=color:limegreen" : "")>@nome</td>
             <td>@turma</td>
             <td>@Model.Atividade.Inscricoes[i].Pessoa.Telefone</td>
             @if (ViewBag.PessoaLogada.IsAdministrador) { 

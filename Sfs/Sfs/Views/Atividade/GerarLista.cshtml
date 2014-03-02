@@ -42,6 +42,7 @@
         foreach (var p in Model.ResultadoPessoas)
         {
             <input type="checkbox" name="IdSelecionados" class="listaQuery" value="@p.Id"/> @p.Nome
+        if (p.Pontuacao < Model.Atividade.Custo) { <div style="color:red"><b> Este aluno não possui pontuação suficiente e não será inscrito.</b></div>}
             <br />
             c++;
         }

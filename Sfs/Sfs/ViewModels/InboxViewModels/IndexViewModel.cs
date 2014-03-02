@@ -6,14 +6,8 @@ using Sfs.Models;
 
 namespace Sfs.ViewModels.InboxViewModels
 {
-    public class IndexViewModel : ListaPaginada
+    public class IndexViewModel : ListaPaginada<Mensagem>
     {
-
-        public List<Mensagem> Mensagens { 
-            get { 
-                var lista = new List<Mensagem> (Lista.Cast<Mensagem>());
-                return lista;
-            } }
         public IndexViewModel()
         {
         }

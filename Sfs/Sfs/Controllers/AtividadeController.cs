@@ -76,14 +76,14 @@ namespace Sfs.Controllers
                 return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
             string log = ServicoAtividade.InscricoesAcaoLote(Context, lvm.IdAtividade, lvm.IdSelecionados, ServicoAtividade.Inscrever, this.ModelState);
             ServicoLog.Log(Context, "Inscrições", log);
-            return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade, Matricula = lvm.CampoMatricula, Turma = lvm.CampoTurma});
+            return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade });
         }
         
         public ActionResult FixarInscricoes(ListarViewModel lvm) {
             if (!PessoaLogada.IsAdministrador)
                 return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
             ServicoAtividade.SetFixadoInscricao(Context, lvm.IdSelecionados, lvm.IdAtividade, true);
-            return RedirectToAction("GerarLista");
+            return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade });
         }
 
         [HttpPost]
@@ -91,7 +91,7 @@ namespace Sfs.Controllers
             if (!PessoaLogada.IsAdministrador)
                 return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
             ServicoAtividade.SetFixadoInscricao(Context, lvm.IdSelecionados, lvm.IdAtividade, false);
-            return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade, Matricula = lvm.CampoMatricula, Turma = lvm.CampoTurma});
+            return RedirectToAction("GerarLista", new { IdAtividade = lvm.IdAtividade});
         }
 
 
@@ -168,11 +168,6 @@ namespace Sfs.Controllers
         public ActionResult Inscrever(Atividade atividade)
         {
             var log = ServicoAtividade.Inscrever(Context, atividade, PessoaLogada.Id, this.ModelState);
-            if (this.ModelState.Count > 0) {
-                var viewModel = new IndexViewModel();
-                PrepararIndexViewModel(viewModel);
-                return View("Index", viewModel);
-            }
             ServicoLog.Log(Context, "Inscrições", log);
             Context.SaveChanges();
             return RedirectToAction("Index", "Home");

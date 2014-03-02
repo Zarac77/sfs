@@ -15,7 +15,7 @@ namespace Sfs.Services {
 
         public static void SetNovaPrioridade(SfsContext context, Inscricao inscricao, List<Inscricao> listaCompleta) {
             inscricao = context.Inscricoes.Find(inscricao.Id);
-            if (listaCompleta.Count > 1) {
+            if (listaCompleta.Count >= 1) {
                 inscricao.Prioridade = listaCompleta.Count - 1;
                 for(int i = 0; i < listaCompleta.Count - 1; i++) {
                     DescerPrioridade(context, inscricao, listaCompleta, false);
@@ -64,11 +64,11 @@ namespace Sfs.Services {
 
         public static bool ConfirmarInscricao(SfsContext context, Inscricao inscricao, out string motivo) {
             var conflitosHorario = GetInscricoesConflitoHorario(context, inscricao);
-            var inscricaoPrioritaria = GetInscricaoPrioritaria(conflitosHorario);
+            var inscricaoPrioritaria = SortByPrioridade(conflitosHorario).First();
             if(conflitosHorario.Count > 1) {
                 motivo = "Conflito de horário com as atividades ";
                 foreach (var ins in conflitosHorario) {
-                    motivo += ins.Atividade.Descricao + ";";
+                    motivo += ins.Atividade.Descricao + "; ";
                 }
             }
             motivo = "";
@@ -99,9 +99,29 @@ namespace Sfs.Services {
             return listaConflitos;
         }
 
-        private static Inscricao GetInscricaoPrioritaria(List<Inscricao> conflitos) {
+        private static List<Inscricao> GetInscricoesConflitoPontuacao(SfsContext context, Inscricao inscricao) {
+            //TODO: checar se a soma do custo das inscrições ativas é maior do que a pontuação total do indivíduo.
+            var inscricoesAtivas = GetInscricoesAtivasPessoa(context, inscricao.Pessoa).ToList();
+            while (CalcularCustoTotal(inscricoesAtivas) > inscricao.Pessoa.Pontuacao) {
+                //fazer validação
+                var inscricaoNaoPrioritaria = SortByPrioridade(inscricoesAtivas).Last();
+                inscricoesAtivas.Remove(inscricaoNaoPrioritaria);
+            }
+
+            return inscricoesAtivas;
+        }
+
+        private static List<Inscricao> SortByPrioridade(List<Inscricao> conflitos) {
             conflitos.Sort((i1, i2) => i1.Prioridade.CompareTo(i2.Prioridade));
-            return conflitos.First();
+            return conflitos;
+        }
+
+        private static int CalcularCustoTotal(List<Inscricao> inscricoes) {
+            int custoTotal = 0;
+            foreach (var ins in inscricoes) {
+                custoTotal += ins.Atividade.Custo;
+            }
+            return custoTotal;
         }
     }
 }

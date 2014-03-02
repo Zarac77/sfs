@@ -29,10 +29,30 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <IncludeIisSettings>true</IncludeIisSettings>
+    <IncludeIisSettings>false</IncludeIisSettings>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>
     </DocumentationFile>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="DefaultConnection-Deployment" Order="1">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=%28localdb%29\v11.0%3b Initial Catalog=SfsContext-20130529153002%3b Integrated Security=True%3b MultipleActiveResultSets=True%3b AttachDbFilename=|DataDirectory|SfsContext-20130529153002.mdf" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\DefaultConnection-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="SfsContext-Deployment" Order="2">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=%28localdb%29\v11.0%3bAttachDbFilename=|DataDirectory|SfsContext-20130529153002.mdf%3bInitial Catalog=SfsContext-20130529153002%3bIntegrated Security=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\SfsContext-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <PublishDatabases>false</PublishDatabases>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -208,6 +228,7 @@
     <Compile Include="Controllers\InboxController.cs" />
     <Compile Include="Controllers\InscricoesController.cs" />
     <Compile Include="Controllers\LoggingController.cs" />
+    <Compile Include="Controllers\MatrizController.cs" />
     <Compile Include="Controllers\ParametrosController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
@@ -230,6 +251,11 @@
     <Compile Include="Models\Professor.cs" />
     <Compile Include="Models\SfsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Services\Servico.cs" />
     <Compile Include="Services\ServicoAtividade.cs" />
     <Compile Include="Services\ServicoControleAcesso.cs" />
@@ -239,6 +265,7 @@
     <Compile Include="Services\ServicoLog.cs" />
     <Compile Include="Services\ServicoMensageiro.cs" />
     <Compile Include="Services\ServicoPessoa.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\CreateViewModel.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\ListarViewModel.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\GerarListaViewModel.cs" />
@@ -250,6 +277,7 @@
     <Compile Include="ViewModels\InboxViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\InboxViewModels\LerViewModel.cs" />
     <Compile Include="ViewModels\ListaPaginada.cs" />
+    <Compile Include="ViewModels\MatrizViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\_ListarViewModel.cs" />
     <Compile Include="ViewModels\PessoaViewModels\AssociarPerfisViewModel.cs" />
     <Compile Include="ViewModels\PessoaViewModels\IndexViewModel.cs" />
@@ -359,6 +387,10 @@
     <Content Include="Scripts\foundation\foundation.topbar.js" />
     <None Include="Properties\PublishProfiles\Produção.pubxml" />
     <None Include="Properties\PublishProfiles\Westerbly.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Scripts\jquery-2.0.3.intellisense.js" />
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
@@ -471,6 +503,8 @@
     <Content Include="Views\GerenciamentoBD\ConfirmacaoSucessoAlimentarDB.cshtml" />
     <Content Include="Views\Controle\Index.cshtml" />
     <Content Include="Views\Controle\Ver.cshtml" />
+    <Content Include="Views\Matriz\Index.cshtml" />
+    <Content Include="Views\Matriz\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

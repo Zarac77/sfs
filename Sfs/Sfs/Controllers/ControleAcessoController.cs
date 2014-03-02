@@ -31,7 +31,7 @@ namespace Sfs.Controllers
             if (ModelState.IsValid)
             {
                 var pessoa = Context.Pessoas.SingleOrDefault(p => p.Email == viewModel.Email);
-                if (pessoa != null && ServicoControleAcesso.CompararSHA1(pessoa.Senha, ServicoControleAcesso.HashSenha(viewModel.Email, viewModel.Senha)))
+                if (pessoa != null && ServicoControleAcesso.Login(viewModel.Email, viewModel.Senha, pessoa))
                 {
                     FormsAuthentication.SetAuthCookie(viewModel.Email, false);
                     return RedirectToAction("Index", "Home");

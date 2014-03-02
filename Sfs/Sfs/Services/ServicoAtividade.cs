@@ -22,9 +22,23 @@ namespace Sfs.Services
         public static string CancelarInscricao(SfsContext context, Atividade atividade, Guid idPessoa, ModelStateDictionary modelState)
         {
             //Coleta de dados:
-            var inscricao = atividade.Inscricoes.SingleOrDefault(i => i.IdPessoa == idPessoa);
+            Inscricao inscricao = null;
             var pessoa = context.Pessoas.Find(idPessoa);
             var inscricoesAtivas = ServicoInscricoes.GetInscricoesAtivasPessoa(context, pessoa);
+            try {
+                inscricao = atividade.Inscricoes.SingleOrDefault(i => i.IdPessoa == idPessoa);
+            }
+            catch {
+                var inscricoes = atividade.Inscricoes.Where(i => i.IdPessoa == idPessoa).Skip(1);
+                if (inscricoes.Count() > 1) {
+                    foreach(var ins in inscricoes) {
+                        RemoverInscricao(context, atividade, ins, pessoa, inscricoesAtivas);
+                    }
+                }
+                inscricao = inscricoes.FirstOrDefault();
+            }
+            
+            
             atividade = context.Atividades.Find(atividade.Id);
 
             //Validação:
@@ -38,15 +52,19 @@ namespace Sfs.Services
             }
                 
             //Lógica:
+            RemoverInscricao(context, atividade, inscricao, pessoa, inscricoesAtivas);
+            pessoa.CoeficienteSorte = ServicoPessoa.CalcCoeficienteSortePessoa(context, pessoa);
+            ServicoPessoa.SetCoeficienteSorteInscricoesPessoa(context, pessoa);
+            string textoLog = "A inscrição de " + pessoa.Nome + " (" + pessoa.Matricula + ") em " + atividade.Descricao + " foi cancelada.";
+            return ServicoLog.FormatarLog(textoLog);
+        }
+
+        private static void RemoverInscricao(SfsContext context, Atividade atividade, Inscricao inscricao, Pessoa pessoa, IEnumerable<Inscricao> inscricoesAtivas) {
             ServicoInscricoes.ElevarInscricao(context, inscricao, inscricoesAtivas.OrderByDescending(i => i.Prioridade).ToList());
             pessoa.Inscricoes.Remove(inscricao);
             atividade.Inscricoes.Remove(inscricao);
             context.Inscricoes.Remove(inscricao);
             context.SaveChanges();
-            pessoa.CoeficienteSorte = ServicoPessoa.CalcCoeficienteSortePessoa(context, pessoa);
-            ServicoPessoa.SetCoeficienteSorteInscricoesPessoa(context, pessoa);
-            string textoLog = "A inscrição de " + pessoa.Nome + " (" + pessoa.Matricula + ") em " + atividade.Descricao + " foi cancelada.";
-            return ServicoLog.FormatarLog(textoLog);
         }
 
         public static string Inscrever(SfsContext context, Atividade atividade, Guid idPessoa, ModelStateDictionary modelState) {
@@ -57,9 +75,9 @@ namespace Sfs.Services
 
             //Validação:
             var existeInscricao = atividade.Inscricoes.Exists(i => i.IdPessoa == idPessoa);
-            var pontuacaoSuficiente = atividade.Custo > pessoa.Pontuacao;
+            var pontuacaoSuficiente = atividade.Custo < pessoa.Pontuacao;
             var dataLimite = DateTime.Now < atividade.DataLimiteInscricao;
-            var inscricaoPossivel = existeInscricao && pontuacaoSuficiente && dataLimite;
+            var inscricaoPossivel = !existeInscricao && pontuacaoSuficiente && dataLimite;
             if (!inscricaoPossivel) {
                 modelState.AddModelError("", "Não foi possível realizar a inscrição.");
                 return String.Empty;
@@ -137,14 +155,14 @@ namespace Sfs.Services
         }
 
         public static bool CreateOrEdit(SfsContext context, CreateViewModel viewModel) {
-            var atividade = context.Atividades.Find(viewModel.Atividade.Id);
+            var atividade = viewModel.Atividade;
             atividade.DataHoraInicio = DateTime.Parse(viewModel.DataInicio.ToString("dd/MM/yyyy") + " " + viewModel.HoraInicio);
             atividade.DataHoraFim = DateTime.Parse(viewModel.DataFim.ToString("dd/MM/yyyy") + " " + viewModel.HoraFim);
             atividade.DataLimiteInscricao = DateTime.Parse(viewModel.DataLimiteInscricao.ToString("dd/MM/yyyy") + " " + viewModel.HoraLimiteInscricao);
             atividade.DataLimiteCancelamento = DateTime.Parse(viewModel.DataLimiteCancelamento.ToString("dd/MM/yyyy") + " " + viewModel.HoraLimiteCancelamento);
             atividade.IdEstadoAtividade = viewModel.Atividade.IdEstadoAtividade;
             atividade.EstadoAtividade = context.EstadosAtividade.Find(atividade.IdEstadoAtividade);
-            if (viewModel.Atividade.Id != Guid.Empty) {
+            if (atividade.Id != Guid.Empty) {
                 context.Entry(atividade).State = EntityState.Modified;
             }
             else {
@@ -222,10 +240,7 @@ namespace Sfs.Services
             context.SaveChanges();
         }
 
-        
-        
-        
-
+       
         public static void ArquivarAtividade(SfsContext context, Guid idAtividade) {
             var atividade = context.Atividades.Include(a => a.Inscricoes).Single(a => a.Id == idAtividade);
             var listaInscricoes = atividade.Inscricoes.OrderByDescending(i => i.CoeficienteSorte);

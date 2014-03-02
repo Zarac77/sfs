@@ -1,6 +1,0 @@
-﻿@using System
-
-@model TimeSpan?
-
-@{var s = Model.HasValue ? Model.Value.ToString("hh:MM") : String.Empty;}
-    @Html.TextBox("", s, new { @class = "date", @style = "width:100px;" })

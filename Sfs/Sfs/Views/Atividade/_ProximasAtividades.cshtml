@@ -11,15 +11,15 @@
     <div class="panel">
         <h3>@atividade.Descricao</h3>
         <div class="row">
-            <div class="small-5 columns">
+            <div class="small-7 columns">
                 Início: @atividade.DataHoraInicio.ToString("dd/MM/yyyy") às @atividade.DataHoraInicio.ToString("hh:mm")
                 <br />
                 Término: @atividade.DataHoraInicio.ToString("dd/MM/yyyy") às @atividade.DataHoraFim.ToString("hh:mm")
             </div>
-            <div class="small-5 columns right">
+            <div class="small-2 columns right-align">
                 Vagas: @atividade.NumeroVagas
                 <br />
-                Inscrições: @atividade.Inscricoes.Count() @GerarLinkInscricao(atividade)
+                Inscrições: @atividade.Inscricoes.Count() 
                 <br />
                 Custo: @atividade.Custo
                 <br />
@@ -29,6 +29,9 @@
                 else {
                     @Html.ActionLink("Ver Lista", "VerLista", "Home", new { id = atividade.Id }, null)
                 }
+            </div>
+            <div class="small-3 columns right">
+                @GerarLinkInscricao(atividade)
             </div>
         </div>
     </div>
@@ -54,12 +57,12 @@
         
         if (!existeInscricao && atividade.DataLimiteInscricao > DateTime.Today)
         {
-            <a href="#" class="small button" onclick="inscrever('@atividade.Id', '@atividade.Descricao');">Inscrever</a>
+            <a href="#" class="button large-12" onclick="inscrever('@atividade.Id', '@atividade.Descricao');">Inscrever</a>
         }
         else
         {
             if (existeInscricao && atividade.DataLimiteCancelamento > DateTime.Today) {
-                <a href="#" class="small alert button" onclick="desistir('@atividade.Id', '@atividade.Descricao');">Desistir</a>
+                <a href="#" class="large-12 alert button" onclick="desistir('@atividade.Id', '@atividade.Descricao');">Desistir</a>
             }
         }
     }

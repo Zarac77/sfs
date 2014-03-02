@@ -1,4 +1,0 @@
-C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\CamadaNegócios\bin\Debug\CamadaNegócios.dll
-C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\CamadaNegócios\bin\Debug\CamadaNegócios.pdb
-C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\CamadaNegócios\obj\Debug\CamadaNegócios.dll
-C:\Users\Westerbly\Documents\Visual Studio 2012\Projects\Sfs\CamadaNegócios\obj\Debug\CamadaNegócios.pdb

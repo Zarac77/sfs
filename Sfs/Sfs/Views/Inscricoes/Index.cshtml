@@ -27,12 +27,19 @@ Organize aqui as suas inscrições por prioridade.
                 @if (Model.IndexOf(item) > 0) {
                     @SfsHtml.IconActionLink("", "SubirInscricao", "Inscricoes", new { idInscricao = item.Id }, "arrow_up_green.png")
                 }
-                
+
                 @if (Model.IndexOf(item) < Model.Count - 1) {
                     @SfsHtml.IconActionLink("", "DescerInscricao", "Inscricoes", new { idInscricao = item.Id }, "arrow_down_red.png")
                 }
-                
+
             </td>
         </tr>
     }
 </table>
+
+<script>
+    $(function () {
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+    });
+</script>
