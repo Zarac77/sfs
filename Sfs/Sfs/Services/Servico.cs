@@ -57,7 +57,7 @@ namespace Sfs.Services
         }
 
         public static int GetWeekOfYear() {
-            return (int()(DateTime.Today.DayOfYear / 7);
+            return int()(DateTime.Today.DayOfYear / 7);
         }
 
         /// <summary>
