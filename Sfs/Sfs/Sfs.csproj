@@ -17,8 +17,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
-    <IISExpressAnonymousAuthentication />
-    <IISExpressWindowsAuthentication />
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>enabled</IISExpressWindowsAuthentication>
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -29,6 +29,30 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <IncludeIisSettings>false</IncludeIisSettings>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>
+    </DocumentationFile>
+    <PublishDatabaseSettings>
+      <Objects>
+        <ObjectGroup Name="DefaultConnection-Deployment" Order="1">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=%28localdb%29\v11.0%3b Initial Catalog=SfsContext-20130529153002%3b Integrated Security=True%3b MultipleActiveResultSets=True%3b AttachDbFilename=|DataDirectory|SfsContext-20130529153002.mdf" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\DefaultConnection-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+        <ObjectGroup Name="SfsContext-Deployment" Order="2">
+          <Destination Path="" />
+          <Object Type="DbFullSql">
+            <PreSource Path="Data Source=%28localdb%29\v11.0%3bAttachDbFilename=|DataDirectory|SfsContext-20130529153002.mdf%3bInitial Catalog=SfsContext-20130529153002%3bIntegrated Security=True" ScriptSchema="True" ScriptData="False" CopyAllFullTextCatalogs="False" DriDefaults="True" />
+            <Source Path="obj\Debug\AutoScripts\SfsContext-Deployment_SchemaOnly.sql" Transacted="True" />
+          </Object>
+        </ObjectGroup>
+      </Objects>
+    </PublishDatabaseSettings>
+    <PublishDatabases>false</PublishDatabases>
+    <FilesToIncludeForPublish>AllFilesInProjectFolder</FilesToIncludeForPublish>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -197,10 +221,14 @@
     <Compile Include="Controllers\AlunoController.cs" />
     <Compile Include="Controllers\AtividadeController.cs" />
     <Compile Include="Controllers\ControleAcessoController.cs" />
+    <Compile Include="Controllers\ControleController.cs" />
     <Compile Include="Controllers\CustomController.cs" />
     <Compile Include="Controllers\GerenciamentoBDController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InboxController.cs" />
+    <Compile Include="Controllers\InscricoesController.cs" />
+    <Compile Include="Controllers\LoggingController.cs" />
+    <Compile Include="Controllers\MatrizController.cs" />
     <Compile Include="Controllers\ParametrosController.cs" />
     <Compile Include="Controllers\PerfilController.cs" />
     <Compile Include="Controllers\PessoaController.cs" />
@@ -215,6 +243,7 @@
     <Compile Include="Models\DataInitializer.cs" />
     <Compile Include="Models\Inbox.cs" />
     <Compile Include="Models\Inscricao.cs" />
+    <Compile Include="Models\LogReport.cs" />
     <Compile Include="Models\Mensagem.cs" />
     <Compile Include="Models\ParametrosSistema.cs" />
     <Compile Include="Models\Perfil.cs" />
@@ -222,19 +251,34 @@
     <Compile Include="Models\Professor.cs" />
     <Compile Include="Models\SfsContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Servico.cs" />
     <Compile Include="Services\ServicoAtividade.cs" />
     <Compile Include="Services\ServicoControleAcesso.cs" />
+    <Compile Include="Services\ServicoGerenciamentoBD.cs" />
     <Compile Include="Services\ServicoInbox.cs" />
+    <Compile Include="Services\ServicoInscricoes.cs" />
+    <Compile Include="Services\ServicoLog.cs" />
     <Compile Include="Services\ServicoMensageiro.cs" />
+    <Compile Include="Services\ServicoPessoa.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\CreateViewModel.cs" />
-    <Compile Include="ViewModels\AtividadeViewModels\ForcarInscricoesViewModel.cs" />
+    <Compile Include="ViewModels\AtividadeViewModels\ListarViewModel.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\GerarListaViewModel.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\AtividadeViewModels\ProximasAtividadesViewModel.cs" />
     <Compile Include="ViewModels\ControleAcessoViewModels\AlterarSenhaViewModel.cs" />
     <Compile Include="ViewModels\ControleAcessoViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\ControleViewModels\ConfirmarPresencasViewModel.cs" />
     <Compile Include="ViewModels\InboxViewModels\IndexViewModel.cs" />
     <Compile Include="ViewModels\InboxViewModels\LerViewModel.cs" />
+    <Compile Include="ViewModels\ListaPaginada.cs" />
+    <Compile Include="ViewModels\MatrizViewModels\IndexViewModel.cs" />
+    <Compile Include="ViewModels\_ListarViewModel.cs" />
     <Compile Include="ViewModels\PessoaViewModels\AssociarPerfisViewModel.cs" />
     <Compile Include="ViewModels\PessoaViewModels\IndexViewModel.cs" />
   </ItemGroup>
@@ -313,6 +357,8 @@
     <Content Include="favicon.ico" />
     <Content Include="Foundation_readme.txt" />
     <Content Include="Global.asax" />
+    <Content Include="Images\16x16\arrow_down_red.png" />
+    <Content Include="Images\16x16\arrow_up_green.png" />
     <Content Include="Images\16x16\atividade.png" />
     <Content Include="Images\16x16\create.png" />
     <Content Include="Images\16x16\delete.png" />
@@ -339,12 +385,19 @@
     <Content Include="Scripts\foundation\foundation.section.js" />
     <Content Include="Scripts\foundation\foundation.tooltips.js" />
     <Content Include="Scripts\foundation\foundation.topbar.js" />
-    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Properties\PublishProfiles\Produção.pubxml" />
+    <None Include="Properties\PublishProfiles\Westerbly.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Scripts\jquery-2.0.3.intellisense.js" />
+    <Content Include="Scripts\jquery-2.0.3.js" />
+    <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.js" />
     <Content Include="Scripts\jquery-ui-1.10.3.min.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery-2.0.3.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.maskedinput-1.3.1.js" />
     <Content Include="Scripts\jquery.maskedinput-1.3.1.min.js" />
@@ -360,12 +413,15 @@
     <Content Include="Scripts\select2.js" />
     <Content Include="Scripts\select2.min.js" />
     <Content Include="Scripts\zepto.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Scripts\_references.js" />
     <Content Include="Images\accent.png" />
@@ -435,13 +491,20 @@
     <Content Include="Views\Shared\_Listar.cshtml" />
     <Content Include="Views\Inbox\Index.cshtml" />
     <Content Include="Views\Inbox\Ler.cshtml" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\ControleAcesso\AcessoNaoAutorizado.cshtml" />
     <Content Include="Views\Atividade\GerarLista.cshtml" />
     <Content Include="Views\GerenciamentoBD\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TimeSpan.cshtml" />
     <Content Include="Views\Parametros\Edit.cshtml" />
     <Content Include="Views\Home\VerLista.cshtml" />
+    <Content Include="Views\Inscricoes\Index.cshtml" />
+    <Content Include="Views\Logging\Index.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Enum.cshtml" />
+    <Content Include="Views\GerenciamentoBD\ConfirmacaoSucessoAlimentarDB.cshtml" />
+    <Content Include="Views\Controle\Index.cshtml" />
+    <Content Include="Views\Controle\Ver.cshtml" />
+    <Content Include="Views\Matriz\Index.cshtml" />
+    <Content Include="Views\Matriz\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -465,7 +528,7 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>2367</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
           <IISUrl>http://localhost:2287/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
@@ -477,7 +540,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.7\tools\Microsoft.Bcl.Build.targets" />
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.13\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

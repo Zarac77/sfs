@@ -20,7 +20,7 @@
     <fieldset>
         <legend>Filtro</legend>
         <div class="row">
-            <div class="small-3 columns">@Html.EditorFor(model => Model.ExibirNaoAprovadas) Exibir não aprovadas</div>
+            <div class="small-3 columns">@Html.EditorFor(model => Model.ExibirArquivadas) Exibir atividades arquivadas</div>
             <div class="small-9 columns">@SfsHtml.Submit("Filtrar")</div>
         </div>
     </fieldset>
@@ -51,11 +51,10 @@
 
 @foreach (var item in Model.Atividades) 
 {
-    var css = item.Aprovada ? "aprovada" : "nao-aprovada";
+    var css = item.EstadoAtividade.Indice == EstadoAtividade.Arquivada ? "nao-aprovada" : "aprovada";
     
     <tr class="linha">
-        <td class="@css">
-            @Html.DisplayFor(modelItem => item.Aprovada, new { title = "Aprovada" })
+        <td class="@css" title="@Model.EstadosAtividade.Single(r => r.Key == item.EstadoAtividade.Id).Value">
             @SfsHtml.SmallImg("atividade.png", String.Empty)
             @Html.DisplayFor(modelItem => item.Descricao)
         </td>

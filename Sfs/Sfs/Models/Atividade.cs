@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Sfs.Models
 {
@@ -19,6 +20,12 @@ namespace Sfs.Models
         [MaxLength(256)]
         [Required]
         public string Descricao { get; set; }
+
+        [DisplayName("Transporte")]
+        public string Transporte { get; set; }
+
+        [DisplayName("Responsáveis")]
+        public string Responsaveis { get; set; }
 
         [DisplayName("Data e hora de início")]
         public DateTime DataHoraInicio { get; set; }
@@ -38,14 +45,23 @@ namespace Sfs.Models
         public int NumeroVagas { get; set; }
 
         /// <summary>
-        /// Indica se a atividade está aprovada para inscrições.
+        /// Indica se a atividade já está finalizada e pronta para controle.
         /// </summary>
-        public bool Aprovada { get; set; } //Sujeita a deprecação. Conforme conversado com a coordenadora de final de semana.
+        //public bool Validada { get; set; }
 
 
         public bool Aberta { get; set; }
 
         public virtual List<Inscricao> Inscricoes { get; set; }
+
+        [Required]
+        public int Custo { get; set; }
+
+        [DisplayName("Estado da atividade")]
+        [ForeignKey("EstadoAtividade")]
+        public Guid IdEstadoAtividade { get; set; }
+
+        public virtual EstadoAtividade EstadoAtividade { get; set; }
 
         #endregion
 
@@ -62,11 +78,26 @@ namespace Sfs.Models
 
         public Atividade()
         {
-            Aprovada = false;
             Inscricoes = new List<Inscricao>();
             Aberta = true;
+            Custo = 10;
         }
 
         #endregion
+    }
+
+    public class EstadoAtividade {
+        public const int Edicao = 0;
+        public const int Aberta = 1;
+        public const int Validada = 2;
+        public const int Arquivada = 3;
+        public const int Cancelada = 4;
+
+        [Key]
+        public Guid Id { get; set; }
+
+        public int Indice { get; set; }
+        public string Descricao { get; set; }
+
     }
 }

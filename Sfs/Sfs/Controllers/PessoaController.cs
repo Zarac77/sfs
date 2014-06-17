@@ -7,6 +7,7 @@ using System.Web.Mvc;
 
 using Sfs.Models;
 using Sfs.ViewModels.PessoaViewModels;
+using Sfs.Services;
 
 namespace Sfs.Controllers
 {   
@@ -15,20 +16,23 @@ namespace Sfs.Controllers
         //
         // GET: /Pessoa/
 
+        private const int PESSOAS_POR_PAGINA = 30;
+
         public ActionResult Index(IndexViewModel viewModel)
         {
             if (!PessoaLogada.IsAdministrador)
                 return RedirectToAction("AcessoNaoAutorizado", "ControleAcesso");
 
             var pessoas = Context.Pessoas.OrderBy(p => p.Nome).AsQueryable();
+            var indiceInicial = (viewModel.PaginaAtual) * PESSOAS_POR_PAGINA;
 
             if (!String.IsNullOrEmpty(viewModel.Nome))
                 pessoas = pessoas.Where(p => p.Nome.Contains(viewModel.Nome));
 
             if (viewModel.IgnorarInativos)
                 pessoas = pessoas.Where(p => p.Ativo);
-
-            viewModel.Pessoas = pessoas.ToList();
+            viewModel.Lista = pessoas;
+            viewModel = (IndexViewModel)Servico.PaginarLista(viewModel, "Nome", false);
             return View(viewModel);
         }
 
@@ -57,10 +61,7 @@ namespace Sfs.Controllers
         {
             if (ModelState.IsValid)
             {
-                pessoa.Id = Guid.NewGuid();
-                Context.Pessoas.Add(pessoa);
-                Context.SaveChanges();
-                return RedirectToAction("Index");  
+                ServicoPessoa.RegistrarPessoa(Context, pessoa, true);
             }
 
             return View(pessoa);

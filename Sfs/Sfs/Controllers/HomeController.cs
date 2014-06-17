@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Sfs.Services;
+using Sfs.ViewModels;
 
 namespace Sfs.Controllers
 {
@@ -32,7 +34,8 @@ namespace Sfs.Controllers
         public ActionResult VerLista(Guid id)
         {
             var atividade = Context.Atividades.Find(id);
-            return View(atividade);
+            atividade.Inscricoes = atividade.Inscricoes.OrderByDescending(i => i.CoeficienteSorte).ToList();
+            return View(new _ListarViewModel { Atividade = atividade, IdAtividade = atividade.Id, MostrarCheckboxes = false});
         }
     }
 }

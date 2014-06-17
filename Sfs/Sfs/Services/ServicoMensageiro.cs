@@ -6,9 +6,9 @@ using Sfs.Models;
 
 namespace Sfs.Services
 {
-    public class ServicoMensageiro
+    public class ServicoMensageiro : Servico
     {
-        public static bool EnviarMensagem(SfsContext context, Pessoa pessoa, string assunto, string remetente, string texto)
+        public static bool EnviarMensagem(SfsContext context, Pessoa destinatario, string assunto, string remetente, string texto)
         {
             try
             {
@@ -19,7 +19,7 @@ namespace Sfs.Services
                     Remetente = remetente,
                     Texto = texto
                 };
-                var inbox = context.Inboxes.Single(i => i.IdPessoa == pessoa.Id);
+                var inbox = context.Inboxes.Single(i => i.IdPessoa == destinatario.Id);
                 inbox.Mensagens.Add(msg);
                 context.SaveChanges();
                 return true;

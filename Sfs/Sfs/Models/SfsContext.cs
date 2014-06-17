@@ -34,5 +34,9 @@ namespace Sfs.Models
         public DbSet<Mensagem> Mensagens { get; set; }
 
         public DbSet<ParametrosSistema> ParametrosSistema { get; set; }
+
+        public DbSet<LogReport> LogReports { get; set; }
+
+        public DbSet<EstadoAtividade> EstadosAtividade { get; set; }
     }
 }

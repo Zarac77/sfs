@@ -1,49 +1,63 @@
-﻿@model Sfs.Models.Atividade
+﻿@model Sfs.ViewModels._ListarViewModel
+@using Sfs.Models
 
 @{
-    ViewBag.Title = "Lista para " + Model.Descricao;
+    ViewBag.Title = "Lista para " + Model.Atividade.Descricao;
 }
-
-<h4 style="text-align:center">@Model.Descricao</h4>
+@Html.ValidationSummary(true)
+<h4 style="text-align:center">@Model.Atividade.Descricao</h4>
+<h5 style="text-align:center"> <b>Responsáveis:</b> @Model.Atividade.Responsaveis
+    <br />
+    <b>Transporte: @Model.Atividade.Transporte
+</b>
+    </h5>
 <hr />
 <br />
-<form id="lista atividade" action="~/Atividade/CancelarInscricoes" method="post">
     <table>
         <thead>
         <tr>
             @{var w = ViewBag.PessoaLogada.IsAdministrador ? "65px" : "30px";}
-            <td style="width:@w;">@if (ViewBag.PessoaLogada.IsAdministrador) { <br />@SfsHtml.SelecionarTodosTrigger("listaAtividade") }</td>
+            <td style="width:@w;">@if (Model.MostrarCheckboxes) { <br />@SfsHtml.SelecionarTodosTrigger("listaAtividade") }</td>
             <td style="width:70px;"><b>Matrícula</b></td>
             <td><b>Nome</b></td>
-            <td style="width:140px;"><b>Turma</b></td>
+            <td style="width:80px;"><b>Turma</b></td>
+            <td style="width:140px"><b>Telefone</b></td>
+            @if (ViewBag.PessoaLogada.IsAdministrador) {
+                @MostrarPresencasCabecalho()
+            }
         </tr>
             </thead>
-        @for (int i = 0; i < Model.NumeroVagas; i++)
+        @for (int i = 0; i < Model.Atividade.Inscricoes.Count; i++)
         {
-            var matrícula = (i < Model.Inscricoes.Count) ? Model.Inscricoes[i].Pessoa.Matricula : String.Empty;
-            var nome = (i < Model.Inscricoes.Count) ? Model.Inscricoes[i].Pessoa.Nome : String.Empty;
-            var turma = (i < Model.Inscricoes.Count) ? Model.Inscricoes[i].Pessoa.Turma : String.Empty;        
+            var matrícula = Model.Atividade.Inscricoes[i].Pessoa.Matricula;
+            var nome = Model.Atividade.Inscricoes[i].Pessoa.Nome;
+            var turma = Model.Atividade.Inscricoes[i].Pessoa.Turma;        
         <tr>
         
-            <td>@if (ViewBag.PessoaLogada.IsAdministrador && i < Model.Inscricoes.Count)
-                { <input type="checkbox" class="listaAtividade" name="ids" value="@Model.Inscricoes[i].Id"/> } 
-                else { <input type="checkbox" /> } 
-                @(i+1)</td>
+            <td>@if (Model.MostrarCheckboxes && i < Model.Atividade.Inscricoes.Count)
+                { <input type="checkbox" class="listaAtividade" name="IdSelecionados" value="@Model.Atividade.Inscricoes[i].IdPessoa"/> }  
+                @(i < Model.Atividade.NumeroVagas ? (i + 1).ToString() : "LE")</td>
             <td>@matrícula</td>
-            <td>@nome</td>
+            <td @(Model.Atividade.Inscricoes[i].Fixada ? "style=color:limegreen" : "")>@nome</td>
             <td>@turma</td>
+            <td>@Model.Atividade.Inscricoes[i].Pessoa.Telefone</td>
+            @if (ViewBag.PessoaLogada.IsAdministrador) { 
+                @MostrarPresencas(Model.Atividade.Inscricoes[i])
+            }
         </tr>
         }
 
     </table>
-    <input type="hidden" name="idAtividade" value="@Model.Id" />
-    @SfsHtml.Submit("Cancelar inscrições selecionadas", "small alert button")
-</form>
+    <input type="hidden" name="IdAtividade" value="@Model.Atividade.Id" />
 
-<script>
-    function cancelarInscricao(idAtividade, nomeAluno) {
-        if (confirm("Confirma a o cancelamento da inscrição do(a) aluno(a) " + nomeAluno + "?"))
-            location.href = "Atividade/Desistir?Id=" + idAtividade;
+
+@helper MostrarPresencasCabecalho() { 
+        if (Model.Atividade.EstadoAtividade.Indice == EstadoAtividade.Validada) {             
+                <td><b>Presente</b></td>           
+        }
+}
+@helper MostrarPresencas(Inscricao ins) {
+                  if (Model.Atividade.EstadoAtividade.Indice == EstadoAtividade.Validada) {
+                      <td>@(ins.Presente ? "Presente" : "Ausente")</td>
+                  }
     }
-</script>
-@SfsHtml.SelecionarTodosScript()

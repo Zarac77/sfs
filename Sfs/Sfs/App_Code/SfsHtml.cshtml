@@ -76,7 +76,13 @@
     <a href="#" onclick="@script (@s)"><img src="@src" title="@linkText" alt="@linkText" /></a>
 }
 
+@helper DummyButton(string text, string onClick) {
+    <input type="button" class="small button" value="@text" onclick="@Html.Raw(onClick)" />
+}
 
+@helper DummyButton(string text, string onClick, string classInput) {
+    <input type="button" class="@classInput" value="@text" onclick="@Html.Raw(onClick)" />
+}
 
 @helper Submit(string text)
 {
@@ -88,13 +94,15 @@
     <input type="submit" class="@classInput" value="@text" />
 }
 
-@helper DateInput(string name, int width, string val) {
+@helper DateInput(string name, int width, string val)
+{
     <input name="@name" class="date hasDatepicker" id="@name" type="text" data-val="true" data-val-date="The field Data de término must be a date." value="@val"/>
 }
 
-@helper TimeInput(string name, int width, string val) {
+@helper TimeInput(string name, int width, string val)
+{
     string w = width + "px";
-    <input type="text" id="time" name="@name" style="width:@w" class="text-box single line" value="@val"/>
+    <input type="text" id="@name" name="@name" style="width:@w" class="text-box single line time" value="@val"/>
 }
 
 @helper ValidationSummary(ViewDataDictionary viewData, bool excludePropertyErrors)
@@ -102,7 +110,7 @@
     if (!viewData.ModelState.IsValid)
     {
         var modelStates = new List<System.Web.Mvc.ModelState>();
-    
+
         for (var i = 0; i < viewData.ModelState.Keys.Count; i++)
         {
             var key = viewData.ModelState.Keys.ElementAt(i);
@@ -112,7 +120,7 @@
                 modelStates.Add(viewData.ModelState.Values.ElementAt(i));
             }
         }
-    
+
         if (modelStates.Count > 0)
         {
             <table class="validation-summary">
@@ -134,7 +142,7 @@
                     }
                 </tbody>
             </table>
-        }    
+        }
     }
 }
 
@@ -147,11 +155,13 @@
     <img src="@src" title="@title" alt="@title" class="small-img" />
 }
 
-@helper FileInput() {
+@helper FileInput()
+{
     <input type="file" />
 }
 
-@helper SelecionarTodosScript() {
+@helper SelecionarTodosScript()
+{
     <script>
         function selecionarTodas(classInput) {
             var inputs = $("." + classInput);
@@ -166,7 +176,48 @@
     </script>
 }
 
-@helper SelecionarTodosTrigger(string classInput) {
+@helper PaginacaoLista(string controllerName, string actionName, object model)
+{
+    //Só funciona para ViewModels com inheritance de "Sfs.ViewModels.ListaPaginada".
+    var urlHelper = new UrlHelper(Context.Request.RequestContext);
+    <p style="text-align:center">
+    @{
+        var propertyInfos = model.GetType().GetProperties();
+        int paginaAtual = (int)propertyInfos.First(a => a.Name == "PaginaAtual").GetValue(model);
+        int totalPaginas = (int)propertyInfos.First(a => a.Name == "TotalPaginas").GetValue(model);       
+    }
+    @if (paginaAtual > 0)
+    {
+        <a href="@urlHelper.Action(actionName, new { PaginaAtual = paginaAtual - 1 })"><</a>
+    }
+    
+    @for (int i = 0; i < totalPaginas; i++) {
+        string iAlterado = (i + 1).ToString() + " ";
+        if (i != paginaAtual) {
+            <a href="@urlHelper.Action(actionName, new { PaginaAtual = i })">@iAlterado</a>
+        }
+        else {
+            @iAlterado
+        }
+    }
+    @if (paginaAtual < totalPaginas - 1)
+    {
+        <a href="@urlHelper.Action(actionName, new { PaginaAtual = paginaAtual + 1 })">></a>
+    }
+</p>
+}
+
+@helper SelecionarTodosTrigger(string classInput)
+{
     <br />
-    <input type="checkbox" onclick="selecionarTodas('@classInput');" title="Inverter Seleção" id="control" />
+    <input type="checkbox" onclick="selecionarTodas('@classInput');" title="Selecionar Todos" id="control" />
+}
+
+@helper DropDown(IDictionary<Guid, string> valueDescricao, Guid keySelecionado, string name, int width) { 
+    <select name="@name" id="@name" style="width:@(width)px">
+        
+        @foreach (var k in valueDescricao) {
+            <option value="@k.Key" @(k.Key == keySelecionado ? "selected" : "")>@k.Value</option>
+        }
+    </select>
 }

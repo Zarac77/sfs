@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "GerarLista";
 }
-@if(!Model.Atividade.Aberta) {
+@if(true) {
     <form action="~/Atividade/GerarLista" method="get" id="listaQuery">
     <fieldset>
         <legend>
@@ -37,11 +37,12 @@
         }
     @if (Model.ResultadoPessoas != null)
     {
-        @SfsHtml.SelecionarTodosTrigger("listaQuery")
+        @SfsHtml.SelecionarTodosTrigger("listaQuery") <text><b>Selecionar Todos</b></text>
         <br />
         foreach (var p in Model.ResultadoPessoas)
         {
             <input type="checkbox" name="IdSelecionados" class="listaQuery" value="@p.Id"/> @p.Nome
+        if (p.Pontuacao < Model.Atividade.Custo) { <div style="color:red"><b> Este aluno não possui pontuação suficiente e não será inscrito.</b></div>}
             <br />
             c++;
         }
@@ -53,5 +54,24 @@
         <input type="hidden" name="CampoTurma" value="@Model.Turma" />
     </form>
 }
+
+@{
+    var lmodel = Model._ListarViewModel;
+}
+<form id="listaAtividade" action="~/Atividade/RedirectToListarAction" method="post">
+    @Html.Partial("_Listar", lmodel)
+</form>
+@if (ViewBag.PessoaLogada.IsAdministrador) {
+    <p style="text-align:right">
+        <input type="button" class="small alert button" value="Desafixar" onclick="redirect('DesafixarInscricoes')" />
+        <input type="button" class="small success button" value="Fixar" onclick="redirect('FixarInscricoes')" />
+        <input type="button" class="small alert button" value="Cancelar Inscrições" onclick="redirect('CancelarInscricoes')" />
+    </p>
+}
+<script>
+    function redirect(sender) {
+        $('#listaAtividade').get(0).setAttribute('action', sender);
+        $('#listaAtividade').submit();
+    }
+</script>
 @SfsHtml.SelecionarTodosScript()
-@Html.Partial("_Listar", Model.Atividade)

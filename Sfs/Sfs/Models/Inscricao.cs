@@ -26,12 +26,14 @@ namespace Sfs.Models
          */
 
         [Required]
-        public bool Aprovada { get; set; }
+        public bool Fixada { get; set; }
 
         /// <summary>
         /// Indica se a pessoa esteve presente ou não na atividade.
         /// </summary>
         public bool Presente { get; set; }
+
+        public bool FaltaAbonada { get; set; }
 
         [ForeignKey("Pessoa")]
         public Guid IdPessoa { get; set; }
@@ -40,6 +42,16 @@ namespace Sfs.Models
         [ForeignKey("Atividade")]
         public Guid IdAtividade { get; set; }
         public virtual Atividade Atividade { get; set; }
+
+        [Required]
+        public double CoeficienteSorte { get; set; }
+
+        /// <summary>
+        /// Indica se a inscrição foi concretizada (com ou sem presença).
+        /// </summary>
+        public bool Validada { get; set; }
+
+        public int Prioridade { get; set; }
 
         #endregion
 
@@ -56,8 +68,10 @@ namespace Sfs.Models
 
         public Inscricao()
         {
-            Aprovada = false;
+            Fixada = false;
             Presente = false;
+            CoeficienteSorte = 0;
+            Validada = false;
         }
 
         #endregion

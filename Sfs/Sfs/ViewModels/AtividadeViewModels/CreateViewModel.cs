@@ -14,29 +14,36 @@ namespace Sfs.ViewModels.AtividadeViewModels
 
         public Atividade Atividade { get; set; }
         public Guid IdAtividade { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime DataInicio
-        {
-            get { return Atividade.DataHoraInicio; }
-            set { Atividade.DataHoraInicio = value; }
-        }
-        public string HoraInicio
-        {
-            get { return Atividade.DataHoraInicio.TimeOfDay.ToString(); }
-            set { var a = Atividade.DataHoraInicio.ToString("dd/MM/yyyy") + " " + value;
-            Atividade.DataHoraInicio = DateTime.Parse(a);
-            }
-        }
 
-        public DateTime DataFim
-        {
-            get { return Atividade.DataHoraFim.Date; }
-            set { Atividade.DataHoraFim = value; }
-        }
-        public string HoraFim
-        {
-            get { return Atividade.DataHoraFim.TimeOfDay.ToString(); }
-            set { Atividade.DataHoraFim = DateTime.Parse(Atividade.DataHoraFim + " " + value); }
+        [DataType(DataType.Date)]
+        public DateTime DataInicio { get; set; }
+        public string HoraInicio { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime DataFim { get; set; }
+        public string HoraFim { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime DataLimiteInscricao { get; set; }
+        public string HoraLimiteInscricao { get; set; }
+
+        [DataType(DataType.Date)]
+        public DateTime DataLimiteCancelamento { get; set; }
+        public string HoraLimiteCancelamento { get; set; }
+
+        public Dictionary<Guid, string> EstadosAtividade { get; set; }
+
+        public string EstadoAtividadeValue { get; set; }
+
+        public List<EstadoAtividade> _EstadosAtividade { get; set; }
+        public CreateViewModel() {
+            Atividade = new Atividade();
+            DataInicio = DateTime.Today;
+            DataFim = DateTime.Today;
+            DataLimiteCancelamento = DateTime.Today;
+            DataLimiteInscricao = DateTime.Today;
+            EstadosAtividade = new Dictionary<Guid, string>();
+
         }
         #endregion
     }

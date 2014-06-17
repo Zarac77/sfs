@@ -11,9 +11,25 @@
 </div>
 
 <div class="editor-label">
-    @Html.LabelFor(model => model.DataInicio)
+    @Html.LabelFor(model => model.Atividade.Responsaveis)
 </div>
 <div class="editor-field">
+    @Html.EditorFor(model => model.Atividade.Responsaveis)
+    @Html.ValidationMessageFor(model => model.Atividade.Responsaveis)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Atividade.Transporte)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Atividade.Transporte)
+    @Html.ValidationMessageFor(model => model.Atividade.Transporte)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.DataInicio)
+</div>
+<div class="editor-field" style="margin:0;padding:0">
         @Html.EditorFor(model => model.DataInicio) às @SfsHtml.TimeInput("HoraInicio", 50, Model.HoraInicio.IsEmpty() ? "" : Model.HoraInicio)
         @Html.ValidationMessageFor(model => model.DataInicio)
 </div>
@@ -22,7 +38,7 @@
     @Html.LabelFor(model => model.DataFim)
 </div>
 <div class="editor-field">
-    @Html.EditorFor(model => model.DataFim)
+    @Html.EditorFor(model => model.DataFim) às @SfsHtml.TimeInput("HoraFim", 50, Model.HoraFim.IsEmpty() ? "" : Model.HoraFim)
     @Html.ValidationMessageFor(model => model.DataFim)
 </div>
 
@@ -30,16 +46,16 @@
     @Html.LabelFor(model => model.Atividade.DataLimiteInscricao)
 </div>
 <div class="editor-field">
-    @Html.EditorFor(model => model.Atividade.DataLimiteInscricao)
-    @Html.ValidationMessageFor(model => model.Atividade.DataLimiteInscricao)
+    @Html.EditorFor(model => model.DataLimiteInscricao) às @SfsHtml.TimeInput("HoraLimiteInscricao", 50, Model.HoraLimiteInscricao.IsEmpty() ? "" : Model.HoraLimiteInscricao)
+    @Html.ValidationMessageFor(model => model.DataLimiteInscricao)
 </div>
 
 <div class="editor-label">
     @Html.LabelFor(model => model.Atividade.DataLimiteCancelamento)
 </div>
 <div class="editor-field">
-    @Html.EditorFor(model => model.Atividade.DataLimiteCancelamento)
-    @Html.ValidationMessageFor(model => model.Atividade.DataLimiteCancelamento)
+    @Html.EditorFor(model => model.DataLimiteCancelamento) às @SfsHtml.TimeInput("HoraLimiteCancelamento", 50, Model.HoraLimiteCancelamento.IsEmpty() ? "" : Model.HoraLimiteCancelamento)
+    @Html.ValidationMessageFor(model => model.DataLimiteCancelamento)
 </div>
 
 <div class="editor-label">
@@ -57,11 +73,11 @@
     @Html.ValidationMessageFor(model => model.Atividade.Aberta)
 </div>
 <div class="editor-label">
-    @Html.LabelFor(model => model.Atividade.Aprovada)
+    @Html.LabelFor(model => model.Atividade.EstadoAtividade)
 </div>
-<div class="editor-field">
-    @Html.EditorFor(model => model.Atividade.Aprovada)
-    @Html.ValidationMessageFor(model => model.Atividade.Aberta)
+<div>
+    @SfsHtml.DropDown(Model.EstadosAtividade, Model.Atividade.EstadoAtividade.Id, "Atividade.IdEstadoAtividade", 340)
+    @*Html.DropDownListFor(model => model.Atividade.IdEstadoAtividade, new SelectList(Model._EstadosAtividade, "Id", "Descricao", Model.Atividade.IdEstadoAtividade))*@
 </div>
 <div class="editor-field">
   <!-- SfsHtml.FileInput() -->

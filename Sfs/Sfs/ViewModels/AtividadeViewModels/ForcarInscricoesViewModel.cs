@@ -6,12 +6,19 @@ using System.Web;
 
 namespace Sfs.ViewModels.AtividadeViewModels
 {
-    public class ForcarInscricoesViewModel
+    public class ListarViewModel
     {
         public Guid IdAtividade { get; set; }
         public Atividade Atividade { get; set; }
         public string CampoMatricula { get; set; }
         public string CampoTurma { get; set; }
         public Guid[] IdSelecionados { get; set; }
+        public bool HaFixadas { get; set; }
+        public bool HaInscritos { get; set; }
+
+        public ListarViewModel() {
+            HaFixadas = false;
+            HaInscritos = false;
+        }
     }
 }

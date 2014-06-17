@@ -48,7 +48,7 @@
         </tr>
     </thead>
 
-@foreach (var item in Model.Pessoas)
+@foreach (var item in Model.Lista)
 {
     var css = item.Ativo ? "ativo" : "inativo";
     
@@ -80,3 +80,5 @@
     @SfsHtml.SmallImg("pessoa.png", String.Empty)
 	<span title="@title">@pessoa.Nome</span>
 }
+
+@SfsHtml.PaginacaoLista("Inbox", "Index", Model)

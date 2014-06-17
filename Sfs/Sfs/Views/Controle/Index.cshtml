@@ -1,0 +1,11 @@
+﻿@using Sfs.Models
+@model IEnumerable<Atividade>
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (var a in Model) {
+    @Html.ActionLink(a.Descricao, "Ver", new { Id = a.Id } )
+}

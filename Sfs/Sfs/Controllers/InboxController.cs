@@ -1,4 +1,6 @@
 ﻿using Sfs.Models;
+using Sfs.Services;
+using Sfs.ViewModels;
 using Sfs.ViewModels.InboxViewModels;
 using System;
 using System.Collections.Generic;
@@ -16,20 +18,8 @@ namespace Sfs.Controllers
 
         public ActionResult Index(IndexViewModel ivm)
         {
-            var indiceInicial = (ivm.PaginaAtual) * MENSAGENS_POR_PAGINA;
-            ivm.Mensagens = Context.Inboxes
-                .Single(i => i.IdPessoa == PessoaLogada.Id)
-                .Mensagens
-                .OrderByDescending(m => m.DataEnvio)
-                .Skip(indiceInicial)
-                .Take(MENSAGENS_POR_PAGINA);
-            int totalMensagens = Context.Inboxes
-                .Single(i => i.IdPessoa == PessoaLogada.Id)
-                .Mensagens
-                .Count();
-            ivm.Delete = new bool[ivm.Mensagens.Count()];
-            double totalPaginas = (double)totalMensagens / MENSAGENS_POR_PAGINA;
-            ivm.TotalPaginas = (int)Math.Ceiling(totalPaginas);            
+            ivm.Lista = Context.Inboxes.Single(i => i.IdPessoa == PessoaLogada.Id).Mensagens;
+            ivm = (IndexViewModel)Servico.PaginarLista(ivm, "DataEnvio", true);
             return View(ivm);
         }
 
